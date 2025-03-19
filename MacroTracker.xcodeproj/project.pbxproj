@@ -13,6 +13,13 @@
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
 		DE087A5B2D6CB6E900B6F6AF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A5A2D6CB6E900B6F6AF /* Persistence.swift */; };
 		DE087A5E2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DE087A5C2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld */; };
+		DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */; };
+		DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C852D8859E500AC3E72 /* APIClient.swift */; };
+		DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */; };
+		DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */; };
+		DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */; };
+		DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C922D885F9600AC3E72 /* HomeView.swift */; };
+		DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +30,13 @@
 		DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DE087A5A2D6CB6E900B6F6AF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		DE087A5D2D6CB6E900B6F6AF /* MacroTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MacroTracker.xcdatamodel; sourceTree = "<group>"; };
+		DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
+		DE6D6C852D8859E500AC3E72 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionEndpoint.swift; sourceTree = "<group>"; };
+		DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionService.swift; sourceTree = "<group>"; };
+		DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
+		DE6D6C922D885F9600AC3E72 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +69,10 @@
 		DE087A502D6CB6E700B6F6AF /* MacroTracker */ = {
 			isa = PBXGroup;
 			children = (
+				DE6D6C8E2D885F4800AC3E72 /* Views */,
+				DE6D6C822D8857DE00AC3E72 /* Model */,
+				DE6D6C812D8857D900AC3E72 /* Service */,
+				DE6D6C802D8857D500AC3E72 /* Network */,
 				DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */,
 				DE087A532D6CB6E700B6F6AF /* ContentView.swift */,
 				DE087A552D6CB6E900B6F6AF /* Assets.xcassets */,
@@ -71,6 +89,65 @@
 				DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DE6D6C802D8857D500AC3E72 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */,
+				DE6D6C852D8859E500AC3E72 /* APIClient.swift */,
+				DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DE6D6C812D8857D900AC3E72 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		DE6D6C822D8857DE00AC3E72 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C8F2D885F7500AC3E72 /* Home */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DE6D6C8F2D885F7500AC3E72 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C912D885F8200AC3E72 /* ViewModel */,
+				DE6D6C902D885F7F00AC3E72 /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DE6D6C902D885F7F00AC3E72 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C922D885F9600AC3E72 /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DE6D6C912D885F8200AC3E72 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,9 +221,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE087A5B2D6CB6E900B6F6AF /* Persistence.swift in Sources */,
+				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
 				DE087A542D6CB6E700B6F6AF /* ContentView.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
+				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
+				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
+				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
 				DE087A5E2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld in Sources */,
+				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
+				DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */,
+				DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
