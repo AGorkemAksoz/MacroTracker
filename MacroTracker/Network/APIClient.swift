@@ -21,17 +21,14 @@ class APIClient<EndpointType: APIEndpoint>: APIClientInterface {
                 if let headers = endpoint.headers {
                     for (key, value) in headers {
                         urlRequest.addValue(value, forHTTPHeaderField: key)
-                        print(urlRequest.allHTTPHeaderFields)
                     }
                 }
         
         return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .tryMap { data, response -> Data in
-                print("Data: ", String(data: data, encoding: .utf8)!)
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200...299).contains(httpResponse.statusCode) else { throw APIError.invalidResponse}
-
                 return data
             }
             .decode(type: T.self, decoder: JSONDecoder())

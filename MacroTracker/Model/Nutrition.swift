@@ -5,35 +5,32 @@
 //  Created by Gorkem on 17.03.2025.
 //
 
-
 // MARK: - Nutrition
 struct Nutrition: Codable {
-    let foods: [Food]?
+    let items: [Item]?
 }
 
 // MARK: - Item
-struct Food: Codable {
-    let sugarG, fiberG, servingSizeG: Double?
-    let sodiumMg: Int?
+struct Item: Codable {
     let name: String?
-    let potassiumMg: Int?
-    let fatSaturatedG, fatTotalG, calories: Double?
-    let cholesterolMg: Int?
-    let proteinG, carbohydratesTotalG: Double?
+    let calories, servingSizeG, fatTotalG, fatSaturatedG: Double?
+    let proteinG: Double?
+    let sodiumMg, potassiumMg, cholesterolMg: Int?
+    let carbohydratesTotalG, fiberG, sugarG: Double?
 
     enum CodingKeys: String, CodingKey {
-        case sugarG = "sugar_g"
-        case fiberG = "fiber_g"
+        case name, calories
         case servingSizeG = "serving_size_g"
-        case sodiumMg = "sodium_mg"
-        case name
-        case potassiumMg = "potassium_mg"
-        case fatSaturatedG = "fat_saturated_g"
         case fatTotalG = "fat_total_g"
-        case calories
-        case cholesterolMg = "cholesterol_mg"
+        case fatSaturatedG = "fat_saturated_g"
         case proteinG = "protein_g"
+        case sodiumMg = "sodium_mg"
+        case potassiumMg = "potassium_mg"
+        case cholesterolMg = "cholesterol_mg"
         case carbohydratesTotalG = "carbohydrates_total_g"
+        case fiberG = "fiber_g"
+        case sugarG = "sugar_g"
     }
 }
+
 

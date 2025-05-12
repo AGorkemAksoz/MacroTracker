@@ -12,20 +12,20 @@ class HomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     let nutritionService: NutritionServiceInterface
     
-    @Published var nutrition: [Food] = []
+    @Published var nutrition: [Item] = []
     
     init(nutritionService: NutritionServiceInterface) {
         self.nutritionService = nutritionService
     }
     
-    func fetchNutrition() {
-        nutritionService.getNutrition()
+    func fetchNutrition(for query: String) {
+        nutritionService.getNutrition(for: query)
             .receive(on: RunLoop.main)
             .sink { data in
             } receiveValue: { [weak self] data in
-                guard let foods = data.foods else { return }
-                print(foods)
+                guard let foods = data.items else { return }
                 self?.nutrition = foods
+                print(foods)
             }
             .store(in: &cancellables)
     }

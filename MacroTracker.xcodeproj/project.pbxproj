@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
-		DE087A542D6CB6E700B6F6AF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A532D6CB6E700B6F6AF /* ContentView.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
-		DE087A5B2D6CB6E900B6F6AF /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A5A2D6CB6E900B6F6AF /* Persistence.swift */; };
-		DE087A5E2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DE087A5C2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld */; };
 		DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */; };
 		DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C852D8859E500AC3E72 /* APIClient.swift */; };
 		DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */; };
@@ -25,11 +22,8 @@
 /* Begin PBXFileReference section */
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
-		DE087A532D6CB6E700B6F6AF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DE087A5A2D6CB6E900B6F6AF /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		DE087A5D2D6CB6E900B6F6AF /* MacroTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MacroTracker.xcdatamodel; sourceTree = "<group>"; };
 		DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		DE6D6C852D8859E500AC3E72 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionEndpoint.swift; sourceTree = "<group>"; };
@@ -74,10 +68,7 @@
 				DE6D6C812D8857D900AC3E72 /* Service */,
 				DE6D6C802D8857D500AC3E72 /* Network */,
 				DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */,
-				DE087A532D6CB6E700B6F6AF /* ContentView.swift */,
 				DE087A552D6CB6E900B6F6AF /* Assets.xcassets */,
-				DE087A5A2D6CB6E900B6F6AF /* Persistence.swift */,
-				DE087A5C2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld */,
 				DE087A572D6CB6E900B6F6AF /* Preview Content */,
 			);
 			path = MacroTracker;
@@ -220,14 +211,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE087A5B2D6CB6E900B6F6AF /* Persistence.swift in Sources */,
 				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
-				DE087A542D6CB6E700B6F6AF /* ContentView.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
 				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
-				DE087A5E2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld in Sources */,
 				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
 				DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */,
 				DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */,
@@ -436,19 +424,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		DE087A5C2D6CB6E900B6F6AF /* MacroTracker.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				DE087A5D2D6CB6E900B6F6AF /* MacroTracker.xcdatamodel */,
-			);
-			currentVersion = DE087A5D2D6CB6E900B6F6AF /* MacroTracker.xcdatamodel */;
-			path = MacroTracker.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = DE087A462D6CB6E700B6F6AF /* Project object */;
 }

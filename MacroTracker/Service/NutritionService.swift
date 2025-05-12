@@ -9,14 +9,13 @@ import Combine
 import Foundation
 
 protocol NutritionServiceInterface {
-    func getNutrition() -> AnyPublisher<Nutrition, Error>
+    func getNutrition(for query: String) -> AnyPublisher<Nutrition, Error>
 }
 
 class NutritionService: NutritionServiceInterface {
     let apiClient = APIClient<NutritionEndpoint>()
     
-    func getNutrition() -> AnyPublisher<Nutrition, Error> {
-        let query = "Last lunch I had 1lb of brisket and 200 grams of rice"
+    func getNutrition(for query: String) -> AnyPublisher<Nutrition, Error> {
         return apiClient.request(.getNutrition(query: query))
     }
 }
