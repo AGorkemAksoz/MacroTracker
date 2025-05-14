@@ -29,4 +29,20 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    var totalProtein: Double {
+        nutrition.reduce(0) { $0 + ($1.proteinG ?? 0) }
+    }
+
+    var totalCarbs: Double {
+        nutrition.reduce(0) { $0 + ($1.carbohydratesTotalG ?? 0) }
+    }
+
+    var totalFat: Double {
+        nutrition.reduce(0) { $0 + ($1.fatTotalG ?? 0) }
+    }
+    
+    var totalSugar: Double {
+        nutrition.reduce(0) { $0 + ($1.sugarG ?? 0) }
+    }
 }

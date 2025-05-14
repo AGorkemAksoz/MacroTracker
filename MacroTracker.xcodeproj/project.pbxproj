@@ -17,6 +17,9 @@
 		DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */; };
 		DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C922D885F9600AC3E72 /* HomeView.swift */; };
 		DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */; };
+		DEAE3F5B2DD4DFBA0096E587 /* SearchFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */; };
+		DEAE3F5D2DD4DFFA0096E587 /* FoodNutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */; };
+		DEAE3F5F2DD4E02F0096E587 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F5E2DD4E02F0096E587 /* PieChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
 		DE6D6C922D885F9600AC3E72 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoodView.swift; sourceTree = "<group>"; };
+		DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodNutritionView.swift; sourceTree = "<group>"; };
+		DEAE3F5E2DD4E02F0096E587 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				DE6D6C922D885F9600AC3E72 /* HomeView.swift */,
+				DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */,
+				DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */,
+				DEAE3F5E2DD4E02F0096E587 /* PieChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -215,7 +224,10 @@
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
+				DEAE3F5F2DD4E02F0096E587 /* PieChartView.swift in Sources */,
 				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
+				DEAE3F5D2DD4DFFA0096E587 /* FoodNutritionView.swift in Sources */,
+				DEAE3F5B2DD4DFBA0096E587 /* SearchFoodView.swift in Sources */,
 				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
 				DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */,
 				DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */,
