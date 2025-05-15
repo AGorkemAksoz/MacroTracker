@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchFoodView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     @State private var typedMeal: String = "250 grams of chicken breast"
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
