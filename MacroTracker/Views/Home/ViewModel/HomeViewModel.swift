@@ -12,29 +12,55 @@ import SwiftData
 class HomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     let nutritionService: NutritionServiceInterface
-    let modelContext: ModelContext
+    var modelContext: ModelContext
     
     
-    @Published var nutrition: [Item] = [] {
-        didSet {
-            for item in nutrition {
-                saveToDatabase(from: item, context: modelContext)
-            }
-        }
-    }
+    @Published var nutrition: [Item] = []
     
     init(nutritionService: NutritionServiceInterface, modelContext: ModelContext) {
         self.nutritionService = nutritionService
         self.modelContext = modelContext
     }
     
+//    func fetchNutrition(for query: String) {
+//        nutritionService.getNutrition(for: query)
+//            .receive(on: RunLoop.main)
+//            .sink { data in
+//            } receiveValue: { [weak self] data in
+//                guard let foods = data.items else { return }
+//                self?.nutrition += foods
+//            }
+//            .store(in: &cancellables)
+//    }
+    
     func fetchNutrition(for query: String) {
         nutritionService.getNutrition(for: query)
             .receive(on: RunLoop.main)
-            .sink { data in
+            .sink { completion in
+                // Hata durumunu ele almak için
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Error fetching nutrition: \(error)")
+                }
             } receiveValue: { [weak self] data in
-                guard let foods = data.items else { return }
-                self?.nutrition += foods
+                guard let self = self, let foods = data.items else { return }
+                
+                // API'dan gelen verileri nutrition dizisine ekle
+                self.nutrition += foods
+                
+                // Her bir öğeyi veritabanına kaydet
+                for item in foods {
+                    self.saveToDatabase(from: item, context: self.modelContext)
+                }
+                
+                // Değişiklikleri kaydet
+                do {
+                    try self.modelContext.save()
+                } catch {
+                    print("Failed to save to database: \(error)")
+                }
             }
             .store(in: &cancellables)
     }
@@ -58,6 +84,31 @@ class HomeViewModel: ObservableObject {
         context.insert(foodItem)
     }
 
+    // ModelContext'i güncellemek için eklenen metod
+    func updateModelContext(_ newModelContext: ModelContext) {
+        self.modelContext = newModelContext
+    }
+    
+    // Veritabanından kayıtlı yemekleri getir
+       func fetchSavedFoods() -> [FoodItem] {
+           do {
+               let descriptor = FetchDescriptor<FoodItem>()
+               return try modelContext.fetch(descriptor)
+           } catch {
+               print("Failed to fetch saved foods: \(error)")
+               return []
+           }
+       }
+
+       // Belirli bir yemeği veritabanından silme
+       func deleteFood(_ foodItem: FoodItem) {
+           modelContext.delete(foodItem)
+           do {
+               try modelContext.save()
+           } catch {
+               print("Failed to delete food: \(error)")
+           }
+       }
     
     var totalProtein: Double {
         nutrition.reduce(0) { $0 + ($1.proteinG ?? 0) }

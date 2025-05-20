@@ -5,6 +5,7 @@
 //  Created by Gorkem on 17.03.2025.
 //
 
+import SwiftData
 import SwiftUI
 
 enum HomeViewMacrosType: String {
@@ -13,7 +14,20 @@ enum HomeViewMacrosType: String {
 }
 
 struct HomeView: View {
-    @StateObject private var homeViewModel = HomeViewModel(nutritionService: NutritionService())
+    // Environment'dan ModelContext'i al
+     @Environment(\.modelContext) private var modelContext
+    
+    @StateObject private var homeViewModel: HomeViewModel
+//    @StateObject private var homeViewModel = HomeViewModel(nutritionService: NutritionService())
+    
+    // Updating Init for init to modelContext
+    init() {
+        // ViewModel'i başlat, modelContext'i onAppear'da atayacağız
+        _homeViewModel = StateObject(wrappedValue: HomeViewModel(
+            nutritionService: NutritionService(),
+            modelContext: ModelContext(try! ModelContainer(for: FoodItem.self)) // Geçici bir modelContext
+        ))
+    }
     
     @State private var selectedListType: HomeViewMacrosType = .list
     var body: some View {
@@ -21,7 +35,7 @@ struct HomeView: View {
             VStack {
                 // SEGMENTED CONTROL
                 Picker("View Type", selection: $selectedListType) {
-                    Text("List").tag(HomeViewMacrosType.list)
+                    Text("List").tag(HomeViewMacrosType.list )
                     Text("Chart").tag(HomeViewMacrosType.pieChart)
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -51,6 +65,15 @@ struct HomeView: View {
                         .foregroundStyle(.blue)
                         .frame(width: 30, height: 30)
                 }
+            }
+            .onAppear {
+                // Environment'dan alınan modelContext'i ViewModel'e ata
+                homeViewModel.updateModelContext(modelContext)
+                
+                // Uygulama başladığında kaydedilmiş verileri yükle
+                let savedFoods = homeViewModel.fetchSavedFoods()
+                // Burada savedFoods ile işlem yapabilirsiniz
+                print(savedFoods)
             }
         }
         .edgesIgnoringSafeArea(.all)
