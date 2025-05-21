@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct FoodNutritionView: View {
-    @Binding var foods: [Item]
+    @Binding var foods: [FoodItem]
     var body: some View {
         List(foods, id: \.name) { food in
             VStack(alignment: .leading, spacing: 8) {
-                Text(food.name ?? "Unknown Food")
+                Text(food.name)
                     .font(.title2)
                 
-                FoodNutritionCellView(nutrition: "Serving Size(gr)", value: String(food.servingSizeG!))
-                FoodNutritionCellView(nutrition: "Calories", value: String(food.calories!))
-                FoodNutritionCellView(nutrition: "Carbonhydrate", value: String(food.carbohydratesTotalG!))
-                FoodNutritionCellView(nutrition: "Fat Total", value: String(food.fatTotalG!))
-                FoodNutritionCellView(nutrition: "Sugar(gr)", value: String(food.sugarG!))
+                FoodNutritionCellView(nutrition: "Serving Size(gr)", value: String(food.servingSizeG))
+                FoodNutritionCellView(nutrition: "Protein(gr)", value: String(food.proteinG))
+                FoodNutritionCellView(nutrition: "Calories", value: String(food.calories))
+                FoodNutritionCellView(nutrition: "Carbonhydrate", value: String(food.carbohydratesTotalG))
+                FoodNutritionCellView(nutrition: "Fat Total", value: String(food.fatTotalG))
+                FoodNutritionCellView(nutrition: "Sugar(gr)", value: String(food.sugarG))
             }
         }
     }

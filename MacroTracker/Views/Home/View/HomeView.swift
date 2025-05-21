@@ -18,7 +18,6 @@ struct HomeView: View {
      @Environment(\.modelContext) private var modelContext
     
     @StateObject private var homeViewModel: HomeViewModel
-//    @StateObject private var homeViewModel = HomeViewModel(nutritionService: NutritionService())
     
     // Updating Init for init to modelContext
     init() {
@@ -44,7 +43,7 @@ struct HomeView: View {
                 // SWITCH VIEW BASED ON SELECTED TYPE
                 switch selectedListType {
                 case .list:
-                    FoodNutritionView(foods: $homeViewModel.nutrition)
+                    FoodNutritionView(foods: $homeViewModel.savedNutrititon)
                 case .pieChart:
                     PieChartView(macros: [
                         Macro(name: "Protein", value: homeViewModel.totalProtein, color: .blue),
@@ -71,9 +70,7 @@ struct HomeView: View {
                 homeViewModel.updateModelContext(modelContext)
                 
                 // Uygulama başladığında kaydedilmiş verileri yükle
-                let savedFoods = homeViewModel.fetchSavedFoods()
-                // Burada savedFoods ile işlem yapabilirsiniz
-                print(savedFoods)
+                homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
             }
         }
         .edgesIgnoringSafeArea(.all)

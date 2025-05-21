@@ -16,22 +16,12 @@ class HomeViewModel: ObservableObject {
     
     
     @Published var nutrition: [Item] = []
+    @Published var savedNutrititon: [FoodItem] = []
     
     init(nutritionService: NutritionServiceInterface, modelContext: ModelContext) {
         self.nutritionService = nutritionService
         self.modelContext = modelContext
     }
-    
-//    func fetchNutrition(for query: String) {
-//        nutritionService.getNutrition(for: query)
-//            .receive(on: RunLoop.main)
-//            .sink { data in
-//            } receiveValue: { [weak self] data in
-//                guard let foods = data.items else { return }
-//                self?.nutrition += foods
-//            }
-//            .store(in: &cancellables)
-//    }
     
     func fetchNutrition(for query: String) {
         nutritionService.getNutrition(for: query)
@@ -55,12 +45,7 @@ class HomeViewModel: ObservableObject {
                     self.saveToDatabase(from: item, context: self.modelContext)
                 }
                 
-                // Değişiklikleri kaydet
-                do {
-                    try self.modelContext.save()
-                } catch {
-                    print("Failed to save to database: \(error)")
-                }
+
             }
             .store(in: &cancellables)
     }
@@ -80,8 +65,16 @@ class HomeViewModel: ObservableObject {
             fiberG: item.fiberG ?? 0,
             sugarG: item.sugarG ?? 0
         )
-        
+        print(foodItem)
         context.insert(foodItem)
+        savedNutrititon.append(foodItem)
+        
+        // Değişiklikleri kaydet
+        do {
+            try self.modelContext.save()
+        } catch {
+            print("Failed to save to database: \(error)")
+        }
     }
 
     // ModelContext'i güncellemek için eklenen metod
@@ -111,18 +104,18 @@ class HomeViewModel: ObservableObject {
        }
     
     var totalProtein: Double {
-        nutrition.reduce(0) { $0 + ($1.proteinG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.proteinG ?? 0) }
     }
 
     var totalCarbs: Double {
-        nutrition.reduce(0) { $0 + ($1.carbohydratesTotalG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.carbohydratesTotalG ?? 0) }
     }
 
     var totalFat: Double {
-        nutrition.reduce(0) { $0 + ($1.fatTotalG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.fatTotalG ?? 0) }
     }
     
     var totalSugar: Double {
-        nutrition.reduce(0) { $0 + ($1.sugarG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.sugarG ?? 0) }
     }
 }
