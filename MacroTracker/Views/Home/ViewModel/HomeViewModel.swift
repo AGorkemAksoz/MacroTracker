@@ -23,7 +23,7 @@ class HomeViewModel: ObservableObject {
         self.modelContext = modelContext
     }
     
-    func fetchNutrition(for query: String) {
+    func fetchNutrition(for query: String) async {
         nutritionService.getNutrition(for: query)
             .receive(on: RunLoop.main)
             .sink { completion in
@@ -36,22 +36,14 @@ class HomeViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] data in
                 guard let self = self, let foods = data.items else { return }
-                
-                // API'dan gelen verileri nutrition dizisine ekle
                 self.nutrition += foods
-                
-                // Her bir öğeyi veritabanına kaydet
-                for item in foods {
-                    self.saveToDatabase(from: item, context: self.modelContext)
-                }
-                
-
             }
             .store(in: &cancellables)
+        print("FETCH")
     }
     
-    func saveToDatabase(from item: Item, context: ModelContext) {
-        let foodItem = FoodItem(
+    func convertingToDatabaseModel(from item: Item) -> FoodItem {
+        return FoodItem(
             name: item.name ?? "Unknown",
             calories: item.calories ?? 0,
             servingSizeG: item.servingSizeG ?? 0,
@@ -65,9 +57,13 @@ class HomeViewModel: ObservableObject {
             fiberG: item.fiberG ?? 0,
             sugarG: item.sugarG ?? 0
         )
-        print(foodItem)
-        context.insert(foodItem)
-        savedNutrititon.append(foodItem)
+    }
+    
+    func savingNutritionToLocalDatabase(context: ModelContext) {
+        
+        for item in nutrition {
+            context.insert(self.convertingToDatabaseModel(from: item))
+        }
         
         // Değişiklikleri kaydet
         do {
@@ -75,6 +71,7 @@ class HomeViewModel: ObservableObject {
         } catch {
             print("Failed to save to database: \(error)")
         }
+        print("Saved")
     }
 
     // ModelContext'i güncellemek için eklenen metod

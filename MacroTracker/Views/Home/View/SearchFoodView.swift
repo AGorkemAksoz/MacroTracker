@@ -5,6 +5,7 @@
 //  Created by Gorkem on 14.05.2025.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SearchFoodView: View {
@@ -13,14 +14,23 @@ struct SearchFoodView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    var modelContext: ModelContext
+    
     var body: some View {
         TextField("Type Your Meal", text: $typedMeal)
             .padding()
             .border(.blue, width: 2)
             .frame(height: UIScreen.main.bounds.height * 0.2)
             .onSubmit {
-                homeViewModel.fetchNutrition(for: typedMeal)
-                dismiss()
-        }
+                Task {
+                    await homeViewModel.fetchNutrition(for: typedMeal)
+                    
+                    await MainActor.run {
+                        homeViewModel.savingNutritionToLocalDatabase(context: modelContext)
+                        dismiss()
+                    }
+
+                }
+            }
     }
 }

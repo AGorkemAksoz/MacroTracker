@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FoodNutritionView: View {
+    @ObservedObject var homeViewModel: HomeViewModel
     @Binding var foods: [FoodItem]
     var body: some View {
         List(foods, id: \.name) { food in
@@ -21,6 +22,14 @@ struct FoodNutritionView: View {
                 FoodNutritionCellView(nutrition: "Carbonhydrate", value: String(food.carbohydratesTotalG))
                 FoodNutritionCellView(nutrition: "Fat Total", value: String(food.fatTotalG))
                 FoodNutritionCellView(nutrition: "Sugar(gr)", value: String(food.sugarG))
+            }
+            .swipeActions(edge: .trailing) {
+                Button(action: {
+                    homeViewModel.deleteFood(food)
+                    homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
+                }) {
+                    Label("Delete", systemImage: "trash")
+                }
             }
         }
     }

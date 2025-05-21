@@ -43,7 +43,7 @@ struct HomeView: View {
                 // SWITCH VIEW BASED ON SELECTED TYPE
                 switch selectedListType {
                 case .list:
-                    FoodNutritionView(foods: $homeViewModel.savedNutrititon)
+                    FoodNutritionView(homeViewModel: homeViewModel, foods: $homeViewModel.savedNutrititon)
                 case .pieChart:
                     PieChartView(macros: [
                         Macro(name: "Protein", value: homeViewModel.totalProtein, color: .blue),
@@ -58,7 +58,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 NavigationLink {
-                    SearchFoodView(homeViewModel: homeViewModel)
+                    SearchFoodView(homeViewModel: homeViewModel, modelContext: modelContext)
                 } label: {
                     Image(systemName: "plus")
                         .foregroundStyle(.blue)
@@ -71,6 +71,7 @@ struct HomeView: View {
                 
                 // Uygulama başladığında kaydedilmiş verileri yükle
                 homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
+                print(homeViewModel.savedNutrititon.count)
             }
         }
         .edgesIgnoringSafeArea(.all)
