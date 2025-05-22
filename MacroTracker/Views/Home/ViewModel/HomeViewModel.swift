@@ -14,16 +14,17 @@ class HomeViewModel: ObservableObject {
     let nutritionService: NutritionServiceInterface
     var modelContext: ModelContext
     
-    
-    @Published var nutrition: [Item] = []
+    @Published var isLoaded: Bool = false
     @Published var savedNutrititon: [FoodItem] = []
     
     init(nutritionService: NutritionServiceInterface, modelContext: ModelContext) {
         self.nutritionService = nutritionService
         self.modelContext = modelContext
+        self.savedNutrititon = self.fetchSavedFoods()
     }
     
-    func fetchNutrition(for query: String) async {
+    func fetchNutrition(for query: String) {
+        self.isLoaded = false
         nutritionService.getNutrition(for: query)
             .receive(on: RunLoop.main)
             .sink { completion in
@@ -36,10 +37,11 @@ class HomeViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] data in
                 guard let self = self, let foods = data.items else { return }
-                self.nutrition += foods
+                savingNutritionToLocalDatabase(foods)
+                self.savedNutrititon = self.fetchSavedFoods()
+                self.isLoaded = true
             }
             .store(in: &cancellables)
-        print("FETCH")
     }
     
     func convertingToDatabaseModel(from item: Item) -> FoodItem {
@@ -59,60 +61,59 @@ class HomeViewModel: ObservableObject {
         )
     }
     
-    func savingNutritionToLocalDatabase(context: ModelContext) {
-        
-        for item in nutrition {
-            context.insert(self.convertingToDatabaseModel(from: item))
+    func savingNutritionToLocalDatabase(_ nutritions: [Item]) {
+        /// It traverses an element of the array containing the data received from the service and converts the model into SwiftData and saves them to the local database.
+        for item in nutritions {
+            self.modelContext.insert(self.convertingToDatabaseModel(from: item))
         }
         
-        // Değişiklikleri kaydet
+        // Saving changes
         do {
             try self.modelContext.save()
         } catch {
             print("Failed to save to database: \(error)")
         }
-        print("Saved")
     }
-
+    
     // ModelContext'i güncellemek için eklenen metod
     func updateModelContext(_ newModelContext: ModelContext) {
         self.modelContext = newModelContext
     }
     
     // Veritabanından kayıtlı yemekleri getir
-       func fetchSavedFoods() -> [FoodItem] {
-           do {
-               let descriptor = FetchDescriptor<FoodItem>()
-               return try modelContext.fetch(descriptor)
-           } catch {
-               print("Failed to fetch saved foods: \(error)")
-               return []
-           }
-       }
-
-       // Belirli bir yemeği veritabanından silme
-       func deleteFood(_ foodItem: FoodItem) {
-           modelContext.delete(foodItem)
-           do {
-               try modelContext.save()
-           } catch {
-               print("Failed to delete food: \(error)")
-           }
-       }
+    func fetchSavedFoods() -> [FoodItem] {
+        do {
+            let descriptor = FetchDescriptor<FoodItem>()
+            return try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to fetch saved foods: \(error)")
+            return []
+        }
+    }
+    
+    // Belirli bir yemeği veritabanından silme
+    func deleteFood(_ foodItem: FoodItem) {
+        modelContext.delete(foodItem)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to delete food: \(error)")
+        }
+    }
     
     var totalProtein: Double {
-        savedNutrititon.reduce(0) { $0 + ($1.proteinG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.proteinG)  }
     }
-
+    
     var totalCarbs: Double {
-        savedNutrititon.reduce(0) { $0 + ($1.carbohydratesTotalG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.carbohydratesTotalG) }
     }
-
+    
     var totalFat: Double {
-        savedNutrititon.reduce(0) { $0 + ($1.fatTotalG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.fatTotalG) }
     }
     
     var totalSugar: Double {
-        savedNutrititon.reduce(0) { $0 + ($1.sugarG ?? 0) }
+        savedNutrititon.reduce(0) { $0 + ($1.sugarG) }
     }
 }

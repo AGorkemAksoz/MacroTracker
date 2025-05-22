@@ -68,10 +68,6 @@ struct HomeView: View {
             .onAppear {
                 // Environment'dan alınan modelContext'i ViewModel'e ata
                 homeViewModel.updateModelContext(modelContext)
-                
-                // Uygulama başladığında kaydedilmiş verileri yükle
-                homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
-                print(homeViewModel.savedNutrititon.count)
             }
         }
         .edgesIgnoringSafeArea(.all)

@@ -22,14 +22,12 @@ struct SearchFoodView: View {
             .border(.blue, width: 2)
             .frame(height: UIScreen.main.bounds.height * 0.2)
             .onSubmit {
-                Task {
-                    await homeViewModel.fetchNutrition(for: typedMeal)
-                    
-                    await MainActor.run {
-                        homeViewModel.savingNutritionToLocalDatabase(context: modelContext)
-                        dismiss()
-                    }
-
+                homeViewModel.fetchNutrition(for: typedMeal)
+//                dismiss()
+            }
+            .onChange(of: homeViewModel.isLoaded) { oldValue, newValue in
+                if newValue {
+                    dismiss()
                 }
             }
     }
