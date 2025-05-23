@@ -11,19 +11,24 @@ import SwiftData
 
 class HomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
-    let nutritionService: NutritionServiceInterface
     var modelContext: ModelContext
     
+    let nutritionService: NutritionServiceInterface
+    let databaseService: DatabaseServiceInterface
+    
     @Published var isLoaded: Bool = false
+    
+    @Published var nutrition: [Item] = []
     @Published var savedNutrititon: [FoodItem] = []
     
-    init(nutritionService: NutritionServiceInterface, modelContext: ModelContext) {
+    init(nutritionService: NutritionServiceInterface, modelContext: ModelContext, databaseService: DatabaseServiceInterface) {
         self.nutritionService = nutritionService
         self.modelContext = modelContext
+        self.databaseService = databaseService
         self.savedNutrititon = self.fetchSavedFoods()
     }
     
-    func fetchNutrition(for query: String) {
+    func fetchNutrition(for query: String, completion: @escaping () -> ()) {
         self.isLoaded = false
         nutritionService.getNutrition(for: query)
             .receive(on: RunLoop.main)
@@ -37,68 +42,16 @@ class HomeViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] data in
                 guard let self = self, let foods = data.items else { return }
-                savingNutritionToLocalDatabase(foods)
-                self.savedNutrititon = self.fetchSavedFoods()
+                self.nutrition += foods
                 self.isLoaded = true
+                completion()
             }
             .store(in: &cancellables)
     }
     
-    func convertingToDatabaseModel(from item: Item) -> FoodItem {
-        return FoodItem(
-            name: item.name ?? "Unknown",
-            calories: item.calories ?? 0,
-            servingSizeG: item.servingSizeG ?? 0,
-            fatTotalG: item.fatTotalG ?? 0,
-            fatSaturatedG: item.fatSaturatedG ?? 0,
-            proteinG: item.proteinG ?? 0,
-            sodiumMg: item.sodiumMg ?? 0,
-            potassiumMg: item.potassiumMg ?? 0,
-            cholesterolMg: item.cholesterolMg ?? 0,
-            carbohydratesTotalG: item.carbohydratesTotalG ?? 0,
-            fiberG: item.fiberG ?? 0,
-            sugarG: item.sugarG ?? 0
-        )
-    }
-    
-    func savingNutritionToLocalDatabase(_ nutritions: [Item]) {
-        /// It traverses an element of the array containing the data received from the service and converts the model into SwiftData and saves them to the local database.
-        for item in nutritions {
-            self.modelContext.insert(self.convertingToDatabaseModel(from: item))
-        }
-        
-        // Saving changes
-        do {
-            try self.modelContext.save()
-        } catch {
-            print("Failed to save to database: \(error)")
-        }
-    }
-    
-    // ModelContext'i güncellemek için eklenen metod
+    // ModelContext'i güncellemek için eklenen metodx
     func updateModelContext(_ newModelContext: ModelContext) {
         self.modelContext = newModelContext
-    }
-    
-    // Veritabanından kayıtlı yemekleri getir
-    func fetchSavedFoods() -> [FoodItem] {
-        do {
-            let descriptor = FetchDescriptor<FoodItem>()
-            return try modelContext.fetch(descriptor)
-        } catch {
-            print("Failed to fetch saved foods: \(error)")
-            return []
-        }
-    }
-    
-    // Belirli bir yemeği veritabanından silme
-    func deleteFood(_ foodItem: FoodItem) {
-        modelContext.delete(foodItem)
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to delete food: \(error)")
-        }
     }
     
     var totalProtein: Double {
@@ -115,5 +68,24 @@ class HomeViewModel: ObservableObject {
     
     var totalSugar: Double {
         savedNutrititon.reduce(0) { $0 + ($1.sugarG) }
+    }
+    
+    // MARK: - Database Functions
+    
+    func convertingToDatabaseModel(from item: Item) -> FoodItem {
+        databaseService.convertingToDatabaseModel(from: item)    }
+    
+    func savingNutritionToLocalDatabase() {
+        databaseService.savingNutritionToLocalDatabase(nutrition)
+    }
+    
+    // Veritabanından kayıtlı yemekleri getir
+    func fetchSavedFoods() -> [FoodItem] {
+        databaseService.fetchSavedFoods()
+    }
+    
+    // Belirli bir yemeği veritabanından silme
+    func deleteFood(_ foodItem: FoodItem) {
+        databaseService.deleteFood(foodItem)
     }
 }

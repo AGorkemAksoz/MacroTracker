@@ -71,5 +71,6 @@ class NutritionDatabaseService: DatabaseServiceInterface {
         } catch {
             print("Failed to save to database: \(error)")
         }
+
     }
 }

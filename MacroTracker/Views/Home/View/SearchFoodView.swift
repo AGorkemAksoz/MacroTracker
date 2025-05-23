@@ -22,7 +22,10 @@ struct SearchFoodView: View {
             .border(.blue, width: 2)
             .frame(height: UIScreen.main.bounds.height * 0.2)
             .onSubmit {
-                homeViewModel.fetchNutrition(for: typedMeal)
+                homeViewModel.fetchNutrition(for: typedMeal) {
+                    homeViewModel.savingNutritionToLocalDatabase()
+                    homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
+                }
 //                dismiss()
             }
             .onChange(of: homeViewModel.isLoaded) { oldValue, newValue in

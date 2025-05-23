@@ -22,9 +22,15 @@ struct HomeView: View {
     // Updating Init for init to modelContext
     init() {
         // ViewModel'i başlat, modelContext'i onAppear'da atayacağız
+        let nutritionService = NutritionService()
+        
+        // Geçici ModelContext oluştur (daha sonra Environment'dan alınanla değiştirilecek)
+        let tempModelContext = try! ModelContext(ModelContainer(for: FoodItem.self))
+        let databaseService = NutritionDatabaseService(modelContext: tempModelContext)
+        
         _homeViewModel = StateObject(wrappedValue: HomeViewModel(
-            nutritionService: NutritionService(),
-            modelContext: ModelContext(try! ModelContainer(for: FoodItem.self)) // Geçici bir modelContext
+            nutritionService: nutritionService, modelContext: tempModelContext,
+            databaseService: databaseService
         ))
     }
     
