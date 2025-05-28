@@ -10,8 +10,8 @@ import SwiftData
 
 // MARK: - Database Service Protocol
 protocol DatabaseServiceInterface {
-    func convertingToDatabaseModel(from item: Item) -> FoodItem
-    func savingNutritionToLocalDatabase(_ nutrition: [Item])
+    func convertingToDatabaseModel(from item: Item, recorderDate: Date?) -> FoodItem
+    func savingNutritionToLocalDatabase(_ nutrition: [Item], date recordedDate: Date?)
     func fetchSavedFoods() -> [FoodItem]
     func deleteFood(_ foodItem: FoodItem)
     func saveContext()
@@ -24,7 +24,7 @@ class NutritionDatabaseService: DatabaseServiceInterface {
         self.modelContext = modelContext
     }
     
-    func convertingToDatabaseModel(from item: Item) -> FoodItem {
+    func convertingToDatabaseModel(from item: Item, recorderDate: Date?) -> FoodItem {
         return FoodItem(
             name: item.name ?? "Unknown",
             calories: item.calories ?? 0,
@@ -37,14 +37,16 @@ class NutritionDatabaseService: DatabaseServiceInterface {
             cholesterolMg: item.cholesterolMg ?? 0,
             carbohydratesTotalG: item.carbohydratesTotalG ?? 0,
             fiberG: item.fiberG ?? 0,
-            sugarG: item.sugarG ?? 0
+            sugarG: item.sugarG ?? 0,
+            recordedDate: recorderDate ?? Date.now
         )
     }
     
-    func savingNutritionToLocalDatabase(_ nutrition: [Item]) {
+    func savingNutritionToLocalDatabase(_ nutrition: [Item], date recordedDate: Date?) {
         /// It traverses an element of the array containing the data received from the service and converts the model into SwiftData and saves them to the local database.
         for item in nutrition {
-            self.modelContext.insert(self.convertingToDatabaseModel(from: item))
+            self.modelContext.insert(self.convertingToDatabaseModel(from: item, recorderDate: recordedDate))
+            print("Food Item Date:", self.convertingToDatabaseModel(from: item, recorderDate: recordedDate).recordedDate)
         }
         saveContext()
     }

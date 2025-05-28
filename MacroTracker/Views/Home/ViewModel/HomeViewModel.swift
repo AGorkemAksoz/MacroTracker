@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import SwiftData
 
-class HomeViewModel: ObservableObject {
+final class HomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     var modelContext: ModelContext
     
@@ -17,7 +17,6 @@ class HomeViewModel: ObservableObject {
     let databaseService: DatabaseServiceInterface
     
     @Published var isLoaded: Bool = false
-    
     @Published var nutrition: [Item] = []
     @Published var savedNutrititon: [FoodItem] = []
     
@@ -71,12 +70,8 @@ class HomeViewModel: ObservableObject {
     }
     
     // MARK: - Database Functions
-    
-    func convertingToDatabaseModel(from item: Item) -> FoodItem {
-        databaseService.convertingToDatabaseModel(from: item)    }
-    
-    func savingNutritionToLocalDatabase() {
-        databaseService.savingNutritionToLocalDatabase(nutrition)
+    func savingNutritionToLocalDatabase(date recordedDate: Date?) {
+        databaseService.savingNutritionToLocalDatabase(nutrition, date: recordedDate)
     }
     
     // Veritabanından kayıtlı yemekleri getir

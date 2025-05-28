@@ -22,6 +22,7 @@ class FoodItem {
     var carbohydratesTotalG: Double
     var fiberG: Double
     var sugarG: Double
+    var recordedDate: Date
 
     init(name: String = "Unknown",
          calories: Double = 0,
@@ -34,7 +35,8 @@ class FoodItem {
          cholesterolMg: Int = 0,
          carbohydratesTotalG: Double = 0,
          fiberG: Double = 0,
-         sugarG: Double = 0) {
+         sugarG: Double = 0,
+         recordedDate: Date = Date.now) {
         
         self.name = name
         self.calories = calories
@@ -48,5 +50,6 @@ class FoodItem {
         self.carbohydratesTotalG = carbohydratesTotalG
         self.fiberG = fiberG
         self.sugarG = sugarG
+        self.recordedDate = recordedDate
     }
 }
