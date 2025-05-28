@@ -16,8 +16,6 @@ struct SearchFoodView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    var modelContext: ModelContext
-    
     var body: some View {
         VStack {
             searchBar
@@ -36,7 +34,7 @@ extension SearchFoodView {
             .onSubmit {
                 homeViewModel.fetchNutrition(for: typedMeal) {
                     homeViewModel.savingNutritionToLocalDatabase(date: selectedDate,
-                                                                 meal: selectedMeal)
+                                                              meal: selectedMeal)
                     homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
                 }
             }

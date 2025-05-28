@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD84E6502DE7986300656DC5 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */; };
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */,
+				DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD84E6502DE7986300656DC5 /* DependencyContainer.swift in Sources */,
 				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,

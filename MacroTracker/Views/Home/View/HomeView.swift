@@ -14,33 +14,22 @@ enum HomeViewMacrosType: String {
 }
 
 struct HomeView: View {
-    // Environment'dan ModelContext'i al
-     @Environment(\.modelContext) private var modelContext
-    
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var homeViewModel: HomeViewModel
+    @State private var selectedListType: HomeViewMacrosType = .list
     
-    // Updating Init for init to modelContext
-    init() {
-        // ViewModel'i başlat, modelContext'i onAppear'da atayacağız
-        let nutritionService = NutritionService()
-        
-        // Geçici ModelContext oluştur (daha sonra Environment'dan alınanla değiştirilecek)
-        let tempModelContext = try! ModelContext(ModelContainer(for: FoodItem.self))
-        let databaseService = NutritionDatabaseService(modelContext: tempModelContext)
-        
-        _homeViewModel = StateObject(wrappedValue: HomeViewModel(
-            nutritionService: nutritionService, modelContext: tempModelContext,
-            databaseService: databaseService
-        ))
+    // Initialize with dependency container
+    init(dependencyContainer: DependencyContainerProtocol) {
+        // Initialize ViewModel using the container
+        _homeViewModel = StateObject(wrappedValue: dependencyContainer.makeHomeViewModel())
     }
     
-    @State private var selectedListType: HomeViewMacrosType = .list
     var body: some View {
         NavigationView {
             VStack {
                 // SEGMENTED CONTROL
                 Picker("View Type", selection: $selectedListType) {
-                    Text("List").tag(HomeViewMacrosType.list )
+                    Text("List").tag(HomeViewMacrosType.list)
                     Text("Chart").tag(HomeViewMacrosType.pieChart)
                 }
                 .pickerStyle(SegmentedPickerStyle())
@@ -64,16 +53,12 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 NavigationLink {
-                    SearchFoodView(homeViewModel: homeViewModel, modelContext: modelContext)
+                    SearchFoodView(homeViewModel: homeViewModel)
                 } label: {
                     Image(systemName: "plus")
                         .foregroundStyle(.blue)
                         .frame(width: 30, height: 30)
                 }
-            }
-            .onAppear {
-                // Environment'dan alınan modelContext'i ViewModel'e ata
-                homeViewModel.updateModelContext(modelContext)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -81,5 +66,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    let container = try! ModelContainer(for: FoodItem.self)
+    let dependencyContainer = DependencyContainer(modelContext: container.mainContext)
+    return HomeView(dependencyContainer: dependencyContainer)
 }
