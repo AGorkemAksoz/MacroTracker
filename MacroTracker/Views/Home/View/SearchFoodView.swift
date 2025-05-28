@@ -12,6 +12,7 @@ struct SearchFoodView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     @State private var typedMeal: String = "250 grams of chicken breast"
     @State private var selectedDate: Date = Date()
+    @State private var selectedMeal: MealTypes = .breakfeast
     
     @Environment(\.dismiss) var dismiss
     
@@ -20,11 +21,8 @@ struct SearchFoodView: View {
     var body: some View {
         VStack {
             searchBar
-            DatePicker("Please pick your meal date", selection: $selectedDate, displayedComponents: [.date])
-                .datePickerStyle(.compact)
-                .onChange(of: selectedDate) { _, newValue in
-                    print("Selected Date: \(newValue)")
-                }
+            datePicker
+            mealPicker
         }
     }
 }
@@ -37,18 +35,29 @@ extension SearchFoodView {
             .frame(height: UIScreen.main.bounds.height * 0.2)
             .onSubmit {
                 homeViewModel.fetchNutrition(for: typedMeal) {
-                    homeViewModel.savingNutritionToLocalDatabase(date: selectedDate)
+                    homeViewModel.savingNutritionToLocalDatabase(date: selectedDate,
+                                                                 meal: selectedMeal)
                     homeViewModel.savedNutrititon = homeViewModel.fetchSavedFoods()
                 }
-//                dismiss()
             }
             .onChange(of: homeViewModel.isLoaded) { oldValue, newValue in
                 if newValue {
                     dismiss()
                 }
             }
-            .onAppear {
-                print(selectedDate)
+    }
+    
+    private var datePicker: some View {
+        DatePicker("Please pick your meal date", selection: $selectedDate, displayedComponents: [.date])
+            .datePickerStyle(.compact)
+    }
+    
+    private var mealPicker: some View {
+        Picker("Please select your meal", selection: $selectedMeal) {
+            ForEach(MealTypes.allCases, id: \.self) {
+                Text($0.mealName)
             }
+        }
+        .pickerStyle(.navigationLink)
     }
 }

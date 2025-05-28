@@ -14,6 +14,8 @@ struct FoodNutritionView: View {
         List(foods, id: \.name) { food in
             Section(header: Text(food.recordedDate.formatted(date: .abbreviated, time: .shortened))) {
                 VStack(alignment: .leading, spacing: 8) {
+                    Text(food.mealType.mealName)
+                        .font(.title)
                     Text(food.name)
                         .font(.title2)
                     

@@ -8,6 +8,23 @@
 import Foundation
 import SwiftData
 
+enum MealTypes: String, CaseIterable, Codable {
+    case breakfeast, lunch, dinner, snack
+    
+    var mealName: String {
+        switch self {
+        case .breakfeast:
+            return "Breakfast"
+        case .lunch:
+            return "Lunch"
+        case .dinner:
+            return "Dinner"
+        case .snack:
+            return "Snack"
+        }
+    }
+}
+
 @Model
 class FoodItem {
     var name: String
@@ -23,6 +40,7 @@ class FoodItem {
     var fiberG: Double
     var sugarG: Double
     var recordedDate: Date
+    var mealType: MealTypes
 
     init(name: String = "Unknown",
          calories: Double = 0,
@@ -36,7 +54,8 @@ class FoodItem {
          carbohydratesTotalG: Double = 0,
          fiberG: Double = 0,
          sugarG: Double = 0,
-         recordedDate: Date = Date.now) {
+         recordedDate: Date = Date.now,
+         mealType: MealTypes = .breakfeast) {
         
         self.name = name
         self.calories = calories
@@ -51,5 +70,6 @@ class FoodItem {
         self.fiberG = fiberG
         self.sugarG = sugarG
         self.recordedDate = recordedDate
+        self.mealType = mealType
     }
 }

@@ -70,8 +70,10 @@ final class HomeViewModel: ObservableObject {
     }
     
     // MARK: - Database Functions
-    func savingNutritionToLocalDatabase(date recordedDate: Date?) {
-        databaseService.savingNutritionToLocalDatabase(nutrition, date: recordedDate)
+    func savingNutritionToLocalDatabase(date recordedDate: Date?, meal mealType: MealTypes?) {
+        databaseService.savingNutritionToLocalDatabase(nutrition,
+                                                       date: recordedDate,
+                                                       mealType: mealType)
     }
     
     // Veritabanından kayıtlı yemekleri getir
