@@ -1,29 +1,85 @@
 import SwiftData
 import Foundation
 
-// MARK: - Container Protocol
+/// A comprehensive guide to Dependency Injection in this app
+///
+/// # What is Dependency Injection?
+/// Dependency Injection (DI) is a design pattern where a class receives its dependencies
+/// from external sources rather than creating them internally. This promotes:
+/// - Loose coupling between classes
+/// - Better testability
+/// - More flexible and maintainable code
+///
+/// # How it works in this app:
+/// 1. Services are defined by protocols (e.g., `NutritionServiceInterface`)
+/// 2. The container holds concrete implementations of these services
+/// 3. Views and ViewModels receive their dependencies through constructor injection
+///
+/// # Usage Example:
+/// ```swift
+/// // Create the container
+/// let container = DependencyContainer(modelContext: context)
+///
+/// // Use the container to create a view
+/// let homeView = HomeView(dependencyContainer: container)
+/// ```
+///
+/// # Benefits:
+/// - **Testability**: Easy to swap real implementations with mocks
+/// - **Maintainability**: Dependencies are managed in one central place
+/// - **Flexibility**: Easy to change implementations without affecting dependent code
+/// - **Single Responsibility**: Each class focuses on its core functionality
 protocol DependencyContainerProtocol {
+    /// The service responsible for nutrition-related API calls
     var nutritionService: NutritionServiceInterface { get }
+    
+    /// The service responsible for local database operations
     var databaseService: DatabaseServiceInterface { get }
+    
+    /// The SwiftData context for managing persistent data
     var modelContext: ModelContext { get }
     
-    // Add factory method to protocol
+    /// Creates a new instance of HomeViewModel with all required dependencies
+    /// - Returns: A configured HomeViewModel instance
     func makeHomeViewModel() -> HomeViewModel
 }
 
-// MARK: - Container Implementation
+/// The concrete implementation of the dependency container
+///
+/// This class is responsible for:
+/// 1. Creating and configuring all service instances
+/// 2. Providing factory methods for ViewModels
+/// 3. Managing the lifecycle of dependencies
+///
+/// # Example Usage:
+/// ```swift
+/// let container = DependencyContainer(modelContext: context)
+/// let viewModel = container.makeHomeViewModel()
+/// ```
 class DependencyContainer: DependencyContainerProtocol {
+    /// The nutrition service instance used throughout the app
     let nutritionService: NutritionServiceInterface
+    
+    /// The database service instance used throughout the app
     let databaseService: DatabaseServiceInterface
+    
+    /// The shared ModelContext instance
     let modelContext: ModelContext
     
+    /// Initializes a new dependency container
+    /// - Parameter modelContext: The SwiftData context to use for database operations
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+        // Create concrete implementations of services
         self.nutritionService = NutritionService()
         self.databaseService = NutritionDatabaseService(modelContext: modelContext)
     }
     
-    // Factory method to create HomeViewModel
+    /// Creates a new HomeViewModel with all its required dependencies
+    /// - Returns: A fully configured HomeViewModel instance
+    ///
+    /// This factory method ensures that HomeViewModel receives all its
+    /// required dependencies in a properly configured state.
     func makeHomeViewModel() -> HomeViewModel {
         return HomeViewModel(
             nutritionService: nutritionService,
