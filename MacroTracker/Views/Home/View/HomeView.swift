@@ -40,12 +40,7 @@ struct HomeView: View {
                 case .list:
                     FoodNutritionView(homeViewModel: homeViewModel, foods: $homeViewModel.savedNutrititon)
                 case .pieChart:
-                    PieChartView(macros: [
-                        Macro(name: "Protein", value: homeViewModel.totalProtein, color: .blue),
-                        Macro(name: "Fat", value: homeViewModel.totalFat, color: .orange),
-                        Macro(name: "Carbs", value: homeViewModel.totalCarbs, color: .red),
-                        Macro(name: "Sugar", value: homeViewModel.totalSugar, color: .brown)
-                    ])
+                    WeeklySummaryView(homeViewModel: homeViewModel)
                 }
                 Spacer()
             }
