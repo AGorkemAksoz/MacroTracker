@@ -27,6 +27,7 @@ enum MealTypes: String, CaseIterable, Codable {
 
 @Model
 class FoodItem {
+    let id: String
     var name: String
     var calories: Double
     var servingSizeG: Double
@@ -42,7 +43,8 @@ class FoodItem {
     var recordedDate: Date
     var mealType: MealTypes
 
-    init(name: String = "Unknown",
+    init(id: String = UUID().uuidString,
+         name: String = "Unknown",
          calories: Double = 0,
          servingSizeG: Double = 0,
          fatTotalG: Double = 0,
@@ -57,6 +59,7 @@ class FoodItem {
          recordedDate: Date = Date.now,
          mealType: MealTypes = .breakfeast) {
         
+        self.id = id
         self.name = name
         self.calories = calories
         self.servingSizeG = servingSizeG

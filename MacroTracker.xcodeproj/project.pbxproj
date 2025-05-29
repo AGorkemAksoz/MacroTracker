@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -48,6 +48,10 @@
 		DEAE3F5E2DD4E02F0096E587 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		DEAE3F602DD616AF0096E587 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DE74B4262DE8899600D52684 /* Detail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Detail; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DE087A4B2D6CB6E700B6F6AF /* Frameworks */ = {
@@ -132,6 +136,7 @@
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DE74B4262DE8899600D52684 /* Detail */,
 				DE6D6C8F2D885F7500AC3E72 /* Home */,
 			);
 			path = Views;
@@ -187,6 +192,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DE74B4262DE8899600D52684 /* Detail */,
 			);
 			name = MacroTracker;
 			productName = MacroTracker;

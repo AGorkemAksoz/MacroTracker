@@ -26,6 +26,7 @@ class NutritionDatabaseService: DatabaseServiceInterface {
     
     func convertingToDatabaseModel(from item: Item, recorderDate: Date?, mealType: MealTypes?) -> FoodItem {
         return FoodItem(
+            id: UUID().uuidString,  // Generate new UUID for each food item
             name: item.name ?? "Unknown",
             calories: item.calories ?? 0,
             servingSizeG: item.servingSizeG ?? 0,
@@ -46,16 +47,21 @@ class NutritionDatabaseService: DatabaseServiceInterface {
     func savingNutritionToLocalDatabase(_ nutrition: [Item], date recordedDate: Date?, mealType: MealTypes?) {
         /// It traverses an element of the array containing the data received from the service and converts the model into SwiftData and saves them to the local database.
         for item in nutrition {
-            self.modelContext.insert(self.convertingToDatabaseModel(from: item,
-                                                                    recorderDate: recordedDate,
-                                                                    mealType: mealType))
+            let foodItem = convertingToDatabaseModel(
+                from: item,
+                recorderDate: recordedDate,
+                mealType: mealType
+            )
+            modelContext.insert(foodItem)
         }
         saveContext()
     }
     
     func fetchSavedFoods() -> [FoodItem] {
         do {
-            let descriptor = FetchDescriptor<FoodItem>()
+            let descriptor = FetchDescriptor<FoodItem>(
+                sortBy: [SortDescriptor(\.recordedDate, order: .reverse)]
+            )
             return try modelContext.fetch(descriptor)
         } catch {
             print("Failed to fetch saved foods: \(error)")
