@@ -18,8 +18,7 @@ import SwiftData
 final class HomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     var modelContext: ModelContext
-    let nutritionService: NutritionServiceInterface
-    let databaseService: DatabaseServiceInterface
+    private let nutritionRepository: NutritionRepositoryInterface
     
     /// Represents the current state of data loading
     enum LoadingState: Equatable {
@@ -55,12 +54,10 @@ final class HomeViewModel: ObservableObject {
     /// Saved nutrition items from the database
     @Published var savedNutrititon: [FoodItem] = []
     
-    init(nutritionService: NutritionServiceInterface,
-         modelContext: ModelContext,
-         databaseService: DatabaseServiceInterface) {
-        self.nutritionService = nutritionService
+    init(nutritionRepository: NutritionRepositoryInterface,
+         modelContext: ModelContext) {
         self.modelContext = modelContext
-        self.databaseService = databaseService
+        self.nutritionRepository = nutritionRepository
         self.savedNutrititon = self.fetchSavedFoods()
     }
     
@@ -72,7 +69,7 @@ final class HomeViewModel: ObservableObject {
         loadingState = .loading
         nutrition = [] // Reset nutrition array
         
-        nutritionService.getNutrition(for: query)
+        nutritionRepository.searchNutrition(query: query)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completionStatus in
                 guard let self = self else { return }
@@ -87,35 +84,14 @@ final class HomeViewModel: ObservableObject {
                         completion(.failure(error))
                     }
                 }
-            } receiveValue: { [weak self] data in
-                guard let self = self, let foods = data.items else {
-                    let error = NSError(domain: "NutritionError", 
-                                      code: -1, 
-                                      userInfo: [NSLocalizedDescriptionKey: "No nutrition data found"])
-                    DispatchQueue.main.async {
-                        completion(.failure(error))
-                    }
-                    return
-                }
-                
-                self.nutrition = foods
+            } receiveValue: { [weak self] items in
+                guard let self = self else { return }
+                self.nutrition = items
                 DispatchQueue.main.async {
-                    completion(.success(foods))
+                    completion(.success(items))
                 }
             }
             .store(in: &cancellables)
-    }
-    
-    /// Saves the fetched nutrition data to the local database
-    /// - Parameters:
-    ///   - items: The nutrition items to save
-    ///   - date: Date when the food was consumed
-    ///   - mealType: Type of meal (breakfast, lunch, etc.)
-    ///   - completion: Closure called when save completes, with success status
-    func saveNutrition(items: [Item], date: Date, mealType: MealTypes, completion: @escaping (Bool) -> Void) {
-        databaseService.savingNutritionToLocalDatabase(items, date: date, mealType: mealType)
-        savedNutrititon = fetchSavedFoods()
-        completion(true)
     }
     
     /// Convenience method to perform both fetch and save operations
@@ -126,14 +102,16 @@ final class HomeViewModel: ObservableObject {
     ///   - completion: Closure called when both operations complete, with success status
     func processFoodEntry(query: String, date: Date, mealType: MealTypes, completion: @escaping (Bool) -> Void) {
         fetchNutrition(query: query) { [weak self] result in
-            guard let self = self else { 
+            guard let self = self else {
                 completion(false)
-                return 
+                return
             }
             
             switch result {
             case .success(let items):
-                self.saveNutrition(items: items, date: date, mealType: mealType, completion: completion)
+                let success = self.nutritionRepository.saveFoodItems(items, date: date, mealType: mealType)
+                self.savedNutrititon = self.fetchSavedFoods()
+                completion(success)
             case .failure:
                 completion(false)
             }
@@ -166,10 +144,10 @@ final class HomeViewModel: ObservableObject {
     // MARK: - Database Operations
     
     func fetchSavedFoods() -> [FoodItem] {
-        databaseService.fetchSavedFoods()
+        return nutritionRepository.getAllFoodItems()
     }
     
     func deleteFood(_ foodItem: FoodItem) {
-        databaseService.deleteFood(foodItem)
+        nutritionRepository.deleteFoodItem(foodItem)
     }
 }

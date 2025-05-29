@@ -30,11 +30,8 @@ import Foundation
 /// - **Flexibility**: Easy to change implementations without affecting dependent code
 /// - **Single Responsibility**: Each class focuses on its core functionality
 protocol DependencyContainerProtocol {
-    /// The service responsible for nutrition-related API calls
-    var nutritionService: NutritionServiceInterface { get }
-    
-    /// The service responsible for local database operations
-    var databaseService: DatabaseServiceInterface { get }
+    /// The repository responsible for all nutrition-related data operations
+    var nutritionRepository: NutritionRepositoryInterface { get }
     
     /// The SwiftData context for managing persistent data
     var modelContext: ModelContext { get }
@@ -58,10 +55,16 @@ protocol DependencyContainerProtocol {
 /// ```
 class DependencyContainer: DependencyContainerProtocol {
     /// The nutrition service instance used throughout the app
-    let nutritionService: NutritionServiceInterface
+    private let nutritionService: NutritionServiceInterface
     
     /// The database service instance used throughout the app
-    let databaseService: DatabaseServiceInterface
+    private let databaseService: DatabaseServiceInterface
+    
+    /// The cache service instance used throughout the app
+    private let cacheService: NutritionCacheServiceInterface
+    
+    /// The repository responsible for all nutrition-related data operations
+    let nutritionRepository: NutritionRepositoryInterface
     
     /// The shared ModelContext instance
     let modelContext: ModelContext
@@ -73,6 +76,13 @@ class DependencyContainer: DependencyContainerProtocol {
         // Create concrete implementations of services
         self.nutritionService = NutritionService()
         self.databaseService = NutritionDatabaseService(modelContext: modelContext)
+        self.cacheService = NutritionCacheService()
+        // Create repository with its dependencies
+        self.nutritionRepository = NutritionRepository(
+            nutritionService: nutritionService,
+            databaseService: databaseService,
+            cacheService: cacheService
+        )
     }
     
     /// Creates a new HomeViewModel with all its required dependencies
@@ -82,9 +92,8 @@ class DependencyContainer: DependencyContainerProtocol {
     /// required dependencies in a properly configured state.
     func makeHomeViewModel() -> HomeViewModel {
         return HomeViewModel(
-            nutritionService: nutritionService,
-            modelContext: modelContext,
-            databaseService: databaseService
+            nutritionRepository: nutritionRepository,
+            modelContext: modelContext
         )
     }
 } 
