@@ -26,37 +26,65 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                // SEGMENTED CONTROL
-                Picker("View Type", selection: $selectedListType) {
-                    Text("List").tag(HomeViewMacrosType.list)
-                    Text("Chart").tag(HomeViewMacrosType.pieChart)
+            VStack(alignment: .leading) {
+                VStack {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Today's Macros")
+                                .font(.primaryTitle)
+                            Text("2100 kcal")
+                                .font(.primaryNumberTitle)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal)
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                .frame(height: UIScreen.main.bounds.height / 8)
+                .frame(maxWidth: .infinity)
+                .background(Color.containerBackgroundColor)
+                .cornerRadius(8)
                 .padding()
                 
-                // SWITCH VIEW BASED ON SELECTED TYPE
-                switch selectedListType {
-                case .list:
-                    FoodNutritionView(homeViewModel: homeViewModel, foods: $homeViewModel.savedNutrititon)
-                case .pieChart:
-                    WeeklySummaryView(homeViewModel: homeViewModel)
-                }
+                Text("Previous Days")
+                    .font(.headerTitle)
+                    .padding()
+                
+                Image("dailyCellIcon")
+                    .frame(width: 48, height: 48)
+                    .foregroundStyle(Color.appForegroundColor)
+                    .background(Color.containerBackgroundColor)
+                    
+                
+                
+//                // SEGMENTED CONTROL
+//                Picker("View Type", selection: $selectedListType) {
+//                    Text("List").tag(HomeViewMacrosType.list)
+//                    Text("Chart").tag(HomeViewMacrosType.pieChart)
+//                }
+//                .pickerStyle(SegmentedPickerStyle())
+//                .padding()
+//                
+//                // SWITCH VIEW BASED ON SELECTED TYPE
+//                switch selectedListType {
+//                case .list:
+//                    FoodNutritionView(homeViewModel: homeViewModel, foods: $homeViewModel.savedNutrititon)
+//                case .pieChart:
+//                    WeeklySummaryView(homeViewModel: homeViewModel)
+//                }
                 Spacer()
             }
-            .navigationTitle("Macro Tracker")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("Macro Tracker").font(.headerTitle)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 NavigationLink {
                     SearchFoodView(homeViewModel: homeViewModel)
                 } label: {
                     Image(systemName: "plus")
-                        .foregroundStyle(.blue)
-                        .frame(width: 30, height: 30)
+                        .foregroundStyle(Color.appForegroundColor)
+                        .frame(width: 24, height: 24)
                 }
             }
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
