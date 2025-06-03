@@ -38,4 +38,5 @@ extension Color {
 extension Color {
     static let appForegroundColor = Color(hex: "0D141C")
     static let containerBackgroundColor = Color(hex: "E8EDF2")
+    static let secondayNumberForegroundColor = Color(hex: "4F7396")
 }

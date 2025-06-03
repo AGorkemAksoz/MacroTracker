@@ -38,7 +38,6 @@
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DE69DA4B2DEF2BBF00533B61 /* Manrope.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Manrope.ttf; sourceTree = "<group>"; };
-		DE69DA4D2DEF2C2B00533B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		DE6D6C852D8859E500AC3E72 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionEndpoint.swift; sourceTree = "<group>"; };
@@ -90,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				DE69DA4E2DEF2E0400533B61 /* Extension */,
-				DE69DA4D2DEF2C2B00533B61 /* Info.plist */,
 				DE69DA4B2DEF2BBF00533B61 /* Manrope.ttf */,
 				DE6D6C8E2D885F4800AC3E72 /* Views */,
 				DE6D6C822D8857DE00AC3E72 /* Model */,
@@ -413,7 +411,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = JKQNUCPDQL;
+				DEVELOPMENT_TEAM = DC2CCCCLGJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
@@ -443,7 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = JKQNUCPDQL;
+				DEVELOPMENT_TEAM = DC2CCCCLGJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;

@@ -24,4 +24,8 @@ extension Font {
     static var primaryNumberTitle: Font {
         return customFont("Manrope-Bold", size: 24)
     }
+    
+    static var secondaryNumberTitle: Font {
+        return customFont("Manrope", size: 14)
+    }
 }

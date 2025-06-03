@@ -49,10 +49,89 @@ struct HomeView: View {
                     .font(.headerTitle)
                     .padding()
                 
-                Image("dailyCellIcon")
-                    .frame(width: 48, height: 48)
-                    .foregroundStyle(Color.appForegroundColor)
-                    .background(Color.containerBackgroundColor)
+                HStack {
+                    Image("dailyCellIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.appForegroundColor)
+                        .padding(12)
+                        .background(Color.containerBackgroundColor)
+                        .cornerRadius(8)
+                        .padding(.leading)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Yesterday")
+                            .font(.primaryTitle)
+                            .foregroundStyle(Color.appForegroundColor)
+                        
+                        Text("2000 kcal | P: 100g, C: 200g, F: 80g")
+                            .font(.secondaryNumberTitle)
+                            .foregroundStyle(Color.secondayNumberForegroundColor)
+                    }
+                }
+                
+                HStack {
+                    Image("dailyCellIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.appForegroundColor)
+                        .padding(12)
+                        .background(Color.containerBackgroundColor)
+                        .cornerRadius(8)
+                        .padding(.leading)
+                    
+                    VStack(alignment: .leading) {
+                        Text("2 days ago")
+                            .font(.primaryTitle)
+                            .foregroundStyle(Color.appForegroundColor)
+                        
+                        Text("2000 kcal | P: 100g, C: 200g, F: 80g")
+                            .font(.secondaryNumberTitle)
+                            .foregroundStyle(Color.secondayNumberForegroundColor)
+                    }
+                }
+                
+                HStack {
+                    Image("dailyCellIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.appForegroundColor)
+                        .padding(12)
+                        .background(Color.containerBackgroundColor)
+                        .cornerRadius(8)
+                        .padding(.leading)
+                    
+                    VStack(alignment: .leading) {
+                        Text("3 days ago")
+                            .font(.primaryTitle)
+                            .foregroundStyle(Color.appForegroundColor)
+                        
+                        Text("2000 kcal | P: 100g, C: 200g, F: 80g")
+                            .font(.secondaryNumberTitle)
+                            .foregroundStyle(Color.secondayNumberForegroundColor)
+                    }
+                }
+                
+                HStack {
+                    Image("dailyCellIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundStyle(Color.appForegroundColor)
+                        .padding(12)
+                        .background(Color.containerBackgroundColor)
+                        .cornerRadius(8)
+                        .padding(.leading)
+                    
+                    VStack(alignment: .leading) {
+                        Text("4 days ago")
+                            .font(.primaryTitle)
+                            .foregroundStyle(Color.appForegroundColor)
+                        
+                        Text("2000 kcal | P: 100g, C: 200g, F: 80g")
+                            .font(.secondaryNumberTitle)
+                            .foregroundStyle(Color.secondayNumberForegroundColor)
+                    }
+                }
                     
                 
                 
