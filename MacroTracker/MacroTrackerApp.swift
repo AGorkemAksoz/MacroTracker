@@ -11,20 +11,20 @@ import SwiftUI
 @main
 struct MacroTrackerApp: App {
     // ModelContainer at app level
-    let modelContainer: ModelContainer
+     let modelContainer: ModelContainer
     // Add dependency container
     let dependencyContainer: DependencyContainerProtocol
      
-    init() {
-        do {
+     init() {
+         do {
             let container = try ModelContainer(for: FoodItem.self)
             self.modelContainer = container
             // Initialize dependency container with model context
             self.dependencyContainer = DependencyContainer(modelContext: container.mainContext)
-        } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
-        }
-    }
+         } catch {
+             fatalError("Failed to create ModelContainer: \(error)")
+         }
+     }
     
     var body: some Scene {
         WindowGroup {

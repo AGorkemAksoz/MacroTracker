@@ -54,6 +54,10 @@ final class HomeViewModel: ObservableObject {
     /// Saved nutrition items from the database
     @Published var savedNutrititon: [FoodItem] = []
     
+    @Published var todaysMeals: [FoodItem] = []
+    
+    @Published var selectedDate: Date = Date()
+    
     init(nutritionRepository: NutritionRepositoryInterface,
          modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -139,6 +143,49 @@ final class HomeViewModel: ObservableObject {
     
     var totalSugar: Double {
         savedNutrititon.reduce(0) { $0 + ($1.sugarG) }
+    }
+    
+    var totalCaloriesForSelectedDate: Double {
+        let meals = getMealsForDate(selectedDate)
+        return meals.reduce(0) { $0 + $1.calories }
+    }
+    
+    var totalProteinForSelectedDate: Double {
+        let meals = getMealsForDate(selectedDate)
+        return meals.reduce(0) { $0 + $1.proteinG }
+    }
+    
+    var totalCarbsForSelectedDate: Double {
+        let meals = getMealsForDate(selectedDate)
+        return meals.reduce(0) { $0 + $1.carbohydratesTotalG }
+    }
+    
+    var totalFatForSelectedDate: Double {
+        let meals = getMealsForDate(selectedDate)
+        return meals.reduce(0) { $0 + $1.fatTotalG }
+    }
+    
+    // MARK: - Methods
+    
+    func getMealsForDate(_ date: Date) -> [FoodItem] {
+        return nutritionRepository.getFoodItems(for: date)
+    }
+    
+    func updateSelectedDate(_ date: Date) {
+        selectedDate = date
+        // This will trigger the computed properties to update
+        objectWillChange.send()
+    }
+    
+    func refreshTodaysMeals() {
+        todaysMeals = getMealsForDate(Date())
+    }
+    
+    func getAllLoggedDates() -> [Date] {
+        let calendar = Calendar.current
+        // Get all unique dates, sorted from newest to oldest
+        let uniqueDates = Set(savedNutrititon.map { calendar.startOfDay(for: $0.recordedDate) })
+        return Array(uniqueDates).sorted(by: >)
     }
     
     // MARK: - Database Operations
