@@ -56,11 +56,15 @@ struct HomeView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(homeViewModel.getAllLoggedDates(), id: \.self) { date in
-                            DailyMealCell(
-                                date: date,
-                                meals: homeViewModel.getMealsForDate(date)
-                            )
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            NavigationLink {
+                                DailyMealDetailView()
+                            } label:{
+                                DailyMealCell(
+                                    date: date,
+                                    meals: homeViewModel.getMealsForDate(date)
+                                )
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
                         }
                     }
                 }
@@ -88,120 +92,7 @@ struct HomeView: View {
     return HomeView(dependencyContainer: dependencyContainer)
 }
 
-struct DailyMealCell: View {
-    let date: Date
-    let meals: [FoodItem]
-    
-    var totalCalories: Double {
-        meals.reduce(0) { $0 + $1.calories }
-    }
-    
-    var totalProtein: Double {
-        meals.reduce(0, {$0 + $1.proteinG})
-    }
-    
-    var totalCarbs: Double {
-        meals.reduce(0, {$0 + $1.carbohydratesTotalG})
-    }
-    
-    var totalFat: Double {
-        meals.reduce(0, {$0 + $1.fatTotalG})
-    }
-    
-    var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEE, MMM d"  // Shows like "Mon, Jun 5"
-        return formatter.string(from: date)
-    }
-    
-    var body: some View {
-        HStack {
-            Image("dailyCellIcon")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(Color.appForegroundColor)
-                .padding(12)
-                .background(Color.containerBackgroundColor)
-                .cornerRadius(8)
-                .padding(.leading)
-            
-            VStack(alignment: .leading) {
-                Text(formattedDate)
-                    .font(.primaryTitle)
-                    .foregroundStyle(Color.appForegroundColor)
-                
-                Text("\(Int(totalCalories)) kcal | P: \(Int(totalProtein))g, C: \(Int(totalCarbs))g, F: \(Int(totalFat))g")
-                    .font(.secondaryNumberTitle)
-                    .foregroundStyle(Color.secondayNumberForegroundColor)
-            }
-        }
-    }
-}
-
-
 /*
- HStack {
-     Image("dailyCellIcon")
-         .resizable()
-         .frame(width: 24, height: 24)
-         .foregroundStyle(Color.appForegroundColor)
-         .padding(12)
-         .background(Color.containerBackgroundColor)
-         .cornerRadius(8)
-         .padding(.leading)
-     
-     VStack(alignment: .leading) {
-         Text("2 days ago")
-             .font(.primaryTitle)
-             .foregroundStyle(Color.appForegroundColor)
-         
-         Text("2000 kcal | P: 100g, C: 200g, F: 80g")
-             .font(.secondaryNumberTitle)
-             .foregroundStyle(Color.secondayNumberForegroundColor)
-     }
- }
- 
- HStack {
-     Image("dailyCellIcon")
-         .resizable()
-         .frame(width: 24, height: 24)
-         .foregroundStyle(Color.appForegroundColor)
-         .padding(12)
-         .background(Color.containerBackgroundColor)
-         .cornerRadius(8)
-         .padding(.leading)
-     
-     VStack(alignment: .leading) {
-         Text("3 days ago")
-             .font(.primaryTitle)
-             .foregroundStyle(Color.appForegroundColor)
-         
-         Text("2000 kcal | P: 100g, C: 200g, F: 80g")
-             .font(.secondaryNumberTitle)
-             .foregroundStyle(Color.secondayNumberForegroundColor)
-     }
- }
- 
- HStack {
-     Image("dailyCellIcon")
-         .resizable()
-         .frame(width: 24, height: 24)
-         .foregroundStyle(Color.appForegroundColor)
-         .padding(12)
-         .background(Color.containerBackgroundColor)
-         .cornerRadius(8)
-         .padding(.leading)
-     
-     VStack(alignment: .leading) {
-         Text("4 days ago")
-             .font(.primaryTitle)
-             .foregroundStyle(Color.appForegroundColor)
-         
-         Text("2000 kcal | P: 100g, C: 200g, F: 80g")
-             .font(.secondaryNumberTitle)
-             .foregroundStyle(Color.secondayNumberForegroundColor)
-     }
- }
  
  //                // SEGMENTED CONTROL
  //                Picker("View Type", selection: $selectedListType) {
@@ -220,3 +111,48 @@ struct DailyMealCell: View {
  //                }
 
  */
+
+struct DailyMealDetailView: View {
+    var body: some View {
+        NavigationView {
+            HStack {
+                VStack {
+                    Text("Meals")
+                        .font(.dayDetailTitle)
+                        .padding()
+                    
+                    HStack(alignment: .top, spacing: 16) {
+                        Image("breakfastIcon")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(Color.appForegroundColor)
+                            .padding(12)
+                            .background(Color.containerBackgroundColor)
+                            .cornerRadius(8)
+                            .padding(.leading)
+                        
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Breakfast")
+                                .font(.primaryTitle)
+                                .foregroundStyle(Color.appForegroundColor)
+                            
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Oatmeal: Protein: 10g, Carbs: 20g, Fats: 5g")
+                                Text("Banana: Protein: 1g, Carbs: 27g, Fats: 0g")
+                                Text("Almonds: Protein: 6g, Carbs: 6g, Fats: 14g")
+                                Text("Protein: 17g, Carbs: 53g, Fats: 19g")
+                            }
+                            .font(.secondaryNumberTitle)
+                            .foregroundStyle(Color.secondayNumberForegroundColor)
+                        }
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
+                .navigationTitle("Today").font(.headline)
+                .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}

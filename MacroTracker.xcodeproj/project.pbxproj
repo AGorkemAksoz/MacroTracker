@@ -10,6 +10,7 @@
 		DD84E6502DE7986300656DC5 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */; };
 		DD84E6542DE8CFE400656DC5 /* WeeklySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84E6532DE8CFE400656DC5 /* WeeklySummaryView.swift */; };
 		DD84E6562DE8E26900656DC5 /* WeeklyCaloriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD84E6552DE8E26900656DC5 /* WeeklyCaloriesViewModel.swift */; };
+		DDB4BB9A2DF0DFE400D0727B /* DailyMealCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BB992DF0DFE400D0727B /* DailyMealCell.swift */; };
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		DD84E6532DE8CFE400656DC5 /* WeeklySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryView.swift; sourceTree = "<group>"; };
 		DD84E6552DE8E26900656DC5 /* WeeklyCaloriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCaloriesViewModel.swift; sourceTree = "<group>"; };
+		DDB4BB992DF0DFE400D0727B /* DailyMealCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMealCell.swift; sourceTree = "<group>"; };
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		DE6D6C902D885F7F00AC3E72 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DDB4BB992DF0DFE400D0727B /* DailyMealCell.swift */,
 				DE6D6C922D885F9600AC3E72 /* HomeView.swift */,
 				DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */,
 				DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */,
@@ -265,6 +268,7 @@
 				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
 				DD84E6542DE8CFE400656DC5 /* WeeklySummaryView.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
+				DDB4BB9A2DF0DFE400D0727B /* DailyMealCell.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
 				DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */,

@@ -28,4 +28,8 @@ extension Font {
     static var secondaryNumberTitle: Font {
         return customFont("Manrope", size: 14)
     }
+    
+    static var dayDetailTitle: Font {
+        return customFont("Manrope-Bold", size: 22)
+    }
 }
