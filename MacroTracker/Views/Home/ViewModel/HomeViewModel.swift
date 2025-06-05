@@ -188,6 +188,11 @@ final class HomeViewModel: ObservableObject {
         return Array(uniqueDates).sorted(by: >)
     }
     
+    func getMealsByType(for date: Date) -> [MealTypes: [FoodItem]] {
+        let mealsForDate = getMealsForDate(date)
+        return Dictionary(grouping: mealsForDate, by: { $0.mealType })
+    }
+    
     // MARK: - Database Operations
     
     func fetchSavedFoods() -> [FoodItem] {

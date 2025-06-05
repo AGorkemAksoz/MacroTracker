@@ -57,7 +57,7 @@ struct HomeView: View {
                     LazyVStack(spacing: 12) {
                         ForEach(homeViewModel.getAllLoggedDates(), id: \.self) { date in
                             NavigationLink {
-                                DailyMealDetailView()
+                                DailyMealDetailView(homeViewModel: homeViewModel, date: date)
                             } label:{
                                 DailyMealCell(
                                     date: date,
@@ -113,46 +113,93 @@ struct HomeView: View {
  */
 
 struct DailyMealDetailView: View {
+    @ObservedObject var homeViewModel: HomeViewModel
+    let date: Date
+    
+    var mealsByType: [MealTypes: [FoodItem]] {
+        homeViewModel.getMealsByType(for: date)
+    }
+    
     var body: some View {
         NavigationView {
-            HStack {
+            ScrollView {
                 VStack {
-                    Text("Meals")
-                        .font(.dayDetailTitle)
-                        .padding()
-                    
-                    HStack(alignment: .top, spacing: 16) {
-                        Image("breakfastIcon")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(Color.appForegroundColor)
-                            .padding(12)
-                            .background(Color.containerBackgroundColor)
-                            .cornerRadius(8)
-                            .padding(.leading)
-                        
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Breakfast")
-                                .font(.primaryTitle)
-                                .foregroundStyle(Color.appForegroundColor)
+                    HStack {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Meals")
+                                .font(.dayDetailTitle)
+                                .padding()
                             
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Oatmeal: Protein: 10g, Carbs: 20g, Fats: 5g")
-                                Text("Banana: Protein: 1g, Carbs: 27g, Fats: 0g")
-                                Text("Almonds: Protein: 6g, Carbs: 6g, Fats: 14g")
-                                Text("Protein: 17g, Carbs: 53g, Fats: 19g")
+                            ForEach(MealTypes.allCases, id: \.self) { mealType in
+                                if let mealsForType = mealsByType[mealType] {
+                                    MealTypeSection(
+                                        mealType: mealType,
+                                        meals: mealsForType
+                                    )
+                                }
                             }
-                            .font(.secondaryNumberTitle)
-                            .foregroundStyle(Color.secondayNumberForegroundColor)
                         }
+                        Spacer()
                     }
                     Spacer()
                 }
-                Spacer()
             }
-                .navigationTitle("Today").font(.headline)
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(formatDate(date))
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy"
+        return formatter.string(from: date)
+    }
+}
+
+struct MealTypeSection: View {
+    let mealType: MealTypes
+    let meals: [FoodItem]
+    
+    var totalProtein: Double {
+        meals.reduce(0) { $0 + $1.proteinG }
+    }
+    
+    var totalCarbs: Double {
+        meals.reduce(0) { $0 + $1.carbohydratesTotalG }
+    }
+    
+    var totalFat: Double {
+        meals.reduce(0) { $0 + $1.fatTotalG }
+    }
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 16) {
+            Image(mealType == .breakfeast ? "breakfastIcon" :
+                    mealType == .lunch ? "breakfastIcon" :
+                    mealType == .dinner ? "dinnerIcon" : "snackIcon")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundStyle(Color.appForegroundColor)
+                .padding(12)
+                .background(Color.containerBackgroundColor)
+                .cornerRadius(8)
+                .padding(.leading)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(mealType.mealName)
+                    .font(.primaryTitle)
+                    .foregroundStyle(Color.appForegroundColor)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    ForEach(meals) { meal in
+                        Text("\(meal.name): P: \(Int(meal.proteinG))g, C: \(Int(meal.carbohydratesTotalG))g, F: \(Int(meal.fatTotalG))g")
+                    }
+                    Text("Total: P: \(Int(totalProtein))g, C: \(Int(totalCarbs))g, F: \(Int(totalFat))g")
+                        .fontWeight(.medium)
+                }
+                .font(.secondaryNumberTitle)
+                .foregroundStyle(Color.secondayNumberForegroundColor)
+            }
         }
     }
 }
