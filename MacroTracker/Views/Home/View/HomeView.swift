@@ -120,10 +120,42 @@ struct DailyMealDetailView: View {
         homeViewModel.getMealsByType(for: date)
     }
     
+    var totalProtein: Double {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.proteinG }
+    }
+    
+    var totalCarbs: Double {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.carbohydratesTotalG }
+    }
+    
+    var totalFat: Double {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.fatTotalG }
+    }
+    
+    var totalFiber: Double {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.fiberG }
+    }
+    
+    var totalSugar: Double {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.sugarG }
+    }
+    
+    var totalCholesterol: Int {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.cholesterolMg }
+    }
+    
+    var totalSodium: Int {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.sodiumMg }
+    }
+    
+    var totalPotassium: Int {
+        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.potassiumMg }
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack {
+                VStack(alignment: .leading) {
                     HStack {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Meals")
@@ -141,6 +173,28 @@ struct DailyMealDetailView: View {
                         }
                         Spacer()
                     }
+                    
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text("Daily Summary")
+                            .font(.dayDetailTitle)
+                            .padding(.horizontal)
+                        
+                        LazyVGrid(columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ], spacing: 16) {
+                            NutrientGridItem(title: "Fiber", value: totalFiber, unit: "g")
+                            NutrientGridItem(title: "Sugar", value: totalSugar, unit: "g")
+                            NutrientGridItem(title: "Cholesterol", value: Double(totalCholesterol), unit: "mg")
+                            NutrientGridItem(title: "Sodium", value: Double(totalSodium), unit: "mg")
+                            NutrientGridItem(title: "Potassium", value: Double(totalPotassium), unit: "mg")
+                            NutrientGridItem(title: "Protein", value: Double(totalProtein), unit: "g")
+                            NutrientGridItem(title: "Carbs", value: Double(totalCarbs), unit: "g")
+                            NutrientGridItem(title: "Fat", value: Double(totalFat), unit: "g")
+                        }
+                        .padding()
+                    }
+                    
                     Spacer()
                 }
             }
@@ -201,5 +255,26 @@ struct MealTypeSection: View {
                 .foregroundStyle(Color.secondayNumberForegroundColor)
             }
         }
+    }
+}
+
+struct NutrientGridItem: View {
+    let title: String
+    let value: Double
+    let unit: String
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.secondaryNumberTitle)
+                .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
+            Text("\(value, specifier: "%.1f") \(unit)")
+                .font(.secondaryNumberTitle)
+                .foregroundStyle(Color.appForegroundColor)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Color.containerBackgroundColor)
+        .cornerRadius(8)
     }
 }
