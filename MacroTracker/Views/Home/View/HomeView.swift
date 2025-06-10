@@ -75,7 +75,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 NavigationLink {
-                    SearchFoodView(homeViewModel: homeViewModel)
+                    EnteringFoodView(homeViewModel: homeViewModel)
                 } label: {
                     Image(systemName: "plus")
                         .foregroundStyle(Color.appForegroundColor)

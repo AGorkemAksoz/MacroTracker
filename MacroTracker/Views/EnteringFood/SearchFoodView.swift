@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-struct SearchFoodView: View {
+struct EnteringFoodView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     @State private var typedMeal: String = "250 grams of chicken breast"
     @State private var selectedDate: Date = Date()
@@ -37,7 +37,7 @@ struct SearchFoodView: View {
     }
 }
 
-extension SearchFoodView {
+extension EnteringFoodView {
     private var foodEnteringTitle: some View {
         Text("What did you eat?")
             .font(.headerTitle)
@@ -89,14 +89,14 @@ extension SearchFoodView {
             Text("Pick your meal date")
         }
         .datePickerStyle(.compact)
-        .tint(.appForegroundColor)
+        .tint(.mealsDetailScreenSecondaryTitleColor)
         .frame(height: 56)
         .padding(.horizontal)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.containerBackgroundColor)
         )
-        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor) // Tarih yazısı rengi
+        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor)
         .padding(.horizontal)
         .font(.primaryTitle)
     }
@@ -108,21 +108,25 @@ extension SearchFoodView {
             }
         }
         .pickerStyle(.menu)
-        .tint(.appForegroundColor)
+        .tint(.mealsDetailScreenSecondaryTitleColor)
         .frame(width: UIScreen.main.bounds.width * 0.85,
-               height: 56)
+               height: 56,
+               alignment: .leading)
         .padding(.horizontal)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.containerBackgroundColor)
         )
-        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor) // Tarih yazısı rengi
+        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor)
         .padding(.horizontal)
         .font(.primaryTitle)
     }
     
     private var enteringButton: some View {
-        Text("Next")
+        NavigationLink {
+            ConfirmingFoodView()
+        } label: {
+            Text("Next")
             .frame(width: UIScreen.main.bounds.width * 0.85)
             .frame(height: 48)
             .padding(.horizontal)
@@ -130,8 +134,9 @@ extension SearchFoodView {
                 RoundedRectangle(cornerRadius: 24)
                     .fill(Color.confirmButtonBackgroudColor)
             )
-            .foregroundColor(Color.appForegroundColor) // Tarih yazısı rengi
+            .foregroundColor(Color.confirmButtonForegroudColor)
             .padding(.horizontal)
             .font(.confirmButtonTitle)
+        }
     }
 }

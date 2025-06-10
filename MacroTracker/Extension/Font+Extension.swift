@@ -21,6 +21,10 @@ extension Font {
         return customFont("Manrope-Bold", size: 16)
     }
     
+    static var confirmViewEditButtonTitle: Font {
+        return customFont("Manrope-Bold", size: 14)
+    }
+    
     static var primaryTitle: Font {
         return customFont("Manrope-Medium", size: 16)
     }
@@ -31,6 +35,10 @@ extension Font {
     
     static var secondaryNumberTitle: Font {
         return customFont("Manrope", size: 14)
+    }
+    
+    static var foodDateLabel: Font {
+        return customFont("Manrope-Regular", size: 16)
     }
     
     static var dayDetailTitle: Font {

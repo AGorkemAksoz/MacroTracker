@@ -40,5 +40,6 @@ extension Color {
     static let containerBackgroundColor = Color(hex: "E8EDF2")
     static let secondayNumberForegroundColor = Color(hex: "4F7396")
     static let mealsDetailScreenSecondaryTitleColor = Color(hex: "57738F")
-    static let confirmButtonBackgroudColor = Color(hex: "ADCCEB")
+    static let confirmButtonBackgroudColor = Color(hex: "4296EB")
+    static let confirmButtonForegroudColor = Color(hex: "F7FAFC")
 }

@@ -25,7 +25,6 @@
 		DE74B4212DE847AF00D52684 /* NutritionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE74B4202DE847AF00D52684 /* NutritionRepository.swift */; };
 		DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE74B4222DE8765F00D52684 /* NutritionCacheService.swift */; };
 		DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */; };
-		DEAE3F5B2DD4DFBA0096E587 /* SearchFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */; };
 		DEAE3F5D2DD4DFFA0096E587 /* FoodNutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */; };
 		DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F602DD616AF0096E587 /* FoodItem.swift */; };
 /* End PBXBuildFile section */
@@ -50,13 +49,13 @@
 		DE74B4202DE847AF00D52684 /* NutritionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionRepository.swift; sourceTree = "<group>"; };
 		DE74B4222DE8765F00D52684 /* NutritionCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCacheService.swift; sourceTree = "<group>"; };
 		DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatabaseService.swift; sourceTree = "<group>"; };
-		DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFoodView.swift; sourceTree = "<group>"; };
 		DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodNutritionView.swift; sourceTree = "<group>"; };
 		DEAE3F602DD616AF0096E587 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DE69DA4E2DEF2E0400533B61 /* Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extension; sourceTree = "<group>"; };
+		DE69DA712DF855AC00533B61 /* EnteringFood */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EnteringFood; sourceTree = "<group>"; };
 		DE74B4262DE8899600D52684 /* Detail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Detail; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -145,6 +144,7 @@
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DE69DA712DF855AC00533B61 /* EnteringFood */,
 				DE74B4262DE8899600D52684 /* Detail */,
 				DE6D6C8F2D885F7500AC3E72 /* Home */,
 			);
@@ -165,7 +165,6 @@
 			children = (
 				DDB4BB992DF0DFE400D0727B /* DailyMealCell.swift */,
 				DE6D6C922D885F9600AC3E72 /* HomeView.swift */,
-				DEAE3F5A2DD4DFBA0096E587 /* SearchFoodView.swift */,
 				DEAE3F5C2DD4DFFA0096E587 /* FoodNutritionView.swift */,
 				DD84E6532DE8CFE400656DC5 /* WeeklySummaryView.swift */,
 			);
@@ -206,6 +205,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				DE69DA4E2DEF2E0400533B61 /* Extension */,
+				DE69DA712DF855AC00533B61 /* EnteringFood */,
 				DE74B4262DE8899600D52684 /* Detail */,
 			);
 			name = MacroTracker;
@@ -276,7 +276,6 @@
 				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
 				DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */,
 				DEAE3F5D2DD4DFFA0096E587 /* FoodNutritionView.swift in Sources */,
-				DEAE3F5B2DD4DFBA0096E587 /* SearchFoodView.swift in Sources */,
 				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
 				DD84E6562DE8E26900656DC5 /* WeeklyCaloriesViewModel.swift in Sources */,
 				DE74B4212DE847AF00D52684 /* NutritionRepository.swift in Sources */,
@@ -415,7 +414,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
@@ -445,7 +444,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
