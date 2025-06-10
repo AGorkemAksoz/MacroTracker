@@ -19,25 +19,42 @@ struct SearchFoodView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            foodEnteringTitle
             searchBar
             datePicker
             mealPicker
+            Spacer()
+            enteringButton
         }
         .alert("Error", isPresented: $showError) {
             Button("OK") { showError = false }
         } message: {
             Text(errorMessage)
         }
+        .navigationTitle("Enter Food")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 extension SearchFoodView {
+    private var foodEnteringTitle: some View {
+        Text("What did you eat?")
+            .font(.headerTitle)
+            .padding([.vertical, .leading])
+    }
+    
     private var searchBar: some View {
         TextField("Type Your Meal", text: $typedMeal)
             .padding()
-            .border(.blue, width: 2)
-            .frame(height: UIScreen.main.bounds.height * 0.2)
+            .font(.primaryTitle)
+            .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.containerBackgroundColor)
+            )
+            .frame(height: 56)
+            .padding(.horizontal)
             .overlay {
                 if case .loading = homeViewModel.loadingState {
                     ProgressView()
@@ -68,9 +85,20 @@ extension SearchFoodView {
     }
     
     private var datePicker: some View {
-        DatePicker("Please pick your meal date", selection: $selectedDate, displayedComponents: [.date])
-            .datePickerStyle(.compact)
-            .padding()
+        DatePicker(selection: $selectedDate, displayedComponents: [.date]) {
+            Text("Pick your meal date")
+        }
+        .datePickerStyle(.compact)
+        .tint(.appForegroundColor)
+        .frame(height: 56)
+        .padding(.horizontal)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.containerBackgroundColor)
+        )
+        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor) // Tarih yazısı rengi
+        .padding(.horizontal)
+        .font(.primaryTitle)
     }
     
     private var mealPicker: some View {
@@ -79,7 +107,31 @@ extension SearchFoodView {
                 Text($0.mealName)
             }
         }
-        .pickerStyle(.navigationLink)
-        .padding()
+        .pickerStyle(.menu)
+        .tint(.appForegroundColor)
+        .frame(width: UIScreen.main.bounds.width * 0.85,
+               height: 56)
+        .padding(.horizontal)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.containerBackgroundColor)
+        )
+        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor) // Tarih yazısı rengi
+        .padding(.horizontal)
+        .font(.primaryTitle)
+    }
+    
+    private var enteringButton: some View {
+        Text("Next")
+            .frame(width: UIScreen.main.bounds.width * 0.85)
+            .frame(height: 48)
+            .padding(.horizontal)
+            .background(
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(Color.confirmButtonBackgroudColor)
+            )
+            .foregroundColor(Color.appForegroundColor) // Tarih yazısı rengi
+            .padding(.horizontal)
+            .font(.confirmButtonTitle)
     }
 }

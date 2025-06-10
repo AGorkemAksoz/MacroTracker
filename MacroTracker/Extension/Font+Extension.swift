@@ -17,6 +17,10 @@ extension Font {
         return customFont("Manrope-Bold", size: 18)
     }
     
+    static var confirmButtonTitle: Font {
+        return customFont("Manrope-Bold", size: 16)
+    }
+    
     static var primaryTitle: Font {
         return customFont("Manrope-Medium", size: 16)
     }
