@@ -104,22 +104,32 @@ final class HomeViewModel: ObservableObject {
     ///   - date: Date when the food was consumed
     ///   - mealType: Type of meal (breakfast, lunch, etc.)
     ///   - completion: Closure called when both operations complete, with success status
-    func processFoodEntry(query: String, date: Date, mealType: MealTypes, completion: @escaping (Bool) -> Void) {
-        fetchNutrition(query: query) { [weak self] result in
-            guard let self = self else {
-                completion(false)
-                return
-            }
-            
-            switch result {
-            case .success(let items):
-                let success = self.nutritionRepository.saveFoodItems(items, date: date, mealType: mealType)
-                self.savedNutrititon = self.fetchSavedFoods()
-                completion(success)
-            case .failure:
-                completion(false)
-            }
+    func processFoodEntry(items: [Item], date: Date, mealType: MealTypes, completion: @escaping (Bool) -> Void) {
+        let success = self.nutritionRepository.saveFoodItems(items, date: date, mealType: mealType)
+        
+        switch success {
+        case true:
+            self.savedNutrititon = self.fetchSavedFoods()
+            completion(success)
+        case false:
+            completion(false)
         }
+        
+        //        fetchNutrition(query: query) { [weak self] result in
+        //            guard let self = self else {
+        //                completion(false)
+        //                return
+        //            }
+        //
+        //            switch result {
+        //            case .success(let items):
+        //                let success = self.nutritionRepository.saveFoodItems(items, date: date, mealType: mealType)
+        //                self.savedNutrititon = self.fetchSavedFoods()
+        //                completion(success)
+        //            case .failure:
+        //                completion(false)
+        //            }
+        //        }
     }
     
     /// Updates the model context

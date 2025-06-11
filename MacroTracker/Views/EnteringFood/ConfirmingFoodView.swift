@@ -8,43 +8,33 @@
 import SwiftUI
 
 struct ConfirmingFoodView: View {
+    @ObservedObject var homeViewModel: HomeViewModel
+    @Environment(\.dismiss) var dismiss
+    
+    var foods: [Item]
+    var consumedDate: Date
+    var consumedMeal: MealTypes
+    
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEE, MMM d"  // Shows like "Mon, Jun 5"
+        return formatter.string(from: consumedDate)
+    }
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 24) {
                 foodConfirmingTitle
                 // Foods list
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Chicken Breast")
-                        .font(.primaryTitle)
-                        .foregroundStyle(Color.appForegroundColor)
-                    Text("200g")
-                        .font(.secondaryNumberTitle)
-                        .foregroundStyle(Color.secondayNumberForegroundColor)
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Brown Rice")
-                        .font(.primaryTitle)
-                        .foregroundStyle(Color.appForegroundColor)
-                    Text("150g")
-                        .font(.secondaryNumberTitle)
-                        .foregroundStyle(Color.secondayNumberForegroundColor)
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Broccoli")
-                        .font(.primaryTitle)
-                        .foregroundStyle(Color.appForegroundColor)
-                    Text("100g")
-                        .font(.secondaryNumberTitle)
-                        .foregroundStyle(Color.secondayNumberForegroundColor)
+                ForEach(foods, id: \.name) { food in
+                    ConfirmingFoodListCell(foodName: food.name ?? "Unknown Food",
+                                           foodServingSize: String(food.servingSizeG ?? 0))
                 }
                 
                 // Date
                 VStack(alignment: .leading, spacing: 24) {
                     Text("Date")
                         .font(.headerTitle)
-                    Text("July 24, 1994")
+                    Text(formattedDate)
                         .font(.foodDateLabel)
                 }
                 
@@ -52,7 +42,7 @@ struct ConfirmingFoodView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     Text("Meal Type")
                         .font(.headerTitle)
-                    Text("Dinner")
+                    Text(consumedMeal.mealName)
                         .font(.foodDateLabel)
                 }
                 
@@ -74,7 +64,16 @@ struct ConfirmingFoodView: View {
                     Spacer()
                     
                     Button {
-                        print("Confirm Button Tapped!!!")
+                        homeViewModel.processFoodEntry(items: foods,
+                                                       date: consumedDate,
+                                                       mealType: consumedMeal) { result in
+                            switch result {
+                            case true:
+                                dismiss()
+                            case false:
+                                print("Get yourself look what you're doing")
+                            }
+                        }
                     } label: {
                         Text("Confirm")
                             .font(.confirmViewEditButtonTitle)
@@ -96,16 +95,29 @@ struct ConfirmingFoodView: View {
             
             Spacer()
         }
+        
     }
-}
-
-#Preview {
-    ConfirmingFoodView()
 }
 
 extension ConfirmingFoodView {
     private var foodConfirmingTitle: some View {
         Text("Meal Details")
             .font(.headerTitle)
+    }
+}
+
+
+struct ConfirmingFoodListCell: View {
+    let foodName: String
+    let foodServingSize: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(foodName)
+                .font(.primaryTitle)
+                .foregroundStyle(Color.appForegroundColor)
+            Text("\(foodServingSize) gr")
+                .font(.secondaryNumberTitle)
+                .foregroundStyle(Color.secondayNumberForegroundColor)
+        }
     }
 }

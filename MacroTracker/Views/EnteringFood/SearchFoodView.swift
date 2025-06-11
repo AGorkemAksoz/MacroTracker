@@ -15,6 +15,7 @@ struct EnteringFoodView: View {
     @State private var selectedMeal: MealTypes = .breakfeast
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+    @State private var navigateToNextScreen: Bool = false
     
     @Environment(\.dismiss) var dismiss
     
@@ -34,6 +35,17 @@ struct EnteringFoodView: View {
         }
         .navigationTitle("Enter Food")
         .navigationBarTitleDisplayMode(.inline)
+        
+        NavigationLink(
+            destination: ConfirmingFoodView(homeViewModel: homeViewModel,
+                                            foods: homeViewModel.nutrition,
+                                            consumedDate: selectedDate,
+                                            consumedMeal: selectedMeal),
+            isActive: $navigateToNextScreen
+        ) {
+            EmptyView()
+        }
+        .hidden()
     }
 }
 
@@ -62,18 +74,18 @@ extension EnteringFoodView {
                 }
             }
             .onSubmit {
-                homeViewModel.processFoodEntry(
-                    query: typedMeal,
-                    date: selectedDate,
-                    mealType: selectedMeal
-                ) { success in
-                    if success {
-                        dismiss()
-                    } else {
-                        errorMessage = "Failed to process food entry. Please try again."
-                        showError = true
-                    }
-                }
+//                homeViewModel.processFoodEntry(
+//                    query: typedMeal,
+//                    date: selectedDate,
+//                    mealType: selectedMeal
+//                ) { success in
+//                    if success {
+//                        dismiss()
+//                    } else {
+//                        errorMessage = "Failed to process food entry. Please try again."
+//                        showError = true
+//                    }
+//                }
             }
             .onChange(of: homeViewModel.loadingState) { oldValue, newValue in
                 if case .error(let message) = newValue {
@@ -123,8 +135,15 @@ extension EnteringFoodView {
     }
     
     private var enteringButton: some View {
-        NavigationLink {
-            ConfirmingFoodView()
+        Button {
+            homeViewModel.fetchNutrition(query: typedMeal) { result in
+                switch result {
+                case .success(_):
+                    self.navigateToNextScreen = true
+                case .failure(_):
+                    print("Error")
+                }
+            }
         } label: {
             Text("Next")
             .frame(width: UIScreen.main.bounds.width * 0.85)

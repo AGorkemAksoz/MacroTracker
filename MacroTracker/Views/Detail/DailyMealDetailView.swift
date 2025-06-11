@@ -276,6 +276,7 @@ struct MealTypeDetailViewCell: View {
             VStack(alignment: .leading) {
                 Text(meal.name)
                     .font(.primaryTitle)
+                    .foregroundStyle(Color.appForegroundColor)
                     
                 Text("\(meal.servingSizeG.formatted(.number)) gr.")
                     .font(.secondaryNumberTitle)
