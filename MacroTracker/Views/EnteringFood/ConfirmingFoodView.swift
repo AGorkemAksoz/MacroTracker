@@ -9,17 +9,19 @@ import SwiftUI
 
 struct ConfirmingFoodView: View {
     @ObservedObject var homeViewModel: HomeViewModel
-    @Environment(\.dismiss) var dismiss
-    
-    var foods: [Item]
-    var consumedDate: Date
-    var consumedMeal: MealTypes
+    @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
+    let foods: [Item]
+    let consumedDate: Date
+    let consumedMeal: MealTypes
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
     
     var formattedDate: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEE, MMM d"  // Shows like "Mon, Jun 5"
+        formatter.dateStyle = .medium
         return formatter.string(from: consumedDate)
     }
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 24) {
@@ -49,7 +51,7 @@ struct ConfirmingFoodView: View {
                 //Edit and Confirm Buttons
                 HStack {
                     Button {
-                        print("Edit Button Tapped!!!")
+                        navigationCoordinator.navigateBack()
                     } label: {
                         Text("Edit")
                             .font(.confirmViewEditButtonTitle)
@@ -65,13 +67,13 @@ struct ConfirmingFoodView: View {
                     
                     Button {
                         homeViewModel.processFoodEntry(items: foods,
-                                                       date: consumedDate,
-                                                       mealType: consumedMeal) { result in
-                            switch result {
-                            case true:
-                                dismiss()
-                            case false:
-                                print("Get yourself look what you're doing")
+                                                     date: consumedDate,
+                                                     mealType: consumedMeal) { result in
+                            if result {
+                                navigationCoordinator.navigateToRoot()
+                            } else {
+                                errorMessage = "Failed to save food entry"
+                                showError = true
                             }
                         }
                     } label: {
@@ -95,7 +97,11 @@ struct ConfirmingFoodView: View {
             
             Spacer()
         }
-        
+        .alert("Error", isPresented: $showError) {
+            Button("OK") { showError = false }
+        } message: {
+            Text(errorMessage)
+        }
     }
 }
 

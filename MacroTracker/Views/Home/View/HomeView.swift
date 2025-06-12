@@ -17,11 +17,14 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var homeViewModel: HomeViewModel
     @State private var selectedListType: HomeViewMacrosType = .list
+    @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
+    private let dependencyContainer: DependencyContainerProtocol
     
     // Initialize with dependency container
     init(dependencyContainer: DependencyContainerProtocol) {
         // Initialize ViewModel using the container
         _homeViewModel = StateObject(wrappedValue: dependencyContainer.makeHomeViewModel())
+        self.dependencyContainer = dependencyContainer
     }
     
     var mealsByDate: [Date: [FoodItem]] {
@@ -29,7 +32,7 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationCoordinator.path) {
             VStack(alignment: .leading) {
                 VStack {
                     HStack {
@@ -56,9 +59,9 @@ struct HomeView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(homeViewModel.getAllLoggedDates(), id: \.self) { date in
-                            NavigationLink {
-                                DailyMealDetailView(homeViewModel: homeViewModel, date: date)
-                            } label:{
+                            Button {
+                                navigationCoordinator.navigate(to: .dailyMealDetail(date: date))
+                            } label: {
                                 DailyMealCell(
                                     date: date,
                                     meals: homeViewModel.getMealsForDate(date)
@@ -74,12 +77,35 @@ struct HomeView: View {
             .navigationTitle("Macro Tracker").font(.headerTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                NavigationLink {
-                    EnteringFoodView(homeViewModel: homeViewModel)
+                Button {
+                    navigationCoordinator.navigate(to: .enterFood)
                 } label: {
                     Image(systemName: "plus")
                         .foregroundStyle(Color.appForegroundColor)
                         .frame(width: 24, height: 24)
+                }
+            }
+            .navigationDestination(for: AppRoute.self) { route in
+                Group {
+                    switch route {
+                    case .home:
+                        HomeView(dependencyContainer: dependencyContainer)
+                    case .enterFood:
+                        EnteringFoodView(homeViewModel: homeViewModel)
+                    case .confirmFood(let foods, let date, let mealType):
+                        ConfirmingFoodView(
+                            homeViewModel: homeViewModel,
+                            foods: foods,
+                            consumedDate: date,
+                            consumedMeal: mealType
+                        )
+                    case .dailyMealDetail(let date):
+                        DailyMealDetailView(homeViewModel: homeViewModel, date: date)
+                    case .mealTypeDetail(let type, let meals):
+                        MealTypeDetailView(mealsType: type, meals: meals)
+                    case .foodDetail(let food):
+                        FoodDetailView(foodItem: food)
+                    }
                 }
             }
         }

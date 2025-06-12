@@ -10,14 +10,12 @@ import SwiftUI
 
 struct EnteringFoodView: View {
     @ObservedObject var homeViewModel: HomeViewModel
+    @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
     @State private var typedMeal: String = "250 grams of chicken breast"
     @State private var selectedDate: Date = Date()
     @State private var selectedMeal: MealTypes = .breakfeast
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-    @State private var navigateToNextScreen: Bool = false
-    
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -35,17 +33,6 @@ struct EnteringFoodView: View {
         }
         .navigationTitle("Enter Food")
         .navigationBarTitleDisplayMode(.inline)
-        
-        NavigationLink(
-            destination: ConfirmingFoodView(homeViewModel: homeViewModel,
-                                            foods: homeViewModel.nutrition,
-                                            consumedDate: selectedDate,
-                                            consumedMeal: selectedMeal),
-            isActive: $navigateToNextScreen
-        ) {
-            EmptyView()
-        }
-        .hidden()
     }
 }
 
@@ -72,20 +59,6 @@ extension EnteringFoodView {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                 }
-            }
-            .onSubmit {
-//                homeViewModel.processFoodEntry(
-//                    query: typedMeal,
-//                    date: selectedDate,
-//                    mealType: selectedMeal
-//                ) { success in
-//                    if success {
-//                        dismiss()
-//                    } else {
-//                        errorMessage = "Failed to process food entry. Please try again."
-//                        showError = true
-//                    }
-//                }
             }
             .onChange(of: homeViewModel.loadingState) { oldValue, newValue in
                 if case .error(let message) = newValue {
@@ -136,26 +109,36 @@ extension EnteringFoodView {
     
     private var enteringButton: some View {
         Button {
-            homeViewModel.fetchNutrition(query: typedMeal) { result in
-                switch result {
-                case .success(_):
-                    self.navigateToNextScreen = true
-                case .failure(_):
-                    print("Error")
-                }
-            }
+            fetchNutrition()
         } label: {
             Text("Next")
-            .frame(width: UIScreen.main.bounds.width * 0.85)
-            .frame(height: 48)
-            .padding(.horizontal)
-            .background(
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(Color.confirmButtonBackgroudColor)
-            )
-            .foregroundColor(Color.confirmButtonForegroudColor)
-            .padding(.horizontal)
-            .font(.confirmButtonTitle)
+                .frame(width: UIScreen.main.bounds.width * 0.85)
+                .frame(height: 48)
+                .padding(.horizontal)
+                .background(
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.confirmButtonBackgroudColor)
+                )
+                .foregroundColor(Color.confirmButtonForegroudColor)
+                .padding(.horizontal)
+                .font(.confirmButtonTitle)
+        }
+        .disabled(homeViewModel.loadingState == .loading)
+    }
+    
+    private func fetchNutrition() {
+        homeViewModel.fetchNutrition(query: typedMeal) { result in
+            switch result {
+            case .success(_):
+                navigationCoordinator.navigate(to: .confirmFood(
+                    foods: homeViewModel.nutrition,
+                    date: selectedDate,
+                    mealType: selectedMeal
+                ))
+            case .failure(_):
+                errorMessage = "Failed to fetch nutrition information"
+                showError = true
+            }
         }
     }
 }
