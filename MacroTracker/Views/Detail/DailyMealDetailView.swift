@@ -8,43 +8,18 @@
 import SwiftUI
 
 struct DailyMealDetailView: View {
-    @ObservedObject var homeViewModel: HomeViewModel
+    let data: DailyMealDataProvider
     let date: Date
+    @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
     
-    var mealsByType: [MealTypes: [FoodItem]] {
-        homeViewModel.getMealsByType(for: date)
+    init(data: DailyMealDataProvider, date: Date) {
+        self.data = data
+        self.date = date
     }
     
-    var totalProtein: Double {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.proteinG }
-    }
-    
-    var totalCarbs: Double {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.carbohydratesTotalG }
-    }
-    
-    var totalFat: Double {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.fatTotalG }
-    }
-    
-    var totalFiber: Double {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.fiberG }
-    }
-    
-    var totalSugar: Double {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.sugarG }
-    }
-    
-    var totalCholesterol: Int {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.cholesterolMg }
-    }
-    
-    var totalSodium: Int {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.sodiumMg }
-    }
-    
-    var totalPotassium: Int {
-        mealsByType.values.flatMap { $0 }.reduce(0) { $0 + $1.potassiumMg }
+    // Convenience initializer for HomeViewModel
+    init(date: Date, homeViewModel: HomeViewModel) {
+        self.init(data: homeViewModel, date: date)
     }
     
     var body: some View {
@@ -57,10 +32,9 @@ struct DailyMealDetailView: View {
                             .padding()
                         
                         ForEach(MealTypes.allCases, id: \.self) { mealType in
-                            if let mealsForType = mealsByType[mealType] {
-                                NavigationLink {
-                                    MealTypeDetailView(mealsType: mealType,
-                                                       meals: mealsForType)
+                            if let mealsForType = data.getMealsByType(for: date)[mealType] {
+                                Button {
+                                    navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType))
                                 } label: {
                                     MealTypeSection(
                                         mealType: mealType,
@@ -78,18 +52,19 @@ struct DailyMealDetailView: View {
                         .font(.dayDetailTitle)
                         .padding(.horizontal)
                     
+                    let mealsByType = data.getMealsByType(for: date)
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())
                     ], spacing: 16) {
-                        NutrientGridItem(title: "Fiber", value: totalFiber, unit: "g")
-                        NutrientGridItem(title: "Sugar", value: totalSugar, unit: "g")
-                        NutrientGridItem(title: "Cholesterol", value: Double(totalCholesterol), unit: "mg")
-                        NutrientGridItem(title: "Sodium", value: Double(totalSodium), unit: "mg")
-                        NutrientGridItem(title: "Potassium", value: Double(totalPotassium), unit: "mg")
-                        NutrientGridItem(title: "Protein", value: Double(totalProtein), unit: "g")
-                        NutrientGridItem(title: "Carbs", value: Double(totalCarbs), unit: "g")
-                        NutrientGridItem(title: "Fat", value: Double(totalFat), unit: "g")
+                        NutrientGridItem(title: "Fiber", value: mealsByType.totalFiber, unit: "g")
+                        NutrientGridItem(title: "Sugar", value: mealsByType.totalSugar, unit: "g")
+                        NutrientGridItem(title: "Cholesterol", value: Double(mealsByType.totalCholesterol), unit: "mg")
+                        NutrientGridItem(title: "Sodium", value: Double(mealsByType.totalSodium), unit: "mg")
+                        NutrientGridItem(title: "Potassium", value: Double(mealsByType.totalPotassium), unit: "mg")
+                        NutrientGridItem(title: "Protein", value: mealsByType.totalProtein, unit: "g")
+                        NutrientGridItem(title: "Carbs", value: mealsByType.totalCarbs, unit: "g")
+                        NutrientGridItem(title: "Fat", value: mealsByType.totalFat, unit: "g")
                     }
                     .padding()
                 }
@@ -111,18 +86,6 @@ struct DailyMealDetailView: View {
 struct MealTypeSection: View {
     let mealType: MealTypes
     let meals: [FoodItem]
-    
-    var totalProtein: Double {
-        meals.reduce(0) { $0 + $1.proteinG }
-    }
-    
-    var totalCarbs: Double {
-        meals.reduce(0) { $0 + $1.carbohydratesTotalG }
-    }
-    
-    var totalFat: Double {
-        meals.reduce(0) { $0 + $1.fatTotalG }
-    }
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
@@ -146,7 +109,7 @@ struct MealTypeSection: View {
                     ForEach(meals) { meal in
                         Text("\(meal.name): P: \(Int(meal.proteinG))g, C: \(Int(meal.carbohydratesTotalG))g, F: \(Int(meal.fatTotalG))g")
                     }
-                    Text("Total: P: \(Int(totalProtein))g, C: \(Int(totalCarbs))g, F: \(Int(totalFat))g")
+                    Text("Total: P: \(Int(meals.totalProtein))g, C: \(Int(meals.totalCarbs))g, F: \(Int(meals.totalFat))g")
                         .fontWeight(.medium)
                 }
                 .font(.secondaryNumberTitle)
@@ -174,116 +137,6 @@ struct NutrientGridItem: View {
         .padding()
         .background(Color.containerBackgroundColor)
         .cornerRadius(8)
-    }
-}
-
-struct MealTypeDetailView: View {
-    var mealsType: MealTypes
-    let meals: [FoodItem]
-    
-    var totalProtein: Double {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.proteinG }
-    }
-    
-    var totalCarbs: Double {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.carbohydratesTotalG }
-    }
-    
-    var totalFat: Double {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.fatTotalG }
-    }
-    
-    var totalFiber: Double {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.fiberG }
-    }
-    
-    var totalSugar: Double {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.sugarG }
-    }
-    
-    var totalCholesterol: Int {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.cholesterolMg }
-    }
-    
-    var totalSodium: Int {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.sodiumMg }
-    }
-    
-    var totalPotassium: Int {
-        meals.flatMap { $0 }.reduce(0) { $0 + $1.potassiumMg }
-    }
-    
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                HStack {
-                    Text("Foods")
-                        .font(.dayDetailTitle)
-                        .padding()
-                        .navigationTitle(mealsType.mealName)
-                    Spacer()
-                }
-                
-                ForEach(meals, id: \.id) { meal in
-                    NavigationLink {
-                        FoodItemDetailView(food: meal)
-                    } label: {
-                        MealTypeDetailViewCell(meal: meal)
-                    }
-                }
-                
-                HStack {
-                    Text("Nutrition")
-                        .font(.dayDetailTitle)
-                        .padding()
-                        .navigationTitle(mealsType.mealName)
-                    Spacer()
-                }
-                
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 16) {
-                    NutrientGridItem(title: "Fiber", value: totalFiber, unit: "g")
-                    NutrientGridItem(title: "Sugar", value: totalSugar, unit: "g")
-                    NutrientGridItem(title: "Cholesterol", value: Double(totalCholesterol), unit: "mg")
-                    NutrientGridItem(title: "Sodium", value: Double(totalSodium), unit: "mg")
-                    NutrientGridItem(title: "Potassium", value: Double(totalPotassium), unit: "mg")
-                    NutrientGridItem(title: "Protein", value: Double(totalProtein), unit: "g")
-                    NutrientGridItem(title: "Carbs", value: Double(totalCarbs), unit: "g")
-                    NutrientGridItem(title: "Fat", value: Double(totalFat), unit: "g")
-                }
-                .padding()
-            }
-            Spacer()
-        }
-    }
-}
-
-struct MealTypeDetailViewCell: View {
-    var meal: FoodItem
-    var body: some View {
-        HStack {
-            Image("breakfastIcon")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(Color.appForegroundColor)
-                .padding(12)
-                .background(Color.containerBackgroundColor)
-                .cornerRadius(8)
-                .padding(.leading)
-            
-            VStack(alignment: .leading) {
-                Text(meal.name)
-                    .font(.primaryTitle)
-                    .foregroundStyle(Color.appForegroundColor)
-                    
-                Text("\(meal.servingSizeG.formatted(.number)) gr.")
-                    .font(.secondaryNumberTitle)
-                    .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
-            }
-            Spacer()
-        }
     }
 }
 

@@ -100,7 +100,7 @@ struct HomeView: View {
                             consumedMeal: mealType
                         )
                     case .dailyMealDetail(let date):
-                        DailyMealDetailView(homeViewModel: homeViewModel, date: date)
+                        DailyMealDetailView(date: date, homeViewModel: homeViewModel)
                     case .mealTypeDetail(let type, let meals):
                         MealTypeDetailView(mealsType: type, meals: meals)
                     case .foodDetail(let food):
@@ -117,23 +117,3 @@ struct HomeView: View {
     let dependencyContainer = DependencyContainer(modelContext: container.mainContext)
     return HomeView(dependencyContainer: dependencyContainer)
 }
-
-/*
- 
- //                // SEGMENTED CONTROL
- //                Picker("View Type", selection: $selectedListType) {
- //                    Text("List").tag(HomeViewMacrosType.list)
- //                    Text("Chart").tag(HomeViewMacrosType.pieChart)
- //                }
- //                .pickerStyle(SegmentedPickerStyle())
- //                .padding()
- //
- //                // SWITCH VIEW BASED ON SELECTED TYPE
- //                switch selectedListType {
- //                case .list:
- //                    FoodNutritionView(homeViewModel: homeViewModel, foods: $homeViewModel.savedNutrititon)
- //                case .pieChart:
- //                    WeeklySummaryView(homeViewModel: homeViewModel)
- //                }
-
- */
