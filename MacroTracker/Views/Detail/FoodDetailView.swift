@@ -20,10 +20,27 @@ struct FoodDetailView: View {
                 headerSection
                 
                 // Macro Summary
-                macroSummarySection
+                CaloriesSummary(calories: data.calories)
                 
                 // Detailed Nutrition
-                nutritionDetailsSection
+                MacroSummary(
+                    protein: data.proteinG,
+                    carbs: data.carbohydratesTotalG,
+                    fat: data.fatTotalG
+                )
+                
+                SectionHeader(title: "Micronutrients")
+                
+                NutritionGrid(items: [
+                    NutritionGridItem(title: "Fiber", value: data.fiberG, unit: "g"),
+                    NutritionGridItem(title: "Sugar", value: data.sugarG, unit: "g"),
+                    NutritionGridItem(title: "Cholesterol", value: Double(data.cholesterolMg), unit: "mg"),
+                    NutritionGridItem(title: "Sodium", value: Double(data.sodiumMg), unit: "mg"),
+                    NutritionGridItem(title: "Potassium", value: Double(data.potassiumMg), unit: "mg"),
+                    NutritionGridItem(title: "Protein", value: data.proteinG, unit: "g"),
+                    NutritionGridItem(title: "Carbs", value: data.carbohydratesTotalG, unit: "g"),
+                    NutritionGridItem(title: "Fat Saturated", value: data.fatSaturatedG, unit: "g")
+                ])
                 
                 // Serving Information
                 servingSection
@@ -47,76 +64,6 @@ struct FoodDetailView: View {
             Text(data.recordedDate.formatted(date: .abbreviated, time: .shortened))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-        }
-    }
-    
-    private var macroSummarySection: some View {
-        VStack {
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Calories")
-                        .font(.secondaryNumberTitle)
-                    
-                    Text(data.calories.formatted(.number))
-                        .font(.dayDetailTitle)
-                }
-                Spacer()
-            }
-            .padding(.horizontal)
-        }
-        .frame(height: UIScreen.main.bounds.height / 8)
-        .frame(maxWidth: .infinity)
-        .background(Color.containerBackgroundColor)
-        .cornerRadius(8)
-    }
-    
-    private var nutritionDetailsSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Macros")
-                .font(.dayDetailTitle)
-                .padding(.top)
-            
-            HStack {
-                Text("Protein")
-                    .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
-                Spacer()
-                Text("\(data.proteinG.formatted(.number)) gr")
-            }
-            .font(.secondaryNumberTitle)
-            
-            HStack {
-                Text("Carbs")
-                    .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
-                Spacer()
-                Text("\(data.carbohydratesTotalG.formatted(.number)) gr")
-            }
-            .font(.secondaryNumberTitle)
-            
-            HStack {
-                Text("Fats")
-                    .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
-                Spacer()
-                Text("\(data.fatTotalG.formatted(.number)) gr")
-            }
-            .font(.secondaryNumberTitle)
-            
-            Text("Micronutrients")
-                .font(.dayDetailTitle)
-                .padding(.top)
-            
-            LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ], spacing: 16) {
-                NutrientGridItem(title: "Fiber", value: data.fiberG, unit: "g")
-                NutrientGridItem(title: "Sugar", value: data.sugarG, unit: "g")
-                NutrientGridItem(title: "Cholesterol", value: Double(data.cholesterolMg), unit: "mg")
-                NutrientGridItem(title: "Sodium", value: Double(data.sodiumMg), unit: "mg")
-                NutrientGridItem(title: "Potassium", value: Double(data.potassiumMg), unit: "mg")
-                NutrientGridItem(title: "Protein", value: data.proteinG, unit: "g")
-                NutrientGridItem(title: "Carbs", value: data.carbohydratesTotalG, unit: "g")
-                NutrientGridItem(title: "Fat Saturated", value: data.fatSaturatedG, unit: "g")
-            }
         }
     }
     

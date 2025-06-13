@@ -18,6 +18,13 @@
 		DE69DAA72DFC459D00533B61 /* DailyMealData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAA52DFC459D00533B61 /* DailyMealData.swift */; };
 		DE69DAAB2DFC597800533B61 /* MealTypeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAAA2DFC597800533B61 /* MealTypeData.swift */; };
 		DE69DAAD2DFC5A3C00533B61 /* FoodDetailData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAAC2DFC5A3C00533B61 /* FoodDetailData.swift */; };
+		DE69DAB42DFC60CC00533B61 /* MacroSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAB02DFC60CC00533B61 /* MacroSummary.swift */; };
+		DE69DAB52DFC60CC00533B61 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAB22DFC60CC00533B61 /* SectionHeader.swift */; };
+		DE69DAB62DFC60CC00533B61 /* NutritionGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAB12DFC60CC00533B61 /* NutritionGrid.swift */; };
+		DE69DAB72DFC60CC00533B61 /* MacroInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAAF2DFC60CC00533B61 /* MacroInfoView.swift */; };
+		DE69DAB82DFC60CC00533B61 /* CaloriesSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DAAE2DFC60CC00533B61 /* CaloriesSummary.swift */; };
+		DE69DABC2DFC62C400533B61 /* MealTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DABB2DFC62C400533B61 /* MealTypeCell.swift */; };
+		DE69DABE2DFC62E600533B61 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE69DABD2DFC62E600533B61 /* IconCell.swift */; };
 		DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */; };
 		DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C852D8859E500AC3E72 /* APIClient.swift */; };
 		DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */; };
@@ -44,6 +51,13 @@
 		DE69DAA52DFC459D00533B61 /* DailyMealData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyMealData.swift; sourceTree = "<group>"; };
 		DE69DAAA2DFC597800533B61 /* MealTypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTypeData.swift; sourceTree = "<group>"; };
 		DE69DAAC2DFC5A3C00533B61 /* FoodDetailData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailData.swift; sourceTree = "<group>"; };
+		DE69DAAE2DFC60CC00533B61 /* CaloriesSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesSummary.swift; sourceTree = "<group>"; };
+		DE69DAAF2DFC60CC00533B61 /* MacroInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroInfoView.swift; sourceTree = "<group>"; };
+		DE69DAB02DFC60CC00533B61 /* MacroSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroSummary.swift; sourceTree = "<group>"; };
+		DE69DAB12DFC60CC00533B61 /* NutritionGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionGrid.swift; sourceTree = "<group>"; };
+		DE69DAB22DFC60CC00533B61 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		DE69DABB2DFC62C400533B61 /* MealTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealTypeCell.swift; sourceTree = "<group>"; };
+		DE69DABD2DFC62E600533B61 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
 		DE6D6C832D8859CD00AC3E72 /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
 		DE6D6C852D8859E500AC3E72 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		DE6D6C882D885A1B00AC3E72 /* NutritionEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionEndpoint.swift; sourceTree = "<group>"; };
@@ -136,6 +150,20 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		DE69DAB32DFC60CC00533B61 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DE69DABD2DFC62E600533B61 /* IconCell.swift */,
+				DE69DABB2DFC62C400533B61 /* MealTypeCell.swift */,
+				DE69DAAE2DFC60CC00533B61 /* CaloriesSummary.swift */,
+				DE69DAAF2DFC60CC00533B61 /* MacroInfoView.swift */,
+				DE69DAB02DFC60CC00533B61 /* MacroSummary.swift */,
+				DE69DAB12DFC60CC00533B61 /* NutritionGrid.swift */,
+				DE69DAB22DFC60CC00533B61 /* SectionHeader.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		DE6D6C802D8857D500AC3E72 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +197,7 @@
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DE69DAB32DFC60CC00533B61 /* Common */,
 				DE69DA712DF855AC00533B61 /* EnteringFood */,
 				DE74B4262DE8899600D52684 /* Detail */,
 				DE6D6C8F2D885F7500AC3E72 /* Home */,
@@ -286,12 +315,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE69DAB42DFC60CC00533B61 /* MacroSummary.swift in Sources */,
+				DE69DAB52DFC60CC00533B61 /* SectionHeader.swift in Sources */,
+				DE69DAB62DFC60CC00533B61 /* NutritionGrid.swift in Sources */,
+				DE69DAB72DFC60CC00533B61 /* MacroInfoView.swift in Sources */,
+				DE69DAB82DFC60CC00533B61 /* CaloriesSummary.swift in Sources */,
+				DE69DABC2DFC62C400533B61 /* MealTypeCell.swift in Sources */,
 				DD84E6502DE7986300656DC5 /* DependencyContainer.swift in Sources */,
 				DE69DAAD2DFC5A3C00533B61 /* FoodDetailData.swift in Sources */,
 				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
 				DE69DAAB2DFC597800533B61 /* MealTypeData.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
 				DDB4BB9A2DF0DFE400D0727B /* DailyMealCell.swift in Sources */,
+				DE69DABE2DFC62E600533B61 /* IconCell.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
 				DDB4BBBF2DFB75A000D0727B /* NavigationRoute.swift in Sources */,

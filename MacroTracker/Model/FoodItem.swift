@@ -23,6 +23,19 @@ enum MealTypes: String, CaseIterable, Codable {
             return "Snack"
         }
     }
+    
+    var iconName: String {
+        switch self {
+        case .breakfeast:
+            return "breakfastIcon"
+        case .lunch:
+            return "breakfastIcon"
+        case .dinner:
+            return "dinnerIcon"
+        case .snack:
+            return "snackIcon"
+        }
+    }
 }
 
 @Model
