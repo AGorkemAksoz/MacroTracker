@@ -24,6 +24,7 @@ struct MealTypeDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 SectionHeader(title: "Foods")
+                    .padding()
                 
                 ForEach(data.meals, id: \.id) { meal in
                     Button {
@@ -38,6 +39,7 @@ struct MealTypeDetailView: View {
                 }
                 
                 SectionHeader(title: "Nutrition")
+                    .padding()
                 
                 NutritionGrid(items: [
                     NutritionGridItem(title: "Fiber", value: data.meals.totalFiber, unit: "g"),
@@ -49,6 +51,7 @@ struct MealTypeDetailView: View {
                     NutritionGridItem(title: "Carbs", value: data.meals.totalCarbs, unit: "g"),
                     NutritionGridItem(title: "Fat", value: data.meals.totalFat, unit: "g")
                 ])
+                .padding()
             }
             Spacer()
         }

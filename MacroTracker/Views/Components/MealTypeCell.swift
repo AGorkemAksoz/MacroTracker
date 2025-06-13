@@ -8,12 +8,7 @@ struct MealTypeCell: View {
         HStack(alignment: .top, spacing: 16) {
             Image(mealType.iconName)
                 .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(Color.appForegroundColor)
-                .padding(12)
-                .background(Color.containerBackgroundColor)
-                .cornerRadius(8)
-                .padding(.leading)
+                .iconContainerStyle()
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(mealType.mealName)
@@ -31,6 +26,7 @@ struct MealTypeCell: View {
                 .foregroundStyle(Color.secondayNumberForegroundColor)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -38,8 +34,18 @@ struct MealTypeCell: View {
     MealTypeCell(
         mealType: .breakfeast,
         meals: [
-            FoodItem(name: "Oatmeal", fatTotalG: 5, proteinG: 10, carbohydratesTotalG: 30),
-            FoodItem(name: "Banana", fatTotalG: 0, proteinG: 1, carbohydratesTotalG: 27)
+            FoodItem(
+                name: "Chicken Breast",
+                calories: 250,
+                fatTotalG: 5, proteinG: 30,
+                carbohydratesTotalG: 0
+            ),
+            FoodItem(
+                name: "Rice",
+                calories: 200,
+                fatTotalG: 0, proteinG: 4,
+                carbohydratesTotalG: 45
+            )
         ]
     )
     .padding()

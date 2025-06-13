@@ -19,11 +19,30 @@ struct EnteringFoodView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            foodEnteringTitle
-            searchBar
-            datePicker
+            SectionHeader(title: "What did you eat?")
+            
+            SearchBar(
+                placeholder: "Type Your Meal",
+                text: $typedMeal,
+                isLoading: homeViewModel.loadingState == .loading,
+                onTextChange: { _ in
+                    if case .error(let message) = homeViewModel.loadingState {
+                        errorMessage = message
+                        showError = true
+                    }
+                }
+            )
+            .disabled(homeViewModel.loadingState == .loading)
+            
+            DatePickerField(
+                title: "Pick your meal date",
+                date: $selectedDate
+            )
+            
             mealPicker
+            
             Spacer()
+            
             enteringButton
         }
         .alert("Error", isPresented: $showError) {
@@ -33,57 +52,6 @@ struct EnteringFoodView: View {
         }
         .navigationTitle("Enter Food")
         .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-extension EnteringFoodView {
-    private var foodEnteringTitle: some View {
-        Text("What did you eat?")
-            .font(.headerTitle)
-            .padding([.vertical, .leading])
-    }
-    
-    private var searchBar: some View {
-        TextField("Type Your Meal", text: $typedMeal)
-            .padding()
-            .font(.primaryTitle)
-            .foregroundStyle(Color.mealsDetailScreenSecondaryTitleColor)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.containerBackgroundColor)
-            )
-            .frame(height: 56)
-            .padding(.horizontal)
-            .overlay {
-                if case .loading = homeViewModel.loadingState {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                }
-            }
-            .onChange(of: homeViewModel.loadingState) { oldValue, newValue in
-                if case .error(let message) = newValue {
-                    errorMessage = message
-                    showError = true
-                }
-            }
-            .disabled(homeViewModel.loadingState == .loading)
-    }
-    
-    private var datePicker: some View {
-        DatePicker(selection: $selectedDate, displayedComponents: [.date]) {
-            Text("Pick your meal date")
-        }
-        .datePickerStyle(.compact)
-        .tint(.mealsDetailScreenSecondaryTitleColor)
-        .frame(height: 56)
-        .padding(.horizontal)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.containerBackgroundColor)
-        )
-        .foregroundColor(Color.mealsDetailScreenSecondaryTitleColor)
-        .padding(.horizontal)
-        .font(.primaryTitle)
     }
     
     private var mealPicker: some View {

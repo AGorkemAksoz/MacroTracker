@@ -30,6 +30,8 @@ struct FoodDetailView: View {
                 )
                 
                 SectionHeader(title: "Micronutrients")
+                    .frame(maxWidth: .infinity,
+                           alignment: .leading)
                 
                 NutritionGrid(items: [
                     NutritionGridItem(title: "Fiber", value: data.fiberG, unit: "g"),

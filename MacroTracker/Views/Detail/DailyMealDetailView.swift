@@ -26,6 +26,7 @@ struct DailyMealDetailView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 SectionHeader(title: "Meals")
+                    .padding()
                 
                 ForEach(MealTypes.allCases, id: \.self) { mealType in
                     if let mealsForType = data.getMealsByType(for: date)[mealType] {
@@ -38,6 +39,7 @@ struct DailyMealDetailView: View {
                 }
                 
                 SectionHeader(title: "Daily Summary")
+                    .padding()
                 
                 let mealsByType = data.getMealsByType(for: date)
                 NutritionGrid(items: [
@@ -50,6 +52,7 @@ struct DailyMealDetailView: View {
                     NutritionGridItem(title: "Carbs", value: mealsByType.totalCarbs, unit: "g"),
                     NutritionGridItem(title: "Fat", value: mealsByType.totalFat, unit: "g")
                 ])
+                .padding()
                 
                 Spacer()
             }
@@ -62,40 +65,6 @@ struct DailyMealDetailView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, yyyy"
         return formatter.string(from: date)
-    }
-}
-
-struct MealTypeSection: View {
-    let mealType: MealTypes
-    let meals: [FoodItem]
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            Image(mealType.iconName)
-                .resizable()
-                .frame(width: 24, height: 24)
-                .foregroundStyle(Color.appForegroundColor)
-                .padding(12)
-                .background(Color.containerBackgroundColor)
-                .cornerRadius(8)
-                .padding(.leading)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(mealType.mealName)
-                    .font(.primaryTitle)
-                    .foregroundStyle(Color.appForegroundColor)
-                
-                VStack(alignment: .leading, spacing: 2) {
-                    ForEach(meals) { meal in
-                        Text("\(meal.name): P: \(Int(meal.proteinG))g, C: \(Int(meal.carbohydratesTotalG))g, F: \(Int(meal.fatTotalG))g")
-                    }
-                    Text("Total: P: \(Int(meals.totalProtein))g, C: \(Int(meals.totalCarbs))g, F: \(Int(meals.totalFat))g")
-                        .fontWeight(.medium)
-                }
-                .font(.secondaryNumberTitle)
-                .foregroundStyle(Color.secondayNumberForegroundColor)
-            }
-        }
     }
 }
 

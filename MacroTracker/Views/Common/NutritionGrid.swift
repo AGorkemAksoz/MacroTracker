@@ -12,7 +12,6 @@ struct NutritionGrid: View {
                 NutrientGridItem(title: item.title, value: item.value, unit: item.unit)
             }
         }
-        .padding()
     }
 }
 
