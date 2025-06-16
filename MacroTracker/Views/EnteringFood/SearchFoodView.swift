@@ -20,6 +20,7 @@ struct EnteringFoodView: View {
     var body: some View {
         VStack(alignment: .leading) {
             SectionHeader(title: "What did you eat?")
+                .padding(.leading)
             
             SearchBar(
                 placeholder: "Type Your Meal",
