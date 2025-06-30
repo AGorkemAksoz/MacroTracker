@@ -26,10 +26,34 @@ struct ConfirmingFoodView: View {
         HStack {
             VStack(alignment: .leading, spacing: 24) {
                 foodConfirmingTitle
+                
                 // Foods list
-                ForEach(foods, id: \.name) { food in
-                    ConfirmingFoodListCell(foodName: food.name ?? "Unknown Food",
-                                           foodServingSize: String(food.servingSizeG ?? 0))
+                if foods.isEmpty {
+                    // Show message when no foods found
+                    VStack(spacing: 12) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.title)
+                            .foregroundColor(.orange)
+                        
+                        Text("No food data found")
+                            .font(.primaryTitle)
+                            .foregroundColor(.orange)
+                        
+                        Text("Please go back and try a different search term")
+                            .font(.secondaryNumberTitle)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.orange.opacity(0.1))
+                    .cornerRadius(12)
+                } else {
+                    // Show foods list
+                    ForEach(foods, id: \.name) { food in
+                        ConfirmingFoodListCell(foodName: food.name ?? "Unknown Food",
+                                               foodServingSize: String(food.servingSizeG ?? 0))
+                    }
                 }
                 
                 // Date
@@ -66,14 +90,21 @@ struct ConfirmingFoodView: View {
                     Spacer()
                     
                     Button {
-                        homeViewModel.processFoodEntry(items: foods,
-                                                     date: consumedDate,
-                                                     mealType: consumedMeal) { result in
-                            if result {
-                                navigationCoordinator.navigateToRoot()
-                            } else {
-                                errorMessage = "Failed to save food entry"
-                                showError = true
+                        if foods.isEmpty {
+                            // Show alert for no food data
+                            errorMessage = "No food data available. Please go back and try a different search term."
+                            showError = true
+                        } else {
+                            // Process food entry
+                            homeViewModel.processFoodEntry(items: foods,
+                                                         date: consumedDate,
+                                                         mealType: consumedMeal) { result in
+                                if result {
+                                    navigationCoordinator.navigateToRoot()
+                                } else {
+                                    errorMessage = "Failed to save food entry"
+                                    showError = true
+                                }
                             }
                         }
                     } label: {
@@ -82,10 +113,11 @@ struct ConfirmingFoodView: View {
                             .frame(width: 84, height: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.confirmButtonBackgroudColor)
+                                    .fill(foods.isEmpty ? Color.gray : Color.confirmButtonBackgroudColor)
                             )
                             .foregroundStyle(Color.confirmButtonForegroudColor)
                     }
+                    .disabled(foods.isEmpty) // Disable button when no foods
                 }
 
                 Spacer()
@@ -97,7 +129,11 @@ struct ConfirmingFoodView: View {
             
             Spacer()
         }
-        .alert("Error", isPresented: $showError) {
+        .alert("No Food Data", isPresented: $showError) {
+            Button("Go Back") { 
+                showError = false
+                navigationCoordinator.navigateBack()
+            }
             Button("OK") { showError = false }
         } message: {
             Text(errorMessage)

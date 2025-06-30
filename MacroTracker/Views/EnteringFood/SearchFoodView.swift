@@ -13,9 +13,10 @@ struct EnteringFoodView: View {
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
     @State private var typedMeal: String = "250 grams of chicken breast"
     @State private var selectedDate: Date = Date()
-    @State private var selectedMeal: MealTypes = .breakfeast
+    @State private var selectedMeal: MealTypes = .breakfast
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+    @State private var searchQueryValidationErrors: [ValidationError] = []
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -26,6 +27,7 @@ struct EnteringFoodView: View {
                 text: $typedMeal,
                 isLoading: homeViewModel.loadingState == .loading,
                 onTextChange: { _ in
+                    validateSearchQuery()
                     if case .error(let message) = homeViewModel.loadingState {
                         errorMessage = message
                         showError = true
@@ -33,6 +35,18 @@ struct EnteringFoodView: View {
                 }
             )
             .disabled(homeViewModel.loadingState == .loading)
+            
+            // Show validation errors
+            if !searchQueryValidationErrors.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(searchQueryValidationErrors, id: \.errorDescription) { error in
+                        Text(error.errorDescription ?? "Validation error")
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
+                }
+                .padding(.horizontal)
+            }
             
             DatePickerField(
                 title: "Pick your meal date",
@@ -94,7 +108,18 @@ struct EnteringFoodView: View {
         .disabled(homeViewModel.loadingState == .loading)
     }
     
+    private func validateSearchQuery() {
+        searchQueryValidationErrors = typedMeal.validateSearchQuery()
+    }
+    
     private func fetchNutrition() {
+        // Validate before fetching
+        let validationErrors = typedMeal.validateSearchQuery()
+        if !validationErrors.isEmpty {
+            searchQueryValidationErrors = validationErrors
+            return
+        }
+        
         homeViewModel.fetchNutrition(query: typedMeal) { result in
             switch result {
             case .success(_):
@@ -103,8 +128,8 @@ struct EnteringFoodView: View {
                     date: selectedDate,
                     mealType: selectedMeal
                 ))
-            case .failure(_):
-                errorMessage = "Failed to fetch nutrition information"
+            case .failure(let error):
+                errorMessage = error.localizedDescription
                 showError = true
             }
         }
