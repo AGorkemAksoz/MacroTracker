@@ -9,11 +9,11 @@ import Foundation
 import SwiftData
 
 enum MealTypes: String, CaseIterable, Codable {
-    case breakfeast, lunch, dinner, snack
+    case breakfast, lunch, dinner, snack
     
     var mealName: String {
         switch self {
-        case .breakfeast:
+        case .breakfast:
             return "Breakfast"
         case .lunch:
             return "Lunch"
@@ -26,7 +26,7 @@ enum MealTypes: String, CaseIterable, Codable {
     
     var iconName: String {
         switch self {
-        case .breakfeast:
+        case .breakfast:
             return "breakfastIcon"
         case .lunch:
             return "breakfastIcon"
@@ -70,7 +70,7 @@ class FoodItem {
          fiberG: Double = 0,
          sugarG: Double = 0,
          recordedDate: Date = Date.now,
-         mealType: MealTypes = .breakfeast) {
+         mealType: MealTypes = .breakfast) {
         
         self.id = id
         self.name = name

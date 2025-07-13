@@ -32,7 +32,7 @@ struct MealTypeCell: View {
 
 #Preview {
     MealTypeCell(
-        mealType: .breakfeast,
+        mealType: .breakfast,
         meals: [
             FoodItem(
                 name: "Chicken Breast",

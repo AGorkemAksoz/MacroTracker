@@ -36,20 +36,43 @@ class NutritionRepository: NutritionRepositoryInterface {
     // MARK: - Remote Operations
     
     func searchNutrition(query: String) -> AnyPublisher<[Item], Error> {
+        // Validate search query
+        let validationErrors = query.validateSearchQuery()
+        if !validationErrors.isEmpty {
+            return Fail(error: validationErrors.first!)
+                .eraseToAnyPublisher()
+        }
+        
+        let sanitizedQuery = query.sanitizedSearchQuery()
+        
         // First, check the cache
-        if let cachedItems = cacheService.getCachedNutrition(for: query) {
+        if let cachedItems = cacheService.getCachedNutrition(for: sanitizedQuery) {
             return Just(cachedItems)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
         
         // If not in cache, fetch from API
-        return nutritionService.getNutrition(for: query)
+        return nutritionService.getNutrition(for: sanitizedQuery)
             .map { nutrition -> [Item] in
                 let items = nutrition.items ?? []
-                // Cache the results for future use
-                self.cacheService.cacheNutrition(items, for: query)
-                return items
+                
+                // Validate and sanitize each item
+                let validatedItems = items.compactMap { item -> Item? in
+                    let validationErrors = item.validate()
+                    
+                    if !validationErrors.isEmpty {
+                        print("Validation errors for item '\(item.name ?? "Unknown")': \(validationErrors)")
+                        // Return sanitized version instead of failing completely
+                        return item.sanitized()
+                    }
+                    
+                    return item
+                }
+                
+                // Cache the validated results
+                self.cacheService.cacheNutrition(validatedItems, for: sanitizedQuery)
+                return validatedItems
             }
             .eraseToAnyPublisher()
     }

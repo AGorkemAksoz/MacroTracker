@@ -65,13 +65,21 @@ final class HomeViewModel: ObservableObject {
         self.savedNutrititon = self.fetchSavedFoods()
     }
     
-    /// Fetches nutrition information from the API
+    /// Fetches nutrition information from the API with validation
     /// - Parameters:
     ///   - query: The food item to search for
     ///   - completion: Closure called when the fetch completes, with success status and optional error
     func fetchNutrition(query: String, completion: @escaping (Result<[Item], Error>) -> Void) {
         loadingState = .loading
         nutrition = [] // Reset nutrition array
+        
+        // Validate search query first
+        let validationErrors = query.validateSearchQuery()
+        if !validationErrors.isEmpty {
+            loadingState = .error(validationErrors.first!.localizedDescription)
+            completion(.failure(validationErrors.first!))
+            return
+        }
         
         nutritionRepository.searchNutrition(query: query)
             .receive(on: DispatchQueue.main)

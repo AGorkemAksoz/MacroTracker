@@ -40,7 +40,7 @@ class NutritionDatabaseService: DatabaseServiceInterface {
             fiberG: item.fiberG ?? 0,
             sugarG: item.sugarG ?? 0,
             recordedDate: recorderDate ?? Date.now,
-            mealType: mealType ?? .breakfeast
+            mealType: mealType ?? .breakfast
         )
     }
     
