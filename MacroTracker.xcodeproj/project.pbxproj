@@ -17,6 +17,14 @@
 		DDB4BBF92DFCDF9400D0727B /* NutritionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BBF22DFCDF9400D0727B /* NutritionCard.swift */; };
 		DDB4BBFA2DFCDF9400D0727B /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BBF42DFCDF9400D0727B /* SectionHeader.swift */; };
 		DDB4BBFD2DFCE48F00D0727B /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BBFB2DFCE48F00D0727B /* ViewModifiers.swift */; };
+		DDB4BBFF2DFF1A9800D0727B /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BBFE2DFF1A9800D0727B /* MainTabView.swift */; };
+		DDB4BC012DFF1AA200D0727B /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BC002DFF1AA200D0727B /* ChartsView.swift */; };
+		DDB4BC032E09C3AB00D0727B /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4BC022E09C3AB00D0727B /* ProgressViewModel.swift */; };
+		DDF66C242E2290C200987FB0 /* TabSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C232E2290C200987FB0 /* TabSelector.swift */; };
+		DDF66C282E2293F200987FB0 /* ChartSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C272E2293F200987FB0 /* ChartSection.swift */; };
+		DDF66C2A2E2293FF00987FB0 /* ProgressNutritionCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C292E2293FF00987FB0 /* ProgressNutritionCard.swift */; };
+		DDF66C2C2E22984600987FB0 /* BarAnnotationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */; };
+		DDF66C2E2E23101300987FB0 /* ProgressStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */; };
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
@@ -53,6 +61,14 @@
 		DDB4BBF32DFCDF9400D0727B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		DDB4BBF42DFCDF9400D0727B /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		DDB4BBFB2DFCE48F00D0727B /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		DDB4BBFE2DFF1A9800D0727B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		DDB4BC002DFF1AA200D0727B /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		DDB4BC022E09C3AB00D0727B /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
+		DDF66C232E2290C200987FB0 /* TabSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelector.swift; sourceTree = "<group>"; };
+		DDF66C272E2293F200987FB0 /* ChartSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSection.swift; sourceTree = "<group>"; };
+		DDF66C292E2293FF00987FB0 /* ProgressNutritionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNutritionCard.swift; sourceTree = "<group>"; };
+		DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarAnnotationCard.swift; sourceTree = "<group>"; };
+		DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStateViews.swift; sourceTree = "<group>"; };
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,9 +124,14 @@
 		DDB4BBF52DFCDF9400D0727B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */,
+				DDF66C272E2293F200987FB0 /* ChartSection.swift */,
+				DDF66C292E2293FF00987FB0 /* ProgressNutritionCard.swift */,
+				DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */,
 				DDB4BBF02DFCDF9400D0727B /* DatePickerField.swift */,
 				DDB4BBF12DFCDF9400D0727B /* MealTypeCell.swift */,
 				DDB4BBF22DFCDF9400D0727B /* NutritionCard.swift */,
+				DDF66C232E2290C200987FB0 /* TabSelector.swift */,
 				DDB4BBF32DFCDF9400D0727B /* SearchBar.swift */,
 				DDB4BBF42DFCDF9400D0727B /* SectionHeader.swift */,
 			);
@@ -223,6 +244,8 @@
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DDB4BBFE2DFF1A9800D0727B /* MainTabView.swift */,
+				DDB4BC002DFF1AA200D0727B /* ChartsView.swift */,
 				DDB4BBFC2DFCE48F00D0727B /* Modifiers */,
 				DDB4BBF52DFCDF9400D0727B /* Components */,
 				DE69DAB32DFC60CC00533B61 /* Common */,
@@ -254,6 +277,7 @@
 		DE6D6C912D885F8200AC3E72 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				DDB4BC022E09C3AB00D0727B /* ProgressViewModel.swift */,
 				DE6D6C942D885FA000AC3E72 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
@@ -347,17 +371,21 @@
 				DDB4BBFD2DFCE48F00D0727B /* ViewModifiers.swift in Sources */,
 				DDB4BBF72DFCDF9400D0727B /* DatePickerField.swift in Sources */,
 				DDB4BBF82DFCDF9400D0727B /* SearchBar.swift in Sources */,
+				DDF66C242E2290C200987FB0 /* TabSelector.swift in Sources */,
 				DDB4BBF92DFCDF9400D0727B /* NutritionCard.swift in Sources */,
+				DDF66C282E2293F200987FB0 /* ChartSection.swift in Sources */,
 				DDB4BBFA2DFCDF9400D0727B /* SectionHeader.swift in Sources */,
 				DE69DAB42DFC60CC00533B61 /* MacroSummary.swift in Sources */,
 				DE69DAB62DFC60CC00533B61 /* NutritionGrid.swift in Sources */,
 				DE69DAB72DFC60CC00533B61 /* MacroInfoView.swift in Sources */,
 				DE69DAB82DFC60CC00533B61 /* CaloriesSummary.swift in Sources */,
+				DDF66C2C2E22984600987FB0 /* BarAnnotationCard.swift in Sources */,
 				DD84E6502DE7986300656DC5 /* DependencyContainer.swift in Sources */,
 				DE69DAAD2DFC5A3C00533B61 /* FoodDetailData.swift in Sources */,
 				DE6D6C952D885FA000AC3E72 /* HomeViewModel.swift in Sources */,
 				DE69DAAB2DFC597800533B61 /* MealTypeData.swift in Sources */,
 				DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */,
+				DDB4BBFF2DFF1A9800D0727B /* MainTabView.swift in Sources */,
 				DDB4BB9A2DF0DFE400D0727B /* DailyMealCell.swift in Sources */,
 				DE69DABE2DFC62E600533B61 /* IconCell.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
@@ -365,12 +393,16 @@
 				DDB4BBBF2DFB75A000D0727B /* NavigationRoute.swift in Sources */,
 				DDB4BBC02DFB75A000D0727B /* NavigationCoordinator.swift in Sources */,
 				DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */,
+				DDF66C2A2E2293FF00987FB0 /* ProgressNutritionCard.swift in Sources */,
 				DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */,
 				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
+				DDF66C2E2E23101300987FB0 /* ProgressStateViews.swift in Sources */,
 				DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */,
 				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
+				DDB4BC032E09C3AB00D0727B /* ProgressViewModel.swift in Sources */,
 				DE74B4212DE847AF00D52684 /* NutritionRepository.swift in Sources */,
 				DE69DAA72DFC459D00533B61 /* DailyMealData.swift in Sources */,
+				DDB4BC012DFF1AA200D0727B /* ChartsView.swift in Sources */,
 				DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */,
 				DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */,
 			);
@@ -506,7 +538,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = JKQNUCPDQL;
+				DEVELOPMENT_TEAM = DC2CCCCLGJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
@@ -536,7 +568,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = JKQNUCPDQL;
+				DEVELOPMENT_TEAM = DC2CCCCLGJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;

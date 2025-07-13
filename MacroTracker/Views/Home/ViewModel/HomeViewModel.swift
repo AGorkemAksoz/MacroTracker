@@ -117,10 +117,14 @@ final class HomeViewModel: ObservableObject {
         
         switch success {
         case true:
-            self.savedNutrititon = self.fetchSavedFoods()
-            completion(success)
+            DispatchQueue.main.async { [weak self] in
+                self?.savedNutrititon = self?.fetchSavedFoods() ?? []
+                completion(success)
+            }
         case false:
-            completion(false)
+            DispatchQueue.main.async {
+                completion(false)
+            }
         }
         
         //        fetchNutrition(query: query) { [weak self] result in
@@ -219,5 +223,16 @@ final class HomeViewModel: ObservableObject {
     
     func deleteFood(_ foodItem: FoodItem) {
         nutritionRepository.deleteFoodItem(foodItem)
+        // Refresh the saved nutrition data after deletion
+        DispatchQueue.main.async { [weak self] in
+            self?.savedNutrititon = self?.fetchSavedFoods() ?? []
+        }
+    }
+    
+    /// Manually refresh saved nutrition data from the database
+    func refreshSavedNutrition() {
+        DispatchQueue.main.async { [weak self] in
+            self?.savedNutrititon = self?.fetchSavedFoods() ?? []
+        }
     }
 }

@@ -1,3 +1,10 @@
+//
+//  NutritionCacheService.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 30.05.2025.
+//
+
 import Foundation
 
 protocol NutritionCacheServiceInterface {

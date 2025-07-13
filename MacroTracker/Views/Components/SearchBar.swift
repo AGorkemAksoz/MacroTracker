@@ -1,3 +1,10 @@
+//
+//  SearchBar.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 15.05.2025.
+//
+
 import SwiftUI
 
 struct SearchBar: View {

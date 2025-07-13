@@ -30,8 +30,7 @@ struct MacroTrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView(dependencyContainer: dependencyContainer)
-                .environmentObject(navigationCoordinator)
+            MainTabView(dependencyContainer: dependencyContainer)
         }
         .modelContainer(modelContainer)
     }

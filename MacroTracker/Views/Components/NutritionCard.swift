@@ -1,3 +1,10 @@
+//
+//  NutritionCard.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 7.06.2025.
+//
+
 import SwiftUI
 
 struct NutritionCard: View {
