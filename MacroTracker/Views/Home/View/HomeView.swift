@@ -15,16 +15,18 @@ enum HomeViewMacrosType: String {
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject private var homeViewModel: HomeViewModel
+    @ObservedObject var homeViewModel: HomeViewModel
     @State private var selectedListType: HomeViewMacrosType = .list
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
-    private let dependencyContainer: DependencyContainerProtocol
     
-    // Initialize with dependency container
+    // Initialize with shared HomeViewModel
+    init(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+    }
+    
+    // Legacy initializer for backwards compatibility
     init(dependencyContainer: DependencyContainerProtocol) {
-        // Initialize ViewModel using the container
-        _homeViewModel = StateObject(wrappedValue: dependencyContainer.makeHomeViewModel())
-        self.dependencyContainer = dependencyContainer
+        self.homeViewModel = dependencyContainer.makeHomeViewModel()
     }
     
     var mealsByDate: [Date: [FoodItem]] {
@@ -89,7 +91,7 @@ struct HomeView: View {
                 Group {
                     switch route {
                     case .home:
-                        HomeView(dependencyContainer: dependencyContainer)
+                        HomeView(homeViewModel: homeViewModel)
                     case .enterFood:
                         EnteringFoodView(homeViewModel: homeViewModel)
                     case .confirmFood(let foods, let date, let mealType):
@@ -115,5 +117,6 @@ struct HomeView: View {
 #Preview {
     let container = try! ModelContainer(for: FoodItem.self)
     let dependencyContainer = DependencyContainer(modelContext: container.mainContext)
-    return HomeView(dependencyContainer: dependencyContainer)
+    let homeViewModel = dependencyContainer.makeHomeViewModel()
+    return HomeView(homeViewModel: homeViewModel)
 }

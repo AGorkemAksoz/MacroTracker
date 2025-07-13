@@ -1,3 +1,10 @@
+//
+//  MainTabView.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 25.02.2025.
+//
+
 import Combine
 import SwiftUI
 import SwiftData
@@ -5,17 +12,23 @@ import SwiftData
 struct MainTabView: View {
     let dependencyContainer: DependencyContainerProtocol
     @StateObject private var navigationCoordinator = NavigationCoordinator()
+    @StateObject private var sharedHomeViewModel: HomeViewModel
+    
+    init(dependencyContainer: DependencyContainerProtocol) {
+        self.dependencyContainer = dependencyContainer
+        _sharedHomeViewModel = StateObject(wrappedValue: dependencyContainer.makeHomeViewModel())
+    }
     
     var body: some View {
         TabView {
-            HomeView(dependencyContainer: dependencyContainer)
+            HomeView(homeViewModel: sharedHomeViewModel)
                 .tabItem {
                     Image(systemName: "house")
                     Text("Dashboard")
                 }
                 .environmentObject(navigationCoordinator)
             
-            ChartsView(homeViewModel: dependencyContainer.makeHomeViewModel())
+            ChartsView(homeViewModel: sharedHomeViewModel)
                 .tabItem {
                     Image(systemName: "chart.bar")
                     Text("Progress")

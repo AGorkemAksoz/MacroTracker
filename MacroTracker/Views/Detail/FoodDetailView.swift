@@ -1,3 +1,10 @@
+//
+//  FoodDetailView.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 11.06.2025.
+//
+
 import SwiftUI
 
 struct FoodDetailView: View {

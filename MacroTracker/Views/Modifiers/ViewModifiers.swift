@@ -1,3 +1,10 @@
+//
+//  ViewModifiers.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 5.06.2025.
+//
+
 import SwiftUI
 
 // MARK: - Card Style

@@ -1,3 +1,10 @@
+//
+//  SectionHeader.swift
+//  MacroTracker
+//
+//  Created by Gorkem on 6.06.2025.
+//
+
 import SwiftUI
 
 struct SectionHeader: View {
