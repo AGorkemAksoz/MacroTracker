@@ -24,12 +24,8 @@ struct SearchBar: View {
             )
             .frame(height: 56)
             .padding(.horizontal)
-            .overlay {
-                if isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                }
-            }
+            .disabled(isLoading)
+            .opacity(isLoading ? 0.6 : 1.0)
             .onChange(of: text) { oldValue, newValue in
                 onTextChange?(newValue)
             }
