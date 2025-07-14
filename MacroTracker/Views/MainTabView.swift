@@ -28,7 +28,7 @@ struct MainTabView: View {
                 }
                 .environmentObject(navigationCoordinator)
             
-            ChartsView(homeViewModel: sharedHomeViewModel)
+            ChartsView(dependencyContainer: dependencyContainer, homeViewModel: sharedHomeViewModel)
                 .tabItem {
                     Image(systemName: "chart.bar")
                     Text("Progress")
@@ -53,6 +53,12 @@ class MockDependencyContainer: DependencyContainerProtocol {
     init(modelContext: ModelContext) { self.modelContext = modelContext }
     func makeHomeViewModel() -> HomeViewModel {
         HomeViewModel(nutritionRepository: nutritionRepository, modelContext: modelContext)
+    }
+    
+    func makeProgressViewModel(homeViewModel: HomeViewModel) -> ProgressViewModel {
+        let dataService = ConcreteProgressDataService(homeViewModel: homeViewModel)
+        let calculationService = ConcreteProgressCalculationService()
+        return ProgressViewModel(dataService: dataService, calculationService: calculationService)
     }
 }
 #endif

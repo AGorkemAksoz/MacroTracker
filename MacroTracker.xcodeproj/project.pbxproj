@@ -49,6 +49,8 @@
 		DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */; };
 		DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F602DD616AF0096E587 /* FoodItem.swift */; };
 		DEBA8C142E251FFF0034D433 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEBA8C132E251FFF0034D433 /* Secrets.plist */; };
+		DEBA8C162E252DBC0034D433 /* ProgressDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */; };
+		DEBA8C182E252DE10034D433 /* ProgressCalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +97,8 @@
 		DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatabaseService.swift; sourceTree = "<group>"; };
 		DEAE3F602DD616AF0096E587 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		DEBA8C132E251FFF0034D433 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDataService.swift; sourceTree = "<group>"; };
+		DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCalculationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -151,7 +155,6 @@
 		DE087A452D6CB6E700B6F6AF = {
 			isa = PBXGroup;
 			children = (
-				DEBA8C132E251FFF0034D433 /* Secrets.plist */,
 				DE087A502D6CB6E700B6F6AF /* MacroTracker */,
 				DE087A4F2D6CB6E700B6F6AF /* Products */,
 			);
@@ -172,13 +175,14 @@
 				DE69DA4B2DEF2BBF00533B61 /* Manrope.ttf */,
 				DDB4BBBE2DFB75A000D0727B /* Navigation */,
 				DE6D6C8E2D885F4800AC3E72 /* Views */,
-				DE69DAA62DFC459D00533B61 /* Models */,
-				DE6D6C822D8857DE00AC3E72 /* Model */,
+				DE69DAA62DFC459D00533B61 /* ViewData */,
+				DE6D6C822D8857DE00AC3E72 /* Entities */,
 				DE6D6C812D8857D900AC3E72 /* Service */,
 				DE6D6C802D8857D500AC3E72 /* Network */,
 				DEA334B22DDF541B0070BD7F /* Database */,
 				DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */,
 				DE087A552D6CB6E900B6F6AF /* Assets.xcassets */,
+				DEBA8C132E251FFF0034D433 /* Secrets.plist */,
 				DE087A572D6CB6E900B6F6AF /* Preview Content */,
 			);
 			path = MacroTracker;
@@ -192,14 +196,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		DE69DAA62DFC459D00533B61 /* Models */ = {
+		DE69DAA62DFC459D00533B61 /* ViewData */ = {
 			isa = PBXGroup;
 			children = (
 				DE69DAAC2DFC5A3C00533B61 /* FoodDetailData.swift */,
 				DE69DAAA2DFC597800533B61 /* MealTypeData.swift */,
 				DE69DAA52DFC459D00533B61 /* DailyMealData.swift */,
 			);
-			path = Models;
+			path = ViewData;
 			sourceTree = "<group>";
 		};
 		DE69DAB32DFC60CC00533B61 /* Common */ = {
@@ -231,17 +235,19 @@
 				DE74B4202DE847AF00D52684 /* NutritionRepository.swift */,
 				DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */,
 				DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */,
+				DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */,
+				DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
 		};
-		DE6D6C822D8857DE00AC3E72 /* Model */ = {
+		DE6D6C822D8857DE00AC3E72 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				DE6D6C8C2D885D8400AC3E72 /* Nutrition.swift */,
 				DEAE3F602DD616AF0096E587 /* FoodItem.swift */,
 			);
-			path = Model;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
@@ -396,6 +402,7 @@
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
 				DDB4BBBF2DFB75A000D0727B /* NavigationRoute.swift in Sources */,
 				DDB4BBC02DFB75A000D0727B /* NavigationCoordinator.swift in Sources */,
+				DEBA8C182E252DE10034D433 /* ProgressCalculationService.swift in Sources */,
 				DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */,
 				DDF66C2A2E2293FF00987FB0 /* ProgressNutritionCard.swift in Sources */,
 				DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */,
@@ -404,6 +411,7 @@
 				DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */,
 				DE6D6C8B2D885D5200AC3E72 /* NutritionService.swift in Sources */,
 				DDB4BC032E09C3AB00D0727B /* ProgressViewModel.swift in Sources */,
+				DEBA8C162E252DBC0034D433 /* ProgressDataService.swift in Sources */,
 				DE74B4212DE847AF00D52684 /* NutritionRepository.swift in Sources */,
 				DE69DAA72DFC459D00533B61 /* DailyMealData.swift in Sources */,
 				DDB4BC012DFF1AA200D0727B /* ChartsView.swift in Sources */,

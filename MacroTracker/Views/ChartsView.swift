@@ -11,9 +11,9 @@ struct ChartsView: View {
     @ObservedObject var homeViewModel: HomeViewModel
     @StateObject private var viewModel: ProgressViewModel
     
-    init(homeViewModel: HomeViewModel) {
+    init(dependencyContainer: DependencyContainerProtocol, homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
-        _viewModel = StateObject(wrappedValue: ProgressViewModel(homeViewModel: homeViewModel))
+        _viewModel = StateObject(wrappedValue: dependencyContainer.makeProgressViewModel(homeViewModel: homeViewModel))
     }
     
     var body: some View {

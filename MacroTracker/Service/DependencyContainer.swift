@@ -1,5 +1,6 @@
 import SwiftData
 import Foundation
+import Combine
 
 /// A comprehensive guide to Dependency Injection in this app
 ///
@@ -39,6 +40,11 @@ protocol DependencyContainerProtocol {
     /// Creates a new instance of HomeViewModel with all required dependencies
     /// - Returns: A configured HomeViewModel instance
     func makeHomeViewModel() -> HomeViewModel
+    
+    /// Creates a new instance of ProgressViewModel with all required dependencies
+    /// - Parameter homeViewModel: The data source for the progress view
+    /// - Returns: A configured ProgressViewModel instance
+    func makeProgressViewModel(homeViewModel: HomeViewModel) -> ProgressViewModel
 }
 
 /// The concrete implementation of the dependency container
@@ -94,6 +100,26 @@ class DependencyContainer: DependencyContainerProtocol {
         return HomeViewModel(
             nutritionRepository: nutritionRepository,
             modelContext: modelContext
+        )
+    }
+    
+    // MARK: - Progress View Factory Methods
+    
+    private func makeProgressDataService(homeViewModel: HomeViewModel) -> ProgressDataService {
+        ConcreteProgressDataService(homeViewModel: homeViewModel)
+    }
+    
+    private func makeProgressCalculationService() -> ProgressCalculationService {
+        ConcreteProgressCalculationService()
+    }
+    
+    func makeProgressViewModel(homeViewModel: HomeViewModel) -> ProgressViewModel {
+        let dataService = makeProgressDataService(homeViewModel: homeViewModel)
+        let calculationService = makeProgressCalculationService()
+        
+        return ProgressViewModel(
+            dataService: dataService,
+            calculationService: calculationService
         )
     }
 } 
