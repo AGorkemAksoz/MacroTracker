@@ -48,6 +48,7 @@
 		DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE74B4222DE8765F00D52684 /* NutritionCacheService.swift */; };
 		DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */; };
 		DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F602DD616AF0096E587 /* FoodItem.swift */; };
+		DEBA8C142E251FFF0034D433 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEBA8C132E251FFF0034D433 /* Secrets.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		DE74B4222DE8765F00D52684 /* NutritionCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCacheService.swift; sourceTree = "<group>"; };
 		DEA334B32DDF54470070BD7F /* NutritionDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionDatabaseService.swift; sourceTree = "<group>"; };
 		DEAE3F602DD616AF0096E587 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		DEBA8C132E251FFF0034D433 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -149,6 +151,7 @@
 		DE087A452D6CB6E700B6F6AF = {
 			isa = PBXGroup;
 			children = (
+				DEBA8C132E251FFF0034D433 /* Secrets.plist */,
 				DE087A502D6CB6E700B6F6AF /* MacroTracker */,
 				DE087A4F2D6CB6E700B6F6AF /* Products */,
 			);
@@ -354,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEBA8C142E251FFF0034D433 /* Secrets.plist in Resources */,
 				DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */,
 				DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */,
 				DE69DA4C2DEF2BBF00533B61 /* Manrope.ttf in Resources */,
@@ -538,7 +542,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
@@ -568,7 +572,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;

@@ -28,3 +28,14 @@ enum APIError: Error {
     case invalidResponse
     case invalidData
 }
+
+struct APIKeyProvider {
+    static var apiKey: String {
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let nsDictionary = NSDictionary(contentsOfFile: path),
+              let key = nsDictionary["API_KEY"] as? String else {
+            fatalError("API Key not found. Make sure Secrets.plist is in the project and contains the API_KEY.")
+        }
+        return key
+    }
+}

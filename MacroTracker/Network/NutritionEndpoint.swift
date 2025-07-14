@@ -23,7 +23,7 @@ enum NutritionEndpoint: APIEndpoint {
     }
 
     var headers: [String: String]? {
-        return ["X-Api-Key": "lQBvfQTHIRJji0NR2oYVuA==D2WRZjgXYvg5ZJt9"] // API Key başlık içinde olmalı
+        return ["X-Api-Key": APIKeyProvider.apiKey]
     }
 
     var parameters: [String: Any]? {
