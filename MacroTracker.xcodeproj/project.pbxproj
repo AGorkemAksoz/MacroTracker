@@ -26,6 +26,7 @@
 		DDF66C2C2E22984600987FB0 /* BarAnnotationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */; };
 		DDF66C2E2E23101300987FB0 /* ProgressStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */; };
 		DDF66C7A2E2581BF00987FB0 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDF66C792E2581BF00987FB0 /* Secrets.plist */; };
+		DDF66C7C2E29864600987FB0 /* ConfirmationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C7B2E29864600987FB0 /* ConfirmationAlert.swift */; };
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarAnnotationCard.swift; sourceTree = "<group>"; };
 		DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStateViews.swift; sourceTree = "<group>"; };
 		DDF66C792E2581BF00987FB0 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		DDF66C7B2E29864600987FB0 /* ConfirmationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlert.swift; sourceTree = "<group>"; };
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		DDB4BBF52DFCDF9400D0727B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DDF66C7B2E29864600987FB0 /* ConfirmationAlert.swift */,
 				DDF66C2B2E22984600987FB0 /* BarAnnotationCard.swift */,
 				DDF66C272E2293F200987FB0 /* ChartSection.swift */,
 				DDF66C292E2293FF00987FB0 /* ProgressNutritionCard.swift */,
@@ -406,6 +409,7 @@
 				DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */,
 				DDF66C2A2E2293FF00987FB0 /* ProgressNutritionCard.swift in Sources */,
 				DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */,
+				DDF66C7C2E29864600987FB0 /* ConfirmationAlert.swift in Sources */,
 				DE6D6C892D885A1B00AC3E72 /* NutritionEndpoint.swift in Sources */,
 				DDF66C2E2E23101300987FB0 /* ProgressStateViews.swift in Sources */,
 				DEA334B42DDF54470070BD7F /* NutritionDatabaseService.swift in Sources */,

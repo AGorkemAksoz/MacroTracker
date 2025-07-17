@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct MealTypeDetailView: View {
-    let data: MealTypeDataProvider
+    let mealType: MealTypes
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
+    @EnvironmentObject private var homeViewModel: HomeViewModel
     
-    init(data: MealTypeDataProvider) {
-        self.data = data
+    // Alert state
+    @State private var showingDeleteAlert = false
+    @State private var foodToDelete: FoodItem?
+    
+    init(mealsType: MealTypes, meals: [FoodItem]) {
+        self.mealType = mealsType
     }
     
-    // Convenience initializer for direct data
-    init(mealsType: MealTypes, meals: [FoodItem]) {
-        self.init(data: MealTypeData(mealType: mealsType, meals: meals))
+    // Computed property to get current meals for this meal type
+    private var currentMeals: [FoodItem] {
+        let mealsForDate = homeViewModel.getMealsForDate(homeViewModel.selectedDate)
+        return mealsForDate.filter { $0.mealType == mealType }
     }
     
     var body: some View {
@@ -26,15 +32,28 @@ struct MealTypeDetailView: View {
                 SectionHeader(title: "Foods")
                     .padding()
                 
-                ForEach(data.meals, id: \.id) { meal in
+                ForEach(currentMeals, id: \.id) { meal in
                     Button {
                         navigationCoordinator.navigate(to: .foodDetail(food: meal))
                     } label: {
                         IconCell(
-                            iconName: data.mealType.iconName,
+                            iconName: mealType.iconName,
                             title: meal.name,
                             subtitle: "\(meal.servingSizeG.formatted(.number)) gr."
                         )
+                    }
+                    .contextMenu {
+                        Button {
+                            navigationCoordinator.navigate(to: .foodDetail(food: meal))
+                        } label: {
+                            Label("View Details", systemImage: "eye")
+                        }
+                        
+                        Button(role: .destructive) {
+                            showDeleteConfirmation(for: meal)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
                     }
                 }
                 
@@ -42,19 +61,53 @@ struct MealTypeDetailView: View {
                     .padding()
                 
                 NutritionGrid(items: [
-                    NutritionGridItem(title: "Fiber", value: data.meals.totalFiber, unit: "g"),
-                    NutritionGridItem(title: "Sugar", value: data.meals.totalSugar, unit: "g"),
-                    NutritionGridItem(title: "Cholesterol", value: Double(data.meals.totalCholesterol), unit: "mg"),
-                    NutritionGridItem(title: "Sodium", value: Double(data.meals.totalSodium), unit: "mg"),
-                    NutritionGridItem(title: "Potassium", value: Double(data.meals.totalPotassium), unit: "mg"),
-                    NutritionGridItem(title: "Protein", value: data.meals.totalProtein, unit: "g"),
-                    NutritionGridItem(title: "Carbs", value: data.meals.totalCarbs, unit: "g"),
-                    NutritionGridItem(title: "Fat", value: data.meals.totalFat, unit: "g")
+                    NutritionGridItem(title: "Fiber", value: currentMeals.totalFiber, unit: "g"),
+                    NutritionGridItem(title: "Sugar", value: currentMeals.totalSugar, unit: "g"),
+                    NutritionGridItem(title: "Cholesterol", value: Double(currentMeals.totalCholesterol), unit: "mg"),
+                    NutritionGridItem(title: "Sodium", value: Double(currentMeals.totalSodium), unit: "mg"),
+                    NutritionGridItem(title: "Potassium", value: Double(currentMeals.totalPotassium), unit: "mg"),
+                    NutritionGridItem(title: "Protein", value: currentMeals.totalProtein, unit: "g"),
+                    NutritionGridItem(title: "Carbs", value: currentMeals.totalCarbs, unit: "g"),
+                    NutritionGridItem(title: "Fat", value: currentMeals.totalFat, unit: "g")
                 ])
                 .padding()
             }
             Spacer()
         }
-        .navigationTitle(data.mealType.mealName)
+        .navigationTitle(mealType.mealName)
+        .confirmationAlert(
+            isPresented: $showingDeleteAlert,
+            alert: deleteConfirmationAlert
+        )
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var deleteConfirmationAlert: ConfirmationAlert {
+        ConfirmationAlert(
+            title: "Delete Food",
+            message: foodToDelete.map { "Are you sure you want to delete '\($0.name)'? This action cannot be undone." } ?? "",
+            confirmButtonTitle: "Delete",
+            cancelButtonTitle: "Cancel"
+        ) {
+            if let food = foodToDelete {
+                deleteFood(food)
+            }
+            foodToDelete = nil
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    private func showDeleteConfirmation(for meal: FoodItem) {
+        foodToDelete = meal
+        showingDeleteAlert = true
+    }
+    
+    private func deleteFood(_ meal: FoodItem) {
+        // Delete the meal from the database
+        homeViewModel.deleteFood(meal)
+        // Refresh the home view model to update the UI
+        homeViewModel.refreshSavedNutrition()
     }
 }
