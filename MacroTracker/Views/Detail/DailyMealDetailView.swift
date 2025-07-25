@@ -31,7 +31,7 @@ struct DailyMealDetailView: View {
                 ForEach(MealTypes.allCases, id: \.self) { mealType in
                     if let mealsForType = data.getMealsByType(for: date)[mealType] {
                         Button {
-                            navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType))
+                            navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType, date: date))
                         } label: {
                             MealTypeCell(mealType: mealType, meals: mealsForType)
                         }
@@ -67,7 +67,6 @@ struct DailyMealDetailView: View {
         return formatter.string(from: date)
     }
 }
-
 struct NutrientGridItem: View {
     let title: String
     let value: Double
@@ -88,3 +87,4 @@ struct NutrientGridItem: View {
         .cornerRadius(8)
     }
 }
+

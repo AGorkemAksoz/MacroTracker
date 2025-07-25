@@ -126,22 +126,6 @@ final class HomeViewModel: ObservableObject {
                 completion(false)
             }
         }
-        
-        //        fetchNutrition(query: query) { [weak self] result in
-        //            guard let self = self else {
-        //                completion(false)
-        //                return
-        //            }
-        //
-        //            switch result {
-        //            case .success(let items):
-        //                let success = self.nutritionRepository.saveFoodItems(items, date: date, mealType: mealType)
-        //                self.savedNutrititon = self.fetchSavedFoods()
-        //                completion(success)
-        //            case .failure:
-        //                completion(false)
-        //            }
-        //        }
     }
     
     /// Updates the model context
@@ -234,5 +218,10 @@ final class HomeViewModel: ObservableObject {
         DispatchQueue.main.async { [weak self] in
             self?.savedNutrititon = self?.fetchSavedFoods() ?? []
         }
+    }
+    
+    func getFoodsByDate(_ date: Date, for mealType: MealTypes) -> [FoodItem] {
+        let mealsForDate = self.getMealsForDate(date)  // Use passed date instead of selectedDate
+        return mealsForDate.filter { $0.mealType == mealType }
     }
 }

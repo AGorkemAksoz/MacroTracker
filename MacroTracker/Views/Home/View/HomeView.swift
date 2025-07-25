@@ -103,8 +103,8 @@ struct HomeView: View {
                         )
                     case .dailyMealDetail(let date):
                         DailyMealDetailView(date: date, homeViewModel: homeViewModel)
-                    case .mealTypeDetail(let type, let meals):
-                        MealTypeDetailView(mealsType: type, meals: meals)
+                    case .mealTypeDetail(let type, let meals, let date):
+                        MealTypeDetailView(mealsType: type, meals: meals, date: date)
                             .environmentObject(homeViewModel)
                     case .foodDetail(let food):
                         FoodDetailView(foodItem: food)

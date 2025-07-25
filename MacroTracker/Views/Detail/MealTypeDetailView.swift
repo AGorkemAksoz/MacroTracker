@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MealTypeDetailView: View {
     let mealType: MealTypes
+    let date: Date  // Added date parameter
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
     @EnvironmentObject private var homeViewModel: HomeViewModel
     
@@ -16,14 +17,9 @@ struct MealTypeDetailView: View {
     @State private var showingDeleteAlert = false
     @State private var foodToDelete: FoodItem?
     
-    init(mealsType: MealTypes, meals: [FoodItem]) {
+    init(mealsType: MealTypes, meals: [FoodItem], date: Date) {  // Updated initializer
         self.mealType = mealsType
-    }
-    
-    // Computed property to get current meals for this meal type
-    private var currentMeals: [FoodItem] {
-        let mealsForDate = homeViewModel.getMealsForDate(homeViewModel.selectedDate)
-        return mealsForDate.filter { $0.mealType == mealType }
+        self.date = date
     }
     
     var body: some View {
@@ -32,7 +28,7 @@ struct MealTypeDetailView: View {
                 SectionHeader(title: "Foods")
                     .padding()
                 
-                ForEach(currentMeals, id: \.id) { meal in
+                ForEach(homeViewModel.getFoodsByDate(date, for: mealType), id: \.id) { meal in
                     Button {
                         navigationCoordinator.navigate(to: .foodDetail(food: meal))
                     } label: {
@@ -61,14 +57,14 @@ struct MealTypeDetailView: View {
                     .padding()
                 
                 NutritionGrid(items: [
-                    NutritionGridItem(title: "Fiber", value: currentMeals.totalFiber, unit: "g"),
-                    NutritionGridItem(title: "Sugar", value: currentMeals.totalSugar, unit: "g"),
-                    NutritionGridItem(title: "Cholesterol", value: Double(currentMeals.totalCholesterol), unit: "mg"),
-                    NutritionGridItem(title: "Sodium", value: Double(currentMeals.totalSodium), unit: "mg"),
-                    NutritionGridItem(title: "Potassium", value: Double(currentMeals.totalPotassium), unit: "mg"),
-                    NutritionGridItem(title: "Protein", value: currentMeals.totalProtein, unit: "g"),
-                    NutritionGridItem(title: "Carbs", value: currentMeals.totalCarbs, unit: "g"),
-                    NutritionGridItem(title: "Fat", value: currentMeals.totalFat, unit: "g")
+                    NutritionGridItem(title: "Fiber", value: homeViewModel.getFoodsByDate(date, for: mealType).totalFiber, unit: "g"),
+                    NutritionGridItem(title: "Sugar", value: homeViewModel.getFoodsByDate(date, for: mealType).totalSugar, unit: "g"),
+                    NutritionGridItem(title: "Cholesterol", value: Double(homeViewModel.getFoodsByDate(date, for: mealType).totalCholesterol), unit: "mg"),
+                    NutritionGridItem(title: "Sodium", value: Double(homeViewModel.getFoodsByDate(date, for: mealType).totalSodium), unit: "mg"),
+                    NutritionGridItem(title: "Potassium", value: Double(homeViewModel.getFoodsByDate(date, for: mealType).totalPotassium), unit: "mg"),
+                    NutritionGridItem(title: "Protein", value: homeViewModel.getFoodsByDate(date, for: mealType).totalProtein, unit: "g"),
+                    NutritionGridItem(title: "Carbs", value: homeViewModel.getFoodsByDate(date, for: mealType).totalCarbs, unit: "g"),
+                    NutritionGridItem(title: "Fat", value: homeViewModel.getFoodsByDate(date, for: mealType).totalFat, unit: "g")
                 ])
                 .padding()
             }
@@ -108,6 +104,9 @@ struct MealTypeDetailView: View {
         // Delete the meal from the database
         homeViewModel.deleteFood(meal)
         // Refresh the home view model to update the UI
+        
+        foodToDelete = nil
+        
         homeViewModel.refreshSavedNutrition()
     }
 }
