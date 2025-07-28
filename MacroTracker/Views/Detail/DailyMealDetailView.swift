@@ -10,16 +10,30 @@ import SwiftUI
 struct DailyMealDetailView: View {
     let data: DailyMealDataProvider
     let date: Date
+    @ObservedObject var homeViewModel: HomeViewModel
     @EnvironmentObject private var navigationCoordinator: NavigationCoordinator
+    
+    // Alert state for delete functionality
+    @State private var showingDeleteAlert = false
+    @State private var mealTypeToDelete: MealTypes?
     
     init(data: DailyMealDataProvider, date: Date) {
         self.data = data
         self.date = date
+        // We need to handle this case - either make homeViewModel optional or provide a default
+        if let homeVM = data as? HomeViewModel {
+            self.homeViewModel = homeVM
+        } else {
+            // This should not happen in normal usage, but we need to provide a fallback
+            fatalError("DailyMealDetailView requires HomeViewModel as data provider")
+        }
     }
     
     // Convenience initializer for HomeViewModel
     init(date: Date, homeViewModel: HomeViewModel) {
-        self.init(data: homeViewModel, date: date)
+        self.data = homeViewModel
+        self.date = date
+        self.homeViewModel = homeViewModel
     }
     
     var body: some View {
@@ -28,12 +42,28 @@ struct DailyMealDetailView: View {
                 SectionHeader(title: "Meals")
                     .padding()
                 
+                // Use homeViewModel directly to ensure reactivity
                 ForEach(MealTypes.allCases, id: \.self) { mealType in
-                    if let mealsForType = data.getMealsByType(for: date)[mealType] {
+                    let mealsForType = homeViewModel.getMealsByType(for: date)[mealType] ?? []
+                    
+                    if !mealsForType.isEmpty {
                         Button {
                             navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType, date: date))
                         } label: {
                             MealTypeCell(mealType: mealType, meals: mealsForType)
+                        }
+                        .contextMenu {
+                            Button {
+                                navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType, date: date))
+                            } label: {
+                                Label("View Details", systemImage: "eye")
+                            }
+                            
+                            Button(role: .destructive) {
+                                showDeleteConfirmation(for: mealType)
+                            } label: {
+                                Label("Delete All Foods", systemImage: "trash")
+                            }
                         }
                     }
                 }
@@ -41,7 +71,8 @@ struct DailyMealDetailView: View {
                 SectionHeader(title: "Daily Summary")
                     .padding()
                 
-                let mealsByType = data.getMealsByType(for: date)
+                // Use homeViewModel directly for reactive updates
+                let mealsByType = homeViewModel.getMealsByType(for: date)
                 NutritionGrid(items: [
                     NutritionGridItem(title: "Fiber", value: mealsByType.totalFiber, unit: "g"),
                     NutritionGridItem(title: "Sugar", value: mealsByType.totalSugar, unit: "g"),
@@ -59,6 +90,50 @@ struct DailyMealDetailView: View {
             .navigationTitle(formatDate(date))
             .navigationBarTitleDisplayMode(.inline)
         }
+        .confirmationAlert(
+            isPresented: $showingDeleteAlert,
+            alert: deleteConfirmationAlert
+        )
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var deleteConfirmationAlert: ConfirmationAlert {
+        ConfirmationAlert(
+            title: "Delete All Foods",
+            message: mealTypeToDelete.map { "Are you sure you want to delete all foods from '\($0.mealName)'? This action cannot be undone." } ?? "",
+            confirmButtonTitle: "Delete",
+            cancelButtonTitle: "Cancel"
+        ) {
+            if let mealType = mealTypeToDelete {
+                deleteAllFoodsForMealType(mealType)
+            }
+            mealTypeToDelete = nil
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    private func showDeleteConfirmation(for mealType: MealTypes) {
+        mealTypeToDelete = mealType
+        showingDeleteAlert = true
+    }
+    
+    private func deleteAllFoodsForMealType(_ mealType: MealTypes) {
+        // Get all foods for this meal type and date
+        let foodsToDelete = homeViewModel.getFoodsByDate(date, for: mealType)
+        
+        // Create a set of unique IDs to avoid deleting the same object multiple times
+        let uniqueFoodIds = Set(foodsToDelete.map { $0.id })
+        
+        // Delete each unique food item
+        for foodId in uniqueFoodIds {
+            if let food = foodsToDelete.first(where: { $0.id == foodId }) {
+                homeViewModel.deleteFood(food)
+            }
+        }
+        
+        mealTypeToDelete = nil
     }
     
     private func formatDate(_ date: Date) -> String {
@@ -67,6 +142,7 @@ struct DailyMealDetailView: View {
         return formatter.string(from: date)
     }
 }
+
 struct NutrientGridItem: View {
     let title: String
     let value: Double

@@ -18,6 +18,7 @@ protocol NutritionRepositoryInterface {
     func getAllFoodItems() -> [FoodItem]
     func getFoodItems(for date: Date) -> [FoodItem]
     func deleteFoodItem(_ item: FoodItem)
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date)
 }
 
 class NutritionRepository: NutritionRepositoryInterface {
@@ -96,5 +97,9 @@ class NutritionRepository: NutritionRepositoryInterface {
     
     func deleteFoodItem(_ item: FoodItem) {
         databaseService.deleteFood(item)
+    }
+    
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date) {
+        databaseService.deleteAllFoodsForMealTypeAndDate(mealType: mealType, date: date)
     }
 } 

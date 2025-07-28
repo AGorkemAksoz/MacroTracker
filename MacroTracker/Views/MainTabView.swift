@@ -44,6 +44,7 @@ class MockNutritionRepository: NutritionRepositoryInterface {
     func getFoodItems(for date: Date) -> [FoodItem] { [] }
     func saveFoodItems(_ items: [Item], date: Date, mealType: MealTypes) -> Bool { true }
     func deleteFoodItem(_ foodItem: FoodItem) {}
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date) {}
     func searchNutrition(query: String) -> AnyPublisher<[Item], Error> { Just([]).setFailureType(to: Error.self).eraseToAnyPublisher() }
 }
 

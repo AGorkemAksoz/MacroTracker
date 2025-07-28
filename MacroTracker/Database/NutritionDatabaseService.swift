@@ -14,6 +14,7 @@ protocol DatabaseServiceInterface {
     func savingNutritionToLocalDatabase(_ nutrition: [Item], date recordedDate: Date?, mealType: MealTypes?)
     func fetchSavedFoods() -> [FoodItem]
     func deleteFood(_ foodItem: FoodItem)
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date)
     func saveContext()
 }
 
@@ -70,17 +71,84 @@ class NutritionDatabaseService: DatabaseServiceInterface {
     }
     
     func deleteFood(_ foodItem: FoodItem) {
-        modelContext.delete(foodItem)
-        saveContext()
+        // Ensure we're on the main thread for SwiftData operations
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            // Check if the object is still valid and not already deleted
+            guard !foodItem.isDeleted else { 
+                print("Food item already deleted: \(foodItem.name)")
+                return 
+            }
+            
+            // Check if the object is still in the context
+            guard self.modelContext.hasChanges || !foodItem.isDeleted else {
+                print("Food item not in context or already deleted: \(foodItem.name)")
+                return
+            }
+            
+            // Delete the object
+            self.modelContext.delete(foodItem)
+            
+            // Save context with error handling
+            do {
+                try self.modelContext.save()
+                print("Successfully deleted food item: \(foodItem.name)")
+            } catch {
+                print("Failed to save context after deletion: \(error)")
+            }
+        }
+    }
+    
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date) {
+        // Use batch deletion to avoid retain cycle issues
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                // Create a predicate to find all foods for the specific meal type and date
+                let calendar = Calendar.current
+                let startOfDay = calendar.startOfDay(for: date)
+                let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+                
+                let predicate = #Predicate<FoodItem> { food in
+                    food.mealType == mealType &&
+                    food.recordedDate >= startOfDay &&
+                    food.recordedDate < endOfDay
+                }
+                
+                let descriptor = FetchDescriptor<FoodItem>(predicate: predicate)
+                let foodsToDelete = try self.modelContext.fetch(descriptor)
+                
+                print("Found \(foodsToDelete.count) foods to delete for \(mealType.mealName) on \(date)")
+                
+                // Delete all found foods
+                for food in foodsToDelete {
+                    if !food.isDeleted {
+                        self.modelContext.delete(food)
+                    }
+                }
+                
+                // Save the context
+                try self.modelContext.save()
+                print("Successfully deleted \(foodsToDelete.count) foods for \(mealType.mealName)")
+                
+            } catch {
+                print("Failed to delete foods for \(mealType.mealName): \(error)")
+            }
+        }
     }
     
     func saveContext() {
-        // Saving changes
-        do {
-            try self.modelContext.save()
-        } catch {
-            print("Failed to save to database: \(error)")
+        // Ensure we're on the main thread
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                try self.modelContext.save()
+            } catch {
+                print("Failed to save to database: \(error)")
+            }
         }
-
     }
 }

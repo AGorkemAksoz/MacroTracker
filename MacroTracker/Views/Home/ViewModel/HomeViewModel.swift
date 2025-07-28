@@ -206,16 +206,34 @@ final class HomeViewModel: ObservableObject {
     }
     
     func deleteFood(_ foodItem: FoodItem) {
-        nutritionRepository.deleteFoodItem(foodItem)
-        // Refresh the saved nutrition data after deletion
+        // Ensure we're on the main thread
         DispatchQueue.main.async { [weak self] in
-            self?.savedNutrititon = self?.fetchSavedFoods() ?? []
+            guard let self = self else { return }
+            
+            // Check if the food item is already deleted
+            guard !foodItem.isDeleted else { return }
+            
+            // Remove from the published array first to avoid retain cycles
+            self.savedNutrititon.removeAll { $0.id == foodItem.id }
+            
+            // Delete from repository
+            self.nutritionRepository.deleteFoodItem(foodItem)
+            
+            // Clear the entire array to release all SwiftData object references
+            self.savedNutrititon.removeAll()
+            
+            // Refresh the saved nutrition data after deletion
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                self?.savedNutrititon = self?.fetchSavedFoods() ?? []
+            }
         }
     }
     
     /// Manually refresh saved nutrition data from the database
     func refreshSavedNutrition() {
         DispatchQueue.main.async { [weak self] in
+            // Clear array first, then fetch fresh data
+            self?.savedNutrititon.removeAll()
             self?.savedNutrititon = self?.fetchSavedFoods() ?? []
         }
     }
@@ -223,5 +241,16 @@ final class HomeViewModel: ObservableObject {
     func getFoodsByDate(_ date: Date, for mealType: MealTypes) -> [FoodItem] {
         let mealsForDate = self.getMealsForDate(date)  // Use passed date instead of selectedDate
         return mealsForDate.filter { $0.mealType == mealType }
+    }
+
+    /// Delete all foods for a specific meal type and date using batch deletion
+    func deleteAllFoodsForMealTypeAndDate(mealType: MealTypes, date: Date) async {
+        await MainActor.run {
+            // Use the repository to perform batch deletion
+            nutritionRepository.deleteAllFoodsForMealTypeAndDate(mealType: mealType, date: date)
+            
+            // Refresh the saved nutrition data
+            refreshSavedNutrition()
+        }
     }
 }
