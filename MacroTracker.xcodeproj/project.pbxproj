@@ -27,6 +27,8 @@
 		DDF66C2E2E23101300987FB0 /* ProgressStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */; };
 		DDF66C7A2E2581BF00987FB0 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDF66C792E2581BF00987FB0 /* Secrets.plist */; };
 		DDF66C7C2E29864600987FB0 /* ConfirmationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C7B2E29864600987FB0 /* ConfirmationAlert.swift */; };
+		DDF66C872E380D7C00987FB0 /* ContextMenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C862E380D7C00987FB0 /* ContextMenuBuilder.swift */; };
+		DDF66C892E380DA400987FB0 /* ConfirmationAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF66C882E380DA400987FB0 /* ConfirmationAlertManager.swift */; };
 		DE087A522D6CB6E700B6F6AF /* MacroTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */; };
 		DE087A562D6CB6E900B6F6AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A552D6CB6E900B6F6AF /* Assets.xcassets */; };
 		DE087A592D6CB6E900B6F6AF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE087A582D6CB6E900B6F6AF /* Preview Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		DDF66C2D2E23101300987FB0 /* ProgressStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStateViews.swift; sourceTree = "<group>"; };
 		DDF66C792E2581BF00987FB0 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		DDF66C7B2E29864600987FB0 /* ConfirmationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlert.swift; sourceTree = "<group>"; };
+		DDF66C862E380D7C00987FB0 /* ContextMenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuBuilder.swift; sourceTree = "<group>"; };
+		DDF66C882E380DA400987FB0 /* ConfirmationAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlertManager.swift; sourceTree = "<group>"; };
 		DE087A4E2D6CB6E700B6F6AF /* MacroTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacroTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE087A512D6CB6E700B6F6AF /* MacroTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroTrackerApp.swift; sourceTree = "<group>"; };
 		DE087A552D6CB6E900B6F6AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 				DDF66C232E2290C200987FB0 /* TabSelector.swift */,
 				DDB4BBF32DFCDF9400D0727B /* SearchBar.swift */,
 				DDB4BBF42DFCDF9400D0727B /* SectionHeader.swift */,
+				DDF66C862E380D7C00987FB0 /* ContextMenuBuilder.swift */,
+				DDF66C882E380DA400987FB0 /* ConfirmationAlertManager.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -406,6 +412,7 @@
 				DDB4BBBF2DFB75A000D0727B /* NavigationRoute.swift in Sources */,
 				DDB4BBC02DFB75A000D0727B /* NavigationCoordinator.swift in Sources */,
 				DEBA8C182E252DE10034D433 /* ProgressCalculationService.swift in Sources */,
+				DDF66C872E380D7C00987FB0 /* ContextMenuBuilder.swift in Sources */,
 				DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */,
 				DDF66C2A2E2293FF00987FB0 /* ProgressNutritionCard.swift in Sources */,
 				DE74B4232DE8765F00D52684 /* NutritionCacheService.swift in Sources */,
@@ -418,6 +425,7 @@
 				DEBA8C162E252DBC0034D433 /* ProgressDataService.swift in Sources */,
 				DE74B4212DE847AF00D52684 /* NutritionRepository.swift in Sources */,
 				DE69DAA72DFC459D00533B61 /* DailyMealData.swift in Sources */,
+				DDF66C892E380DA400987FB0 /* ConfirmationAlertManager.swift in Sources */,
 				DDB4BC012DFF1AA200D0727B /* ChartsView.swift in Sources */,
 				DE6D6C862D8859E500AC3E72 /* APIClient.swift in Sources */,
 				DE6D6C8D2D885D8400AC3E72 /* Nutrition.swift in Sources */,

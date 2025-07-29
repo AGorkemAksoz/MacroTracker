@@ -52,19 +52,21 @@ struct DailyMealDetailView: View {
                         } label: {
                             MealTypeCell(mealType: mealType, meals: mealsForType)
                         }
-                        .contextMenu {
-                            Button {
+                        .contextMenu(item: mealType,
+                                                 actions: [
+                                                    ViewDetailsAction(),
+                                                    DeleteAction(title: "Delete All Foods")
+                                                 ],
+                                                 onAction: { action, mealType in
+                            switch action {
+                            case is ViewDetailsAction:
                                 navigationCoordinator.navigate(to: .mealTypeDetail(type: mealType, meals: mealsForType, date: date))
-                            } label: {
-                                Label("View Details", systemImage: "eye")
-                            }
-                            
-                            Button(role: .destructive) {
+                            case is DeleteAction:
                                 showDeleteConfirmation(for: mealType)
-                            } label: {
-                                Label("Delete All Foods", systemImage: "trash")
+                            default:
+                                break
                             }
-                        }
+                        })
                     }
                 }
                 

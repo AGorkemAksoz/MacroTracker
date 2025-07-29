@@ -38,19 +38,21 @@ struct MealTypeDetailView: View {
                             subtitle: "\(meal.servingSizeG.formatted(.number)) gr."
                         )
                     }
-                    .contextMenu {
-                        Button {
+                    .contextMenu(item: meal,
+                                 actions: [
+                                    ViewDetailsAction(),
+                                    DeleteAction(title: "Delete Food")
+                                 ],
+                                 onAction: { action, meal in
+                        switch action {
+                        case is ViewDetailsAction:
                             navigationCoordinator.navigate(to: .foodDetail(food: meal))
-                        } label: {
-                            Label("View Details", systemImage: "eye")
-                        }
-                        
-                        Button(role: .destructive) {
+                        case is DeleteAction:
                             showDeleteConfirmation(for: meal)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
+                        default:
+                            break
                         }
-                    }
+                    })
                 }
                 
                 SectionHeader(title: "Nutrition")
