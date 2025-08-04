@@ -72,7 +72,15 @@ struct MealTypeDetailView: View {
             }
             Spacer()
         }
-        .navigationTitle(mealType.mealName)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(mealType.mealName)
+                    .foregroundColor(.black)
+            }
+        }
+
+        .background(Color("appBackgroundColor").ignoresSafeArea())
         .confirmationAlert(
             isPresented: $showingDeleteAlert,
             alert: deleteConfirmationAlert

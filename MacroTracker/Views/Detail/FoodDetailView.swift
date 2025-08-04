@@ -54,8 +54,10 @@ struct FoodDetailView: View {
                 // Serving Information
                 servingSection
             }
+            .foregroundStyle(Color.appTitleTintColor)
             .padding()
         }
+        .background(Color("appBackgroundColor").ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -68,11 +70,9 @@ struct FoodDetailView: View {
             
             Text(data.mealType.mealName)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
             
             Text(data.recordedDate.formatted(date: .abbreviated, time: .shortened))
                 .font(.subheadline)
-                .foregroundColor(.secondary)
         }
     }
     

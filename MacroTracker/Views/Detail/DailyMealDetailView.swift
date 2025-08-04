@@ -27,6 +27,15 @@ struct DailyMealDetailView: View {
             // This should not happen in normal usage, but we need to provide a fallback
             fatalError("DailyMealDetailView requires HomeViewModel as data provider")
         }
+        
+        // Configure navigation bar appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     // Convenience initializer for HomeViewModel
@@ -34,13 +43,22 @@ struct DailyMealDetailView: View {
         self.data = homeViewModel
         self.date = date
         self.homeViewModel = homeViewModel
+        
+        // Configure navigation bar appearance
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 SectionHeader(title: "Meals")
-                    .padding()
+                    .padding([.leading, .bottom])
                 
                 // Use homeViewModel directly to ensure reactivity
                 ForEach(MealTypes.allCases, id: \.self) { mealType in
@@ -53,7 +71,7 @@ struct DailyMealDetailView: View {
                             MealTypeCell(mealType: mealType, meals: mealsForType)
                         }
                         .contextMenu(item: mealType,
-                                                 actions: [
+                                            actions: [
                                                     ViewDetailsAction(),
                                                     DeleteAction(title: "Delete All Foods")
                                                  ],
@@ -89,9 +107,15 @@ struct DailyMealDetailView: View {
                 
                 Spacer()
             }
-            .navigationTitle(formatDate(date))
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(formatDate(date))
+                    .foregroundColor(.black)
+            }
+        }
+        .background(Color("appBackgroundColor").ignoresSafeArea())
         .confirmationAlert(
             isPresented: $showingDeleteAlert,
             alert: deleteConfirmationAlert

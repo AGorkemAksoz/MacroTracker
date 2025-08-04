@@ -22,6 +22,8 @@ struct HomeView: View {
     // Initialize with shared HomeViewModel
     init(homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
+        
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     // Legacy initializer for backwards compatibility
@@ -77,16 +79,20 @@ struct HomeView: View {
                 Spacer()
             }
             .navigationTitle("Macro Tracker").font(.headerTitle)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
+            .foregroundStyle(Color.appTitleTintColor)
             .toolbar {
-                Button {
-                    navigationCoordinator.navigate(to: .enterFood)
-                } label: {
-                    Image(systemName: "plus")
-                        .foregroundStyle(Color.appForegroundColor)
-                        .frame(width: 24, height: 24)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        navigationCoordinator.navigate(to: .enterFood)
+                    } label: {
+                        Image(systemName: "plus")
+                            .foregroundStyle(Color.appForegroundColor)
+                            .frame(width: 24, height: 24)
+                    }
                 }
             }
+            .background(Color("appBackgroundColor").ignoresSafeArea())
             .navigationDestination(for: AppRoute.self) { route in
                 Group {
                     switch route {
