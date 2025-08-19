@@ -124,8 +124,6 @@ struct ConfirmingFoodView: View {
             }
             .padding()
             .padding(.top, 8)
-            .navigationTitle("Confirm Food")
-            .navigationBarTitleDisplayMode(.inline)
             
             Spacer()
         }
@@ -137,6 +135,15 @@ struct ConfirmingFoodView: View {
             Button("OK") { showError = false }
         } message: {
             Text(errorMessage)
+        }
+        .foregroundStyle(Color.appTitleTintColor)
+        .background(Color("appBackgroundColor").ignoresSafeArea())
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Confirm Food")
+                    .foregroundColor(.black)
+            }
         }
     }
 }

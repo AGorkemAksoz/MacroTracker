@@ -43,9 +43,15 @@ struct ChartsView: View {
                     progressContent
                 }
             }
+            .foregroundStyle(Color.appTitleTintColor)
             .background(Color("appBackgroundColor").ignoresSafeArea())
-            .navigationTitle("Progress")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Progress")
+                        .foregroundColor(.black)
+                }
+            }
         }
     }
     

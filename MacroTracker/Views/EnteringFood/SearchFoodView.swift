@@ -130,8 +130,14 @@ struct EnteringFoodView: View {
         } message: {
             Text(errorMessage)
         }
-        .navigationTitle("Enter Food")
+        .background(Color("appBackgroundColor").ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Enter Food")
+                    .foregroundColor(.black)
+            }
+        }
     }
     
     private var mealPicker: some View {
