@@ -17,42 +17,46 @@ struct ChartsView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                TabSelector(
-                    selectedTab: viewModel.selectedTab,
-                    onTabSelected: viewModel.selectTab
+        // Remove NavigationView wrapper - it's not needed here
+        VStack(spacing: 0) {
+            // Add a custom header since we removed NavigationView
+            HStack {
+                Spacer()
+                Text("Progress")
+                    .font(.headerTitle)
+                    .foregroundStyle(Color.appTitleTintColor)
+                Spacer()
+            }
+            .padding(.top, 8)
+            .padding(.bottom, 16)
+            
+            TabSelector(
+                selectedTab: viewModel.selectedTab,
+                onTabSelected: viewModel.selectTab
+            )
+            
+            // Content based on loading state
+            switch viewModel.loadingState {
+            case .loading(let message):
+                ProgressLoadingView(message: message)
+                
+            case .error(let error):
+                ProgressErrorView(
+                    errorMessage: error.errorDescription ?? "Unknown error",
+                    recoverySuggestion: error.recoverySuggestion,
+                    onRetry: viewModel.retry
                 )
                 
-                // Content based on loading state
-                switch viewModel.loadingState {
-                case .loading(let message):
-                    ProgressLoadingView(message: message)
-                    
-                case .error(let error):
-                    ProgressErrorView(
-                        errorMessage: error.errorDescription ?? "Unknown error",
-                        recoverySuggestion: error.recoverySuggestion,
-                        onRetry: viewModel.retry
-                    )
-                    
-                case .empty:
-                    ProgressEmptyStateView(selectedTab: viewModel.selectedTab)
-                    
-                case .loaded, .idle:
-                    progressContent
-                }
-            }
-            .foregroundStyle(Color.appTitleTintColor)
-            .background(Color("appBackgroundColor").ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Progress")
-                        .foregroundColor(.black)
-                }
+            case .empty:
+                ProgressEmptyStateView(selectedTab: viewModel.selectedTab)
+                
+            case .loaded, .idle:
+                progressContent
             }
         }
+        .foregroundStyle(Color.appTitleTintColor)
+        .background(Color("appBackgroundColor").ignoresSafeArea())
+        // Remove navigation bar modifiers since we're not using NavigationView
     }
     
     private var progressContent: some View {

@@ -22,8 +22,6 @@ struct HomeView: View {
     // Initialize with shared HomeViewModel
     init(homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
-        
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]
     }
     
     // Legacy initializer for backwards compatibility

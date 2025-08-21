@@ -26,7 +26,7 @@ struct MealTypeDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 SectionHeader(title: "Foods")
-                    .padding()
+                    .padding(.leading)
                 
                 ForEach(homeViewModel.getFoodsByDate(date, for: mealType), id: \.id) { meal in
                     Button {
