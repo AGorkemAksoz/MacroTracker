@@ -43,4 +43,5 @@ extension Color {
     static let confirmButtonBackgroudColor = Color(hex: "4296EB")
     static let confirmButtonForegroudColor = Color(hex: "F7FAFC")
     static let appTitleTintColor = Color(hex: "0D141C")
+    static let onboardHeaderTintColor = Color(hex: "0F141A")
 }

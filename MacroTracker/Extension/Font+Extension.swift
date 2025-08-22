@@ -44,4 +44,8 @@ extension Font {
     static var dayDetailTitle: Font {
         return customFont("Manrope-Bold", size: 22)
     }
+    
+    static var onboardingHeaderTitle: Font {
+        return customFont("Manrope-Bold", size: 28)
+    }
 }

@@ -17,9 +17,7 @@ struct ChartsView: View {
     }
     
     var body: some View {
-        // Remove NavigationView wrapper - it's not needed here
         VStack(spacing: 0) {
-            // Add a custom header since we removed NavigationView
             HStack {
                 Spacer()
                 Text("Progress")
@@ -56,7 +54,6 @@ struct ChartsView: View {
         }
         .foregroundStyle(Color.appTitleTintColor)
         .background(Color("appBackgroundColor").ignoresSafeArea())
-        // Remove navigation bar modifiers since we're not using NavigationView
     }
     
     private var progressContent: some View {
@@ -164,6 +161,7 @@ struct EnhancedChartSection<Chart: View>: View {
                 change: change,
                 comparisonLabel: comparisonLabel
             )
+            .padding(.bottom, 8)
             
             if hasValidData {
                 chart

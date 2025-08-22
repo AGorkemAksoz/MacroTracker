@@ -111,6 +111,7 @@
 		DE69DA4E2DEF2E0400533B61 /* Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extension; sourceTree = "<group>"; };
 		DE69DA712DF855AC00533B61 /* EnteringFood */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EnteringFood; sourceTree = "<group>"; };
 		DE74B4262DE8899600D52684 /* Detail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Detail; sourceTree = "<group>"; };
+		DEBA8CBB2E58A2150034D433 /* Onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Onboarding; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +263,7 @@
 		DE6D6C8E2D885F4800AC3E72 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DEBA8CBB2E58A2150034D433 /* Onboarding */,
 				DDB4BBFE2DFF1A9800D0727B /* MainTabView.swift */,
 				DDB4BC002DFF1AA200D0727B /* ChartsView.swift */,
 				DDB4BBFC2DFCE48F00D0727B /* Modifiers */,
@@ -328,6 +330,7 @@
 				DE69DA4E2DEF2E0400533B61 /* Extension */,
 				DE69DA712DF855AC00533B61 /* EnteringFood */,
 				DE74B4262DE8899600D52684 /* Detail */,
+				DEBA8CBB2E58A2150034D433 /* Onboarding */,
 			);
 			name = MacroTracker;
 			productName = MacroTracker;
@@ -562,7 +565,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
@@ -592,7 +595,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MacroTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = DC2CCCCLGJ;
+				DEVELOPMENT_TEAM = JKQNUCPDQL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MacroTracker/Info.plist;
