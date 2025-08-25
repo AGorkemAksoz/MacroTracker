@@ -16,6 +16,7 @@ struct MacroTrackerApp: App {
     let dependencyContainer: DependencyContainerProtocol
     // Add navigation coordinator
     @StateObject private var navigationCoordinator = NavigationCoordinator()
+    @StateObject private var onboardingManager = OnboardingManager()
     
     init() {
         do {
@@ -30,7 +31,15 @@ struct MacroTrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainTabView(dependencyContainer: dependencyContainer)
+            Group {
+                if onboardingManager.shouldShowOnboarding {
+                    OnboardingFlowView()
+                        .environmentObject(onboardingManager)
+                } else {
+                    MainTabView(dependencyContainer: dependencyContainer)
+                        .environmentObject(navigationCoordinator)
+                }
+            }
         }
         .modelContainer(modelContainer)
     }
