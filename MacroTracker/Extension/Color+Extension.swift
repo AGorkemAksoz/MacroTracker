@@ -44,4 +44,6 @@ extension Color {
     static let confirmButtonForegroudColor = Color(hex: "F7FAFC")
     static let appTitleTintColor = Color(hex: "0D141C")
     static let onboardHeaderTintColor = Color(hex: "0F141A")
+    static let tabBarTintColor = Color(hex: "72B505")
+    static let barChartTintColor = Color(hex: "333335")
 }

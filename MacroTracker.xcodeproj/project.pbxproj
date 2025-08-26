@@ -54,6 +54,7 @@
 		DEAE3F612DD616AF0096E587 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAE3F602DD616AF0096E587 /* FoodItem.swift */; };
 		DEBA8C162E252DBC0034D433 /* ProgressDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */; };
 		DEBA8C182E252DE10034D433 /* ProgressCalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */; };
+		DEBA8CDE2E5CA1F80034D433 /* OnboardingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA8CDD2E5CA1F80034D433 /* OnboardingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		DEAE3F602DD616AF0096E587 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDataService.swift; sourceTree = "<group>"; };
 		DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCalculationService.swift; sourceTree = "<group>"; };
+		DEBA8CDD2E5CA1F80034D433 /* OnboardingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -245,6 +247,7 @@
 				DE74B4202DE847AF00D52684 /* NutritionRepository.swift */,
 				DE6D6C8A2D885D5100AC3E72 /* NutritionService.swift */,
 				DD84E64F2DE7986300656DC5 /* DependencyContainer.swift */,
+				DEBA8CDD2E5CA1F80034D433 /* OnboardingManager.swift */,
 				DEBA8C152E252DBC0034D433 /* ProgressDataService.swift */,
 				DEBA8C172E252DE10034D433 /* ProgressCalculationService.swift */,
 			);
@@ -411,6 +414,7 @@
 				DDB4BB9A2DF0DFE400D0727B /* DailyMealCell.swift in Sources */,
 				DE69DABE2DFC62E600533B61 /* IconCell.swift in Sources */,
 				DE6D6C932D885F9600AC3E72 /* HomeView.swift in Sources */,
+				DEBA8CDE2E5CA1F80034D433 /* OnboardingManager.swift in Sources */,
 				DE6D6C842D8859CD00AC3E72 /* APIHelper.swift in Sources */,
 				DDB4BBBF2DFB75A000D0727B /* NavigationRoute.swift in Sources */,
 				DDB4BBC02DFB75A000D0727B /* NavigationCoordinator.swift in Sources */,

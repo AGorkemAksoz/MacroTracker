@@ -113,7 +113,7 @@ struct ConfirmingFoodView: View {
                             .frame(width: 84, height: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(foods.isEmpty ? Color.gray : Color.confirmButtonBackgroudColor)
+                                    .fill(foods.isEmpty ? Color.gray : Color.tabBarTintColor)
                             )
                             .foregroundStyle(Color.confirmButtonForegroudColor)
                     }

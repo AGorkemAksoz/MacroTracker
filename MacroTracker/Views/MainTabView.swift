@@ -34,6 +34,7 @@ struct MainTabView: View {
                     Text("Progress")
                 }
         }
+        .tint(Color.tabBarTintColor)
     }
 }
 

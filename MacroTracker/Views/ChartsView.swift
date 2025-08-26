@@ -302,7 +302,7 @@ struct CaloriesLineChart: View {
                             }
                         }
                     }
-                    .stroke(Color.secondayNumberForegroundColor, lineWidth: 3)
+                    .stroke(Color.barChartTintColor, lineWidth: 3)
                     
                     // Tappable points
                     ForEach(points.indices, id: \.self) { idx in

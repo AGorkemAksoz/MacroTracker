@@ -97,7 +97,7 @@ struct EnteringFoodView: View {
                                 
                                 Circle()
                                     .trim(from: 0, to: 0.7)
-                                    .stroke(Color.confirmButtonBackgroudColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                    .stroke(Color.tabBarTintColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                                     .frame(width: 40, height: 40)
                                     .rotationEffect(.degrees(-90))
                                     .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: homeViewModel.loadingState == .loading)
@@ -194,8 +194,8 @@ struct EnteringFoodView: View {
             .background(
                 RoundedRectangle(cornerRadius: 24)
                     .fill(homeViewModel.loadingState == .loading ? 
-                          Color.confirmButtonBackgroudColor.opacity(0.7) : 
-                          Color.confirmButtonBackgroudColor)
+                          Color.tabBarTintColor.opacity(0.7) :
+                          Color.tabBarTintColor)
             )
             .foregroundColor(Color.confirmButtonForegroudColor)
             .padding(.horizontal)
