@@ -40,7 +40,7 @@ enum MealTypes: String, CaseIterable, Codable {
 
 @Model
 class FoodItem {
-    let id: String
+    var id: String
     var name: String
     var calories: Double
     var servingSizeG: Double
