@@ -76,7 +76,7 @@ struct HomeView: View {
                 
                 Spacer()
             }
-            .navigationTitle("Macro Tracker").font(.headerTitle)
+            .navigationTitle("Bite Wisely").font(.headerTitle)
             .navigationBarTitleDisplayMode(.large)
             .foregroundStyle(Color.appTitleTintColor)
             .toolbar {

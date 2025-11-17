@@ -140,6 +140,8 @@ struct EnteringFoodView: View {
         }
     }
     
+    //MARK: - UI Components
+    
     private var mealPicker: some View {
         Picker("Please select your meal", selection: $selectedMeal) {
             ForEach(MealTypes.allCases, id: \.self) {
@@ -205,6 +207,8 @@ struct EnteringFoodView: View {
         .disabled(homeViewModel.loadingState == .loading)
         .opacity(homeViewModel.loadingState == .loading ? 0.8 : 1.0)
     }
+    
+    //MARK: - Actions
     
     private func validateSearchQuery() {
         searchQueryValidationErrors = typedMeal.validateSearchQuery()
